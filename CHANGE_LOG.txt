@@ -1,0 +1,119 @@
+===== 1.1.0 ===== (10.18.2015)
+11.01.2015
+Barcodes.java
+- Changed from local to public class
+
+FormatString.java
+- Removed Buffer of MJ to display barcode, was getting exponential form of some numbers
+- Fixed character lengths in comments and in substrings to reflect above change
+
+MainActivity.java
+- Added more comments and removed some
+- Removed using MJ buffer like in FormatString.java
+- Added UpdateLog() to InputManual()
+- Added variable Done
+- Added Method mAdd()
+- Edited Method InputManual() to only allow FedEX,UPS
+- Removed Load()
+- Removed DisplaySharedPreferences()
+- Edited loadPreferences(), to work...
+- Removed variable paused
+- Added validation for Numbers on for FedEX on InputManual()
+- Fixed loadPreferences() to work 100% FOR SURE!
+- Changed storing of Counter to Integer
+
+SQLite.java Changes
+- Changed database type from String to Text to fix exponential displaying problem
+- Added getTableAsString() method to display table contents for debugging
+
+Misc Changes
+- Fixed adding invalid scans
+- Removed hard coded email TO for public release
+- Added credit to code from stackoverflow.com
+
+10.31.2015
+MainActivity.java Changes
+- Rearranged code again!
+- Saving & Loading is COMPLETE
+- Added more comments
+- Created FormatString.java and moved Formatatting methods into it
+- Renamed FormatEmail() to UpdateLog()
+- Added TinyDB to make SharePreferences saving easier
+- Moved Buttons/Button Listeners to CreateListView()
+
+Misc Changes
+- Added FormString.java
+- Edited SQLite.java comments
+
+10.30.2015
+Barcodes.java Changes
+- Made Class Local
+- Made variables private
+- Removed getID()
+
+MainActivity.java Changes
+- Changed FedEX,UPS Variables to local
+- Added ScanButton(),ManButton(),ClearButton() for OnClickListerner's
+- Renamed clrBtnData() to ClearButtonData()
+- Added ScanDataEmpty(), for No scan data messages
+- Modified InputManual()
+- Modified FormatEmail()
+- Changed FormatString to FedEx,UPS
+
+Future changes
+- Working on Loading/Saving State
+
+10.29.2015
+- Adding loadPreferemces()
+- Adding LoadData()
+- Trying to fix ActivityState data by using onStop()
+- Adding savePreferences()
+- Adding saveLog()
+- Fixed formatting and rearranged code
+
+Fixing recent changes but most likely buggy! :(
+
+10.18.2015
+- Added Manual Button to add entries, added hint's in input boxes for formating
+- Added InputManual(), support for FedEX Ground, FedEX Express, UPS
+- Changed FormatEmail(), added support for 3 manual entries
+- Renamed FilterFedex() to Filter()
+- Added FormatStringManualE(), FormatStringManualUPS(), FormatStringManualX()
+- Changed onActivityResult() to new Alert Dialog layout
+- Formatted Comments
+- Added two new activity layouts and icons
+
+===== 1.0.5 ===== (09.27.2015)
+
+09.27.2015
+- Added my By: Text
+- Added Full Screen
+- Added an Error if you send with no data received!
+- Changed Number.length() == 18 to less than 11 to throw an -Error
+- Made ListView selection transparent so you can't click
+- Misc Formatting
+
+09.26.2015
+- Changed FilterFedex()
+- Removed FormatString()
+- Changed FormatEmail()
+- Fixed Counter
+- Added Arrays.fill() to clear out Log Array
+- Added Independent filtering based on character length
+
+===== 1.0.0 ===== (06.01.2015)
+
+09.24.2015
+- Notice Last minute stuff
+
+09.23.2015
+- Added FedEx Ground
+- Added FedEx Express
+- Changed Email Formating
+- Changed Scan Result
+- Added Counter
+
+06.01.2015
+
+- new start of this change_log file
+

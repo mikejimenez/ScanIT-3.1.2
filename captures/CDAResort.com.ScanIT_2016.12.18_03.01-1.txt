@@ -1,0 +1,90 @@
+Applications Graphics Acceleration Info:
+Uptime: 13587495 Realtime: 13587491
+
+** Graphics info for pid 6668 [CDAResort.com.ScanIT] **
+
+Recent DisplayList operations
+DrawRenderNode
+  DrawRenderNode
+    DrawRoundRect
+  Save
+  ClipRect
+  DrawRenderNode
+    DrawRenderNode
+      DrawRenderNode
+        DrawRenderNode
+        DrawRenderNode
+          DrawRenderNode
+            DrawRenderNode
+              DrawRenderNode
+              DrawRenderNode
+                DrawRenderNode
+                  Save
+                  ClipRect
+                  DrawPatch
+                  SaveLayer
+                  Translate
+                  DrawCircle
+                  Translate
+                  SaveLayer
+                  DrawColor
+                  DrawPatch
+                  RestoreToCount
+                Save
+                ClipRect
+                Translate
+                DrawPatch
+                Translate
+                DrawText
+                DrawText
+                DrawText
+                RestoreToCount
+              DrawRenderNode
+              DrawRenderNode
+              DrawRenderNode
+        DrawRenderNode
+  RestoreToCount
+RestoreToCount
+DrawShadow
+DrawRoundRect
+DrawPatch
+DrawCircle
+DrawColor
+DrawPatch
+DrawPatch
+multiDraw
+  DrawText
+
+Caches:
+Current memory usage / total memory usage (bytes):
+  TextureCache           173040 / 37748736
+  LayerCache                  0 / 25165824 (numLayers = 0)
+  Garbage layers              0
+  Active layers               0
+  RenderBufferCache           0 /  2097152
+  GradientCache               0 /   524288
+  PathCache                   0 / 10485760
+  TessellationCache        3720 /  1048576
+  TextDropShadowCache         0 /  2097152
+  PatchCache                256 /   131072
+  FontRenderer 0 A8      524288 /   524288
+  FontRenderer 0 RGBA         0 /        0
+  FontRenderer 0 total   524288 /   524288
+Other:
+  FboCache                    0 /        0
+Total memory usage:
+  701304 bytes, 0.67 MB
+
+Profile data in ms:
+
+	CDAResort.com.ScanIT/alpha.com.ScanIT.MainActivity/android.view.ViewRootImpl@9b77a2f (visibility=0)
+View hierarchy:
+
+  CDAResort.com.ScanIT/alpha.com.ScanIT.MainActivity/android.view.ViewRootImpl@9b77a2f
+  15 views, 16.10 kB of display lists
+
+
+Total ViewRootImpl: 1
+Total Views:        15
+Total DisplayList:  16.10 kB
+

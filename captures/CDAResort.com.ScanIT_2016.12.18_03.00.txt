@@ -1,0 +1,43 @@
+TASK CDAResort.com.ScanIT id=225
+  ACTIVITY CDAResort.com.ScanIT/alpha.com.ScanIT.MainActivity 17d6a803 pid=6668
+    Local Activity 19b4499 State:
+      mResumed=true mStopped=false mFinished=false
+      mLoadersStarted=true
+      mChangingConfigurations=false
+      mCurrentConfig={0 1.0 311mcc480mnc en_US ldltr sw360dp w640dp h335dp 480dpi nrml long land finger -keyb/v/h -nav/h s.56}
+    FragmentManager misc state:
+      mActivity=alpha.com.ScanIT.MainActivity@19b4499
+      mContainer=android.app.Activity$1@2559035e
+      mCurState=5 mStateSaved=false mDestroyed=false
+    ViewRoot:
+      mAdded=true mRemoved=false
+      mConsumeBatchedInputScheduled=false
+      mConsumeBatchedInputImmediatelyScheduled=false
+      mPendingInputEventCount=0
+      mProcessInputEventsScheduled=false
+      mTraversalScheduled=false
+      android.view.ViewRootImpl$NativePreImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$ImeInputStage: mQueueLength=0
+      android.view.ViewRootImpl$NativePostImeInputStage: mQueueLength=0
+    Choreographer:
+      mFrameScheduled=false
+      mLastFrameTime=13383284 (152891 ms ago)
+    View Hierarchy:
+      com.android.internal.policy.impl.PhoneWindow$DecorView{3ea1433f V.E..... R....... 0,0-1920,1080}
+        android.widget.LinearLayout{ee1040c V.E..... ........ 0,0-1920,1080}
+          android.view.ViewStub{12529155 G.E..... ......I. 0,0-0,0 #102036e}
+          android.widget.FrameLayout{322df76a V.E..... ........ 0,0-1920,1080 #1020002 android:id/content}
+            android.widget.RelativeLayout{24f0d45b V.E..... ........ 0,0-1920,1080}
+              android.widget.Button{34a054f8 VFED..C. ........ 0,0-264,144 #7f0d003f app:id/scan_button}
+              android.widget.TextView{31f7edd1 VFED..CL .F...... 960,144-960,201 #7f0d0040 app:id/scan_format}
+              android.widget.TextView{11ac2036 VFED..CL ........ 960,201-960,258 #7f0d0041 app:id/scan_content}
+              android.widget.ListView{17de5b37 V.ED.VC. ........ 0,144-1920,144 #7f0d0042 app:id/listView}
+              android.widget.Button{2d01c8a4 VFED..C. ........ 1656,0-1920,144 #7f0d0043 app:id/clr_button}
+              android.widget.TextView{7bc960d V.ED.... ........ 1031,1012-1055,1069 #7f0d0044 app:id/textView2}
+              android.widget.TextView{1c1209c2 V.ED.... ........ 1652,1047-1872,1080 #7f0d0046 app:id/textView3}
+              android.widget.TextView{b373d3 V.ED.... ........ 899,1012-1020,1069 #7f0d0045 app:id/textView}
+              android.widget.Button{21e4cb10 VFED..C. ........ 264,0-528,144 #7f0d0047 app:id/manual_button}
+              android.widget.Button{2a98609 VFED..C. ........ 612,0-876,144 #7f0d0048 app:id/history}
+    Looper (main, tid 1) {3cfb000e}
+now=13536177
+      (Total messages: 0, idling=false, quitting=false)

@@ -1,0 +1,36 @@
+Applications Memory Usage (kB):
+Uptime: 13566173 Realtime: 13566169
+
+** MEMINFO in pid 6668 [CDAResort.com.ScanIT] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap     4190     3344        0        0    28724    27879      352
+  Dalvik Heap     2366     2284        0        0     4254     2126     2128
+ Dalvik Other      392      372        0        0                           
+        Stack      128      128        0        0                           
+       Cursor        8        8        0        0                           
+    Other dev     2989     2924        4        0                           
+     .so mmap      793      312      116        0                           
+    .apk mmap      194        0      100        0                           
+    .ttf mmap       12        0        0        0                           
+    .dex mmap      676        0      616        0                           
+    code mmap      713        0       44        0                           
+   image mmap     1211      776        0        0                           
+   Other mmap      133        8      104        0                           
+      Unknown      144      144        0        0                           
+        TOTAL    13949    10300      984        0    32978    30005     2480
+ 
+ Objects
+               Views:       49         ViewRootImpl:        1
+         AppContexts:        3           Activities:        1
+              Assets:        4        AssetManagers:        4
+       Local Binders:        9        Proxy Binders:       15
+    Death Recipients:        0
+     OpenSSL Sockets:        0
+ 
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:       62
+ 
+Uptime: 13566614 Realtime now=13566610

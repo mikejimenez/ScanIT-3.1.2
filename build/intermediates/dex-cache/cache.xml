@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="G:\AndroidAPP\Workspace\ScanIt\app\src\main\res\opencsv-3.9.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="01e0df53c5ef2431f072d1da3fd31bea9da5b529">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\opencsv-3.9_e54b22ea19834f9cf3d6f30672b9d537e9106eaa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="G:\AndroidAPP\Workspace\ScanIt\app\src\main\res\android-viewbadger.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f1303b50d535716ca7601c5014357b8435658313">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\android-viewbadger_9f8fed16caebbd083d41485da618f2d2766ff2bf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\44d41944cced66b2570892e4dd7df1d24896134e\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_283866fb0d85c7ede90d965c4894097143fd67a1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\9098fa6b8e77ba8a7cebcc27842f2c38994420d0\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_affbef55e0a03c563076520ae214a50a0ae11089.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="G:\AndroidStudio\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\support-annotations-23.3.0_1c0fd4363d2816acda91b2bd939df160292902d3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\1ecf6069cd66929611b4d20037b5e892addf1a43\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_7ff1aee907ca62dcf5d925ac78a19e5962a96eee.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\d1eff2c755699dc5ef7984e6ff710be1a32a5749\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_613b7de6c1aa34c57f7a532f6fdc7faf9a273290.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\350fab0b803521b54df314b0cac2d25f90930013\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_dfe3026f0443f98964701a78faf16030dcc5f6bb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\fda9b9e211c1e174a86ffce268ac7cc7003de03c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_543f3eecadb9f6a76c721e5281aed0063908c93d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\fda9b9e211c1e174a86ffce268ac7cc7003de03c\output\jars\libs\internal_impl-23.3.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\internal_impl-23.3.0_7a7d7461ec8cf533689c90591969cc21904f9129.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/historyCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fabClearHistory"
+        android:visibility="invisible"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:src="@drawable/ic_priority_high_black_24dp"
+        app:backgroundTint="#f5f5f5"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        android:layout_marginEnd="28dp"
+        android:layout_above="@+id/listView"
+        android:layout_toStartOf="@+id/fabEmail" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabClearHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/listView"
+        android:layout_marginStart="75dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="center"
+        android:src="@drawable/ic_delete_sweep_black_24dp"
+        app:backgroundTint="#f5f5f5"
+        app:borderWidth="0dp"
+        app:elevation="0dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/fabClearHistory"
+        android:scaleType="center"
+        android:src="@drawable/ic_sd_storage_black_24dp"
+        app:backgroundTint="#f5f5f5"
+        app:borderWidth="0dp"
+        app:elevation="0dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/ic_email_black_24dp"
+        app:backgroundTint="#f5f5f5"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        android:layout_marginEnd="21dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabManual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="5dp"
+        android:layout_toStartOf="@+id/fabHistory"
+        android:scaleType="center"
+        android:src="@drawable/ic_edit_black_24dp"
+        app:backgroundTint="#f5f5f5"
+        app:borderWidth="0dp"
+        app:elevation="0dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabScan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/ic_control_point_black_24dp"
+        app:backgroundTint="#f5f5f5"
+        app:borderWidth="0dp"
+        app:elevation="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/fabScan" />
+
+    <ListView
+        android:id="@+id/listView_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fabManual"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/UserLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignRight="@+id/fabEmail"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_marginEnd="-25dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/TotalCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerHorizontal="false"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="false"
+        android:layout_marginLeft="-4dp"
+        android:layout_toRightOf="@+id/fabScan"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/UserLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ResortLogo"
+        android:layout_width="197dp"
+        android:layout_height="50dp"
+        android:visibility="visible"
+        android:src="@drawable/_template_sitelogo_print"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/UserPassword"
+        android:layout_alignStart="@+id/UserPassword"
+        android:layout_below="@+id/UserPassword"
+        android:layout_marginTop="35dp"
+        android:text="@string/login"
+        android:theme="@android:style/Theme.DeviceDefault.Dialog" />
+
+    <EditText
+        android:id="@+id/UserText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/ResortLogo"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/ResortLogo"
+        android:layout_marginEnd="-50dp"
+        android:layout_marginLeft="-40dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="150dp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:ems="10"
+        android:hint="@string/Login_Hint"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/UserPassword"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/UserText"
+        android:layout_alignStart="@+id/UserText"
+        android:layout_below="@+id/UserText"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/Login_Password"
+        android:inputType="textPassword" />
+
+</RelativeLayout>

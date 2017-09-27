@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Scan It</string>
+    <string name="count">Count:  </string>
+    <string name="Name">
+        Name / Guest\n
+    </string>
+    <string name="hint_manual">
+    Fedex\n
+    Express: XXXX XXXX XXXX\n
+    Ground: XXXXXXX XXXXXXX XXXXXXX\nUPS\n 1Z XXX XXX XX XXXX XXXX\n
+    1z XXX XXX XX XXXX XXXX\n
+   </string>
+    <string-array name="departments">
+        <item>Guest</item>
+        <item>No Department</item>
+        <item>Accounting</item>
+        <item>Admin</item>
+        <item>Bakery</item>
+        <item>Beverlys</item>
+        <item>Business Center</item>
+        <item>CDA Cruises</item>
+        <item>Convention Center (Banquets)</item>
+        <item>Convention Center (Beverages)</item>
+        <item>Convention Center (Kitchen)</item>
+        <item>Dockside (Lobby Cafe)</item>
+        <item>Dockside (Kitchen)</item>
+        <item>Engineering</item>
+        <item>Front Desk</item>
+        <item>Golf Course</item>
+        <item>Housekeeping</item>
+        <item>IT Department</item>
+        <item>Janitorial</item>
+        <item>Landscaping</item>
+        <item>Laundry</item>
+        <item>Marie Boutique</item>
+        <item>Personnel</item>
+        <item>Receiving</item>
+        <item>Recreation Center</item>
+        <item>Reservations</item>
+        <item>Resort Logo Shop</item>
+        <item>Room Service</item>
+        <item>Sales &amp; Catering</item>
+        <item>Seamstress</item>
+        <item>Security</item>
+        <item>Spa</item>
+        <item>Special Promotions</item>
+        <item>TapHouse Unchained</item>
+        <item>Titos</item>
+        <item>Transportation</item>
+        <item>Weddings</item>
+        <item>Whispers</item>
+    </string-array>
+    <string name="logout">Logout</string>
+    <string name="cancel">Cancel</string>
+    <!--<string name="user">User</string>-->
+    <string name="login">LOGIN</string>
+    <string name="Login_Hint">Username</string>
+    <string name="Login_Password">Password</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="uiDepartment">Sender / Company</string>
+    <!--<string name="updateCompany">Update Department</string>-->
+    <string name="previous">Previous</string>
+    <string name="unlock">Unlock</string>
+</resources>

@@ -1,0 +1,220 @@
+AGGREGATED OVER LAST 24 HOURS:
+System memory usage:
+  SOff/Norm: 5 samples:
+    Cached: 696MB min, 0.95GB avg, 1.1GB max
+    Free: 68MB min, 119MB avg, 216MB max
+    ZRam: 0.00 min, 0.00 avg, 0.00 max
+    Kernel: 66MB min, 80MB avg, 105MB max
+    Native: 38MB min, 52MB avg, 61MB max
+  SOn /Norm: 7 samples:
+    Cached: 710MB min, 852MB avg, 1.1GB max
+    Free: 75MB min, 169MB avg, 351MB max
+    ZRam: 0.00 min, 0.00 avg, 0.00 max
+    Kernel: 62MB min, 86MB avg, 116MB max
+    Native: 39MB min, 48MB avg, 55MB max
+       Mod : 3 samples:
+    Cached: 721MB min, 788MB avg, 880MB max
+    Free: 237MB min, 276MB avg, 352MB max
+    ZRam: 0.00 min, 0.00 avg, 0.00 max
+    Kernel: 83MB min, 86MB avg, 90MB max
+    Native: 39MB min, 41MB avg, 44MB max
+
+Per-Package Stats:
+  * CDAResort.com.ScanIT / u0a214 / v1:
+      * CDAResort.com.ScanIT / u0a214 / v1:
+               TOTAL: 6.5% (11MB-15MB-18MB/8.4MB-12MB-14MB over 54)
+                 Top: 6.5% (11MB-15MB-18MB/8.4MB-12MB-14MB over 54)
+              Imp Fg: 0.00%
+          (Last Act): 2.7% (12MB-14MB-16MB/9.9MB-11MB-13MB over 6)
+            (Cached): 1.4% (5.8MB-11MB-15MB/3.6MB-8.8MB-12MB over 3)
+  * CDAResort.com.ScanIT / u0a216 / v1:
+      * CDAResort.com.ScanIT / u0a216 / v1:
+               TOTAL: 2.9% (12MB-16MB-25MB/9.9MB-14MB-22MB over 23)
+                 Top: 2.9% (12MB-16MB-25MB/9.9MB-14MB-22MB over 23)
+          (Last Act): 0.56% (14MB-14MB-16MB/11MB-12MB-13MB over 4)
+            (Cached): 0.02%
+  * CDAResort.com.ScanIT / u0a218 / v1:
+      * CDAResort.com.ScanIT / u0a218 / v1:
+               TOTAL: 0.94% (14MB-16MB-19MB/12MB-13MB-15MB over 12)
+                 Top: 0.94% (14MB-16MB-19MB/12MB-13MB-15MB over 12)
+          (Last Act): 0.58% (13MB-14MB-15MB/11MB-11MB-12MB over 4)
+            (Cached): 0.03%
+  * CDAResort.com.ScanIT / u0a219 / v1:
+      * CDAResort.com.ScanIT / u0a219 / v1:
+               TOTAL: 8.6% (11MB-15MB-22MB/7.7MB-12MB-19MB over 61)
+                 Top: 8.6% (11MB-15MB-22MB/7.7MB-12MB-19MB over 61)
+              Imp Fg: 0.01%
+          (Last Act): 1.4% (13MB-14MB-14MB/11MB-11MB-12MB over 7)
+            (Cached): 16% (14MB-15MB-16MB/11MB-12MB-13MB over 9)
+  * CDAResort.com.ScanIT / u0a222 / v1:
+      * CDAResort.com.ScanIT / u0a222 / v1:
+               TOTAL: 4.5% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+                 Top: 4.5% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+          (Last Act): 5.7% (13MB-14MB-15MB/11MB-11MB-12MB over 12)
+            (Cached): 0.24% (8.9MB-11MB-13MB/6.6MB-8.7MB-11MB over 2)
+
+Summary:
+  * CDAResort.com.ScanIT / u0a219 / v1:
+           TOTAL: 8.6% (11MB-15MB-22MB/7.7MB-12MB-19MB over 61)
+             Top: 8.6% (11MB-15MB-22MB/7.7MB-12MB-19MB over 61)
+          Imp Fg: 0.01%
+      (Last Act): 1.4% (13MB-14MB-14MB/11MB-11MB-12MB over 7)
+        (Cached): 16% (14MB-15MB-16MB/11MB-12MB-13MB over 9)
+  * CDAResort.com.ScanIT / u0a214 / v1:
+           TOTAL: 6.5% (11MB-15MB-18MB/8.4MB-12MB-14MB over 54)
+             Top: 6.5% (11MB-15MB-18MB/8.4MB-12MB-14MB over 54)
+          Imp Fg: 0.00%
+      (Last Act): 2.7% (12MB-14MB-16MB/9.9MB-11MB-13MB over 6)
+        (Cached): 1.4% (5.8MB-11MB-15MB/3.6MB-8.8MB-12MB over 3)
+  * CDAResort.com.ScanIT / u0a222 / v1:
+           TOTAL: 4.5% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+             Top: 4.5% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+      (Last Act): 5.7% (13MB-14MB-15MB/11MB-11MB-12MB over 12)
+        (Cached): 0.24% (8.9MB-11MB-13MB/6.6MB-8.7MB-11MB over 2)
+  * CDAResort.com.ScanIT / u0a216 / v1:
+           TOTAL: 2.9% (12MB-16MB-25MB/9.9MB-14MB-22MB over 23)
+             Top: 2.9% (12MB-16MB-25MB/9.9MB-14MB-22MB over 23)
+      (Last Act): 0.56% (14MB-14MB-16MB/11MB-12MB-13MB over 4)
+        (Cached): 0.02%
+  * CDAResort.com.ScanIT / u0a218 / v1:
+           TOTAL: 0.94% (14MB-16MB-19MB/12MB-13MB-15MB over 12)
+             Top: 0.94% (14MB-16MB-19MB/12MB-13MB-15MB over 12)
+      (Last Act): 0.58% (13MB-14MB-15MB/11MB-11MB-12MB over 4)
+        (Cached): 0.03%
+
+Run time Stats:
+  SOff/Norm: +9h56m26s114ms
+  SOn /Norm: +9h11m34s64ms
+       Mod : +12m33s217ms
+      TOTAL: +19h20m33s395ms
+
+Memory usage:
+  Kernel : 83MB (90 samples)
+  Native : 50MB (90 samples)
+  Persist: 183MB (362 samples)
+  Top    : 41MB (1193 samples)
+  ImpFg  : 69MB (2112 samples)
+  ImpBg  : 69MB (1175 samples)
+  Service: 23MB (2502 samples)
+  Receivr: 46KB (2667 samples)
+  Home   : 13MB (255 samples)
+  LastAct: 28MB (662 samples)
+  CchAct : 74MB (328 samples)
+  CchCAct: 15MB (109 samples)
+  CchEmty: 116MB (1859 samples)
+  Cached : 0.89GB (90 samples)
+  Free   : 145MB (90 samples)
+  TOTAL  : 1.8GB
+  ServRst: 48KB (769 samples)
+
+          Start time: 2016-12-13 08:17:41
+  Total elapsed time: +1d2h55m18s375ms (partial) libart.so
+
+AGGREGATED OVER LAST 3 HOURS:
+System memory usage:
+  SOff/Norm: 1 samples:
+    Cached: 0.94GB min, 0.94GB avg, 0.94GB max
+    Free: 216MB min, 216MB avg, 216MB max
+    ZRam: 0.00 min, 0.00 avg, 0.00 max
+    Kernel: 66MB min, 66MB avg, 66MB max
+    Native: 61MB min, 61MB avg, 61MB max
+  SOn /Mod : 1 samples:
+    Cached: 880MB min, 880MB avg, 880MB max
+    Free: 237MB min, 237MB avg, 237MB max
+    ZRam: 0.00 min, 0.00 avg, 0.00 max
+    Kernel: 90MB min, 90MB avg, 90MB max
+    Native: 44MB min, 44MB avg, 44MB max
+
+Per-Package Stats:
+  * CDAResort.com.ScanIT / u0a219 / v1:
+      * CDAResort.com.ScanIT / u0a219 / v1:
+               TOTAL: 36% (11MB-15MB-22MB/7.7MB-12MB-19MB over 44)
+                 Top: 35% (11MB-15MB-22MB/7.7MB-12MB-19MB over 44)
+              Imp Fg: 0.04%
+          (Last Act): 2.1% (14MB-14MB-14MB/11MB-11MB-11MB over 1)
+            (Cached): 0.00%
+  * CDAResort.com.ScanIT / u0a222 / v1:
+      * CDAResort.com.ScanIT / u0a222 / v1:
+               TOTAL: 23% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+                 Top: 23% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+          (Last Act): 29% (13MB-14MB-15MB/11MB-11MB-12MB over 12)
+            (Cached): 1.2% (8.9MB-11MB-13MB/6.6MB-8.7MB-11MB over 2)
+
+Summary:
+  * CDAResort.com.ScanIT / u0a219 / v1:
+           TOTAL: 36% (11MB-15MB-22MB/7.7MB-12MB-19MB over 44)
+             Top: 35% (11MB-15MB-22MB/7.7MB-12MB-19MB over 44)
+          Imp Fg: 0.04%
+      (Last Act): 2.1% (14MB-14MB-14MB/11MB-11MB-11MB over 1)
+        (Cached): 0.00%
+  * CDAResort.com.ScanIT / u0a222 / v1:
+           TOTAL: 23% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+             Top: 23% (10MB-15MB-20MB/7.8MB-12MB-17MB over 52)
+      (Last Act): 29% (13MB-14MB-15MB/11MB-11MB-12MB over 12)
+        (Cached): 1.2% (8.9MB-11MB-13MB/6.6MB-8.7MB-11MB over 2)
+
+Run time Stats:
+  SOff/Norm: +1m31s57ms
+  SOn /Norm: +3h43m39s152ms
+       Mod : +51s703ms
+      TOTAL: +3h46m1s912ms
+
+Memory usage:
+  Kernel : 78MB (16 samples)
+  Native : 52MB (16 samples)
+  Persist: 189MB (136 samples)
+  Top    : 44MB (473 samples)
+  ImpFg  : 96MB (704 samples)
+  ImpBg  : 62MB (289 samples)
+  Service: 11MB (766 samples)
+  Receivr: 73KB (639 samples)
+  Home   : 33MB (18 samples)
+  LastAct: 6.0MB (154 samples)
+  CchAct : 37MB (98 samples)
+  CchCAct: 124KB (43 samples)
+  CchEmty: 148MB (810 samples)
+  Cached : 0.90GB (16 samples)
+  Free   : 226MB (16 samples)
+  TOTAL  : 1.9GB
+  ServRst: 245KB (183 samples)
+
+          Start time: 2016-12-17 23:14:49
+  Total elapsed time: +3h46m9s547ms (partial) libart.so
+
+CURRENT STATS:
+Per-Package Stats:
+  * CDAResort.com.ScanIT / u0a222 / v1:
+      * CDAResort.com.ScanIT / u0a222 / v1:
+               TOTAL: 48% (10MB-15MB-20MB/7.8MB-12MB-17MB over 20)
+                 Top: 48% (10MB-15MB-20MB/7.8MB-12MB-17MB over 20)
+          (Last Act): 49% (14MB-14MB-15MB/11MB-12MB-12MB over 2)
+            (Cached): 3.5% (13MB-13MB-13MB/11MB-11MB-11MB over 1)
+
+Summary:
+  * CDAResort.com.ScanIT / u0a222 / v1:
+           TOTAL: 48% (10MB-15MB-20MB/7.8MB-12MB-17MB over 20)
+             Top: 48% (10MB-15MB-20MB/7.8MB-12MB-17MB over 20)
+      (Last Act): 49% (14MB-14MB-15MB/11MB-12MB-12MB over 2)
+        (Cached): 3.5% (13MB-13MB-13MB/11MB-11MB-11MB over 1)
+
+Run time Stats:
+  SOn /Norm: +43m43s558ms (running)
+      TOTAL: +43m43s558ms
+
+Memory usage:
+  Persist: 185MB (12 samples)
+  Top    : 63MB (68 samples)
+  ImpFg  : 108MB (74 samples)
+  ImpBg  : 61MB (8 samples)
+  Service: 16MB (45 samples)
+  Receivr: 3.3KB (28 samples)
+  Home   : 33MB (3 samples)
+  LastAct: 7.2MB (18 samples)
+  CchAct : 60MB (5 samples)
+  CchCAct: 404KB (11 samples)
+  CchEmty: 121MB (53 samples)
+  TOTAL  : 655MB
+  ServRst: 817 (4 samples)
+
+          Start time: 2016-12-18 02:17:20
+  Total elapsed time: +43m43s871ms (partial) libart.so
