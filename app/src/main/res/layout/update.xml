@@ -27,7 +27,8 @@
         android:hint="@string/uiDepartment"
         android:maxLines="1"
         android:singleLine="true"
-        android:paddingLeft="5dp"/>
+        android:paddingLeft="5dp"
+        android:theme="@android:style/Theme.Holo.InputMethod"/>
 
     <EditText
         android:id="@+id/InfoDataName"
@@ -39,7 +40,8 @@
         android:inputType="textFilter"
         android:paddingLeft="5dp"
         android:maxLines="1"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:theme="@android:style/Theme.Holo.InputMethod"/>
 
     <Spinner
         android:id="@+id/infoDepartments_update"
@@ -47,7 +49,9 @@
         android:layout_height="50dp"
         android:layout_weight="0.08"
         android:background="@android:color/transparent"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <Spinner
         android:id="@+id/infoPackage_count__"

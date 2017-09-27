@@ -8,57 +8,70 @@
         android:id="@+id/infoTracking_manual"
         style="@android:style/TextAppearance.Small"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="0.27"
+        android:layout_height="45dp"
+        android:layout_marginTop="5dp"
         android:hint="@string/hint_manual"
         android:maxLines="1"
         android:selectAllOnFocus="false"
         android:singleLine="true"
+        android:textColorHint="@android:color/black"
         android:theme="@android:style/Theme.Holo.InputMethod" />
 
     <EditText
         android:id="@+id/infoCompany_manual"
         style="@android:style/TextAppearance.Small"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_weight="0.18"
+        android:layout_height="45dp"
+        android:layout_marginTop="2dp"
         android:hint="@string/uiDepartment"
         android:maxLines="1"
         android:paddingLeft="5dp"
         android:singleLine="true"
+        android:textColorHint="@android:color/black"
         android:theme="@android:style/Theme.Holo.InputMethod" />
 
     <EditText
         android:id="@+id/infoName_manual"
         style="@android:style/TextAppearance.Small"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_weight="0.18"
+        android:layout_height="40dp"
         android:hint="@string/Name"
         android:maxLines="1"
         android:paddingLeft="5dp"
         android:singleLine="true"
+        android:textColorHint="@android:color/black"
         android:theme="@android:style/Theme.Holo.InputMethod" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="@string/DepartmentText"
+        android:textColorHint="@android:color/black" />
 
     <Spinner
         android:id="@+id/infoDepartment_manual"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="2dp"
         android:background="@android:color/transparent"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="@string/CountText" />
 
     <Spinner
         android:id="@+id/infoPackage_count_"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.27"
+        android:paddingLeft="5dp"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 

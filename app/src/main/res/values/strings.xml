@@ -5,10 +5,11 @@
         Name / Guest\n
     </string>
     <string name="hint_manual">
-    Fedex\n
-    Express: XXXX XXXX XXXX\n
-    Ground: XXXXXXX XXXXXXX XXXXXXX\nUPS\n 1Z XXX XXX XX XXXX XXXX\n
-    1z XXX XXX XX XXXX XXXX\n
+    Tracking Number\n\n
+    Fedex Express: XXXX XXXX XXXX\n
+    Fedex Ground: XXXXXXX XXXXXXX XXXXXXX\n
+    UPS:  1Z XXX XXX XX XXXX XXXX\n
+    UPS:  1z XXX XXX XX XXXX XXXX\n
    </string>
     <string-array name="departments">
         <item>Guest</item>
@@ -58,6 +59,8 @@
     <string name="Login_Password">Password</string>
     <string name="update">Update</string>
     <string name="delete">Delete</string>
+    <string name="DepartmentText">Department</string>
+    <string name="CountText">Count</string>
     <string name="uiDepartment">Sender / Company</string>
     <!--<string name="updateCompany">Update Department</string>-->
     <string name="previous">Previous</string>
