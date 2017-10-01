@@ -21,44 +21,61 @@
 
     <EditText
         android:id="@+id/InfoDataCompany"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
         style="@android:style/TextAppearance.Small"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
         android:hint="@string/uiDepartment"
         android:maxLines="1"
-        android:singleLine="true"
         android:paddingLeft="5dp"
-        android:theme="@android:style/Theme.Holo.InputMethod"/>
+        android:singleLine="true"
+        android:theme="@android:style/Theme.Holo.InputMethod" />
 
     <EditText
         android:id="@+id/InfoDataName"
         style="@android:style/TextAppearance.Small"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_weight="0.01"
         android:hint="@string/Name"
         android:inputType="textFilter"
-        android:paddingLeft="5dp"
         android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
         android:singleLine="true"
-        android:theme="@android:style/Theme.Holo.InputMethod"/>
+        android:theme="@android:style/Theme.Holo.InputMethod" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="@string/DepartmentText" />
 
     <Spinner
         android:id="@+id/infoDepartments_update"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="0.08"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.02"
         android:background="@android:color/transparent"
-        android:paddingTop="10dp"
+        android:paddingLeft="5dp"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="@string/CountText" />
 
     <Spinner
         android:id="@+id/infoPackage_count__"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
+        android:paddingLeft="5dp"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

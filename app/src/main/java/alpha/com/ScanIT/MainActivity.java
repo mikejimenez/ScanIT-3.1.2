@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
     //Todo: Add load old scan history for current
     //Todo: Convert dialogs to ButtKnife
     private static final String TAG = "MAKE_BARCODES";
-    private final String[] log = new String[200];
+    private ArrayList<String> log = new ArrayList<String>();
     /**
      * Private Strings
      */
@@ -187,6 +187,7 @@ public class MainActivity extends Activity {
 //ToDO Don't think it is working test
     protected boolean checkFocus() {
         String PackageName = "com.google.zxing.client.android";
+        String PackageName_ = "com.google.android.gm";
         ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         ComponentName componentInfo;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -200,7 +201,7 @@ public class MainActivity extends Activity {
             componentInfo = tasks.get(0).topActivity;
         }
 
-        if (componentInfo.getPackageName().equals(PackageName)) {
+        if (componentInfo.getPackageName().equals(PackageName) || componentInfo.getPackageName().equals(PackageName_) ) {
             //Log.e(TAG, "True2");
             return true;
         }
@@ -385,9 +386,9 @@ public class MainActivity extends Activity {
         final SQLite db = new SQLite(this);
         final SQLite db2 = new SQLite(this);
         final SQLite db3 = new SQLite(this);
+        //final History db4 = new History(this);
         final SQLite db5 = new SQLite(this);
-        final History db4 = new History(this);
-        //final TinyDB tinydb = new TinyDB(this);
+        final TinyDB tinydb = new TinyDB(this);
         final Long _id = id;
         final SQLiteDatabase X = db.getReadableDatabase();
         final SQLiteDatabase X2 = db2.getReadableDatabase();
@@ -479,11 +480,11 @@ public class MainActivity extends Activity {
                     final String Name = infoDataName.getText().toString();
                     final String Count = SpinnerValue_;
                     final String ListView = Data + " - " + Name + " - " + SpinnerValue + " - " + Count;
-
-                    db.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count);
+                    final String infoUsername = "User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN");
+                    db.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername);
                     db.close();
-                    db4.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count);
-                    db4.close();
+                    //db4.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername);
+                    // db4.close();
                     alertDialog.dismiss();
                     CreateListView();
                     //Log.e(TAG, "Old: " + DataUpdate2 + " - New: " + ListView);
@@ -499,34 +500,31 @@ public class MainActivity extends Activity {
         Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: Add User Check or OVERRIDE
-                //Todo: Assistant can't delete
-                //Todo: Admin can.
                 db.DeleteRecord(_id);
-                db4.DeleteRecord(_id);
+                //db4.DeleteRecord(_id);
                 alertDialog.dismiss();
-                CreateListView();
                 db.close();
-                db4.close();
+                // db4.close();
+                CreateListView();
                 badge.decrement(1);
+                Counter = Counter - 1;
+                CounterTxt.setText(String.format(Integer.valueOf(Counter).toString()));
+
             }
         });
 
         departmentTxt.setText(DataUpdate2);
-        //builder.setTitle("Update Scan").setView(Manual);
         alertDialog.show();
         db.close();
         db2.close();
         db3.close();
-        db4.close();
+        //db4.close();
         db5.close();
     }
-
 
     /**
      * Manual Functions
      */
-
 
     public void onDestroyView(View view) {
 
@@ -602,7 +600,7 @@ public class MainActivity extends Activity {
             }
         });
 
-        alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Tracking Number").setView(textEntryView).setPositiveButton("Save",
+        alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Information").setView(textEntryView).setPositiveButton("Save",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
@@ -722,17 +720,16 @@ public class MainActivity extends Activity {
         final SQLite db = new SQLite(this);
         final History db2 = new History(this);
 
-        db.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
-        db2.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
-        //DisplayDebug(getWindow().getDecorView().getRootView(), Result, Company, Name, Department, Username, Count);
-        Counter++;
-        db.close();
-        db2.close();
-        UpdateLog();
-        CreateListView();
-        CounterTxt.setText(String.format(Integer.valueOf(Counter).toString()));
-        badge.increment(1);
-    }
+            db.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
+            db2.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
+            //DisplayDebug(getWindow().getDecorView().getRootView(), Result, Company, Name, Department, Username, Count);
+            Counter++;
+            db.close();
+            db2.close();
+            CreateListView();
+            CounterTxt.setText(String.format(Integer.valueOf(Counter).toString()));
+            badge.increment(1);
+        }
 
     /**
      * Email Log
@@ -743,29 +740,24 @@ public class MainActivity extends Activity {
      */
 
     private void emailResults() {
-
         final Calendar c = Calendar.getInstance();
         Intent i = new Intent(Intent.ACTION_SEND);
         final SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         final String formattedDate = df.format(c.getTime());
         final String[] TO = {"Receiving@cdaresort.com"};
-
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/storage/emulated/0/Receiving-Data-" + formattedDate + ".csv")));
         i.putExtra(Intent.EXTRA_SUBJECT, "Tracking Numbers - " + formattedDate + "");
         i.putExtra(Intent.EXTRA_EMAIL, TO);
         UpdateLog();
-
-        final String newString = Arrays.toString(log);
+        final String newString = Arrays.toString(log.toArray());
         final String FilterA = newString.replace(", null", "");
         final String FilterB = FilterA.replace("[", "");
         final String FilterC = FilterB.replace("]", "");
         final String FilterD = FilterC.replace(",", "");
-
         i.putExtra(Intent.EXTRA_TEXT, FilterD);
-        Arrays.fill(log, null);
+        log.clear();
         Counter = 0;
-
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
         } catch (android.content.ActivityNotFoundException ex) {
@@ -796,14 +788,12 @@ public class MainActivity extends Activity {
 
             if (bar.length() == 18) {
                 Output = FormatString.UPS(bar);
-                // Old
-                // log[i] = "\n" + cn.getDepartment() + " " + Output + " / " + cn.getCompany();
-                // log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
-                //log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-                log[i] = "\nName: " + cn.getName()
-                        + "\n" + "Company: " + cn.getCompany()
-                        + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
+                final String values =
+                          "\nSender: " + cn.getCompany()
+                        + "\n" + "Name: " + cn.getName()
+                        + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                         + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                log.add(values);
                 i++;
             }
 
@@ -820,10 +810,16 @@ public class MainActivity extends Activity {
                     Output = FormatString.ManualUPS(bar);
                     //log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
                     //log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-                    log[i] = "\nName: " + cn.getName()
-                            + "\n" + "Company: " + cn.getCompany()
-                            + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
-                            + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+//                    log[i] = "\nName: " + cn.getName()
+//                            + "\n" + "Company: " + cn.getCompany()
+//                            + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
+//                            + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                    final String values =
+                            "\nSender: " + cn.getCompany()
+                                    + "\n" + "Name: " + cn.getName()
+                                    + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                    + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                    log.add(values);
                     i++;
                 }
             }
@@ -835,12 +831,12 @@ public class MainActivity extends Activity {
 
             if (bar.length() == 22) {
                 Output = FormatString.FedEXGO(bar);
-                //log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
-                //log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-                log[i] = "\nName: " + cn.getName()
-                        + "\n" + "Company: " + cn.getCompany()
-                        + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
-                        + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                final String values =
+                        "\nSender: " + cn.getCompany()
+                                + "\n" + "Name: " + cn.getName()
+                                + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                log.add(values);
                 i++;
             }
 
@@ -852,12 +848,12 @@ public class MainActivity extends Activity {
 
             if (bar.length() == 21 && !bar.contains("Z")) {
                 Output = FormatString.ManualFedEXG(bar);
-                //log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
-               // log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-                log[i] = "\nName: " + cn.getName()
-                        + "\n" + "Company: " + cn.getCompany()
-                        + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
-                        + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                final String values =
+                        "\nSender: " + cn.getCompany()
+                                + "\n" + "Name: " + cn.getName()
+                                + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                log.add(values);
                 i++;
             }
 
@@ -870,12 +866,12 @@ public class MainActivity extends Activity {
 
             if (bar.length() == 14) {
                 Output = FormatString.ManualFedEXE(bar);
-                //log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
-                //log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-                log[i] = "\nName: " + cn.getName()
-                        + "\n" + "Company: " + cn.getCompany()
-                        + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
-                        + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                final String values =
+                        "\nSender: " + cn.getCompany()
+                                + "\n" + "Name: " + cn.getName()
+                                + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                log.add(values);
                 i++;
             }
 
@@ -892,12 +888,12 @@ public class MainActivity extends Activity {
 
             if (bar.length() == 12) {
                 Output = FormatString.FedEXE(bar);
-                //log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
-                //log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-                log[i] = "\nName: " + cn.getName()
-                        + "\n" + "Company: " + cn.getCompany()
-                        + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
-                        + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                final String values =
+                        "\nSender: " + cn.getCompany()
+                                + "\n" + "Name: " + cn.getName()
+                                + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                log.add(values);
                 i++;
             }
         }
@@ -953,7 +949,7 @@ public class MainActivity extends Activity {
             ScanFromFedEXEAir = Number.substring(Number.length() - 16, Number.length() - 4);
             return ScanFromFedEXEAir;
         }
-        // if (Number.length() == 12) { ScanFromFedEXE = Number.substring(Number.length() - 12, Number.length()); return ScanFromFedEXE; }
+        //if (Number.length() == 12) { ScanFromFedEXE = Number.substring(Number.length() - 12, Number.length()); return ScanFromFedEXE; }
         if (Number.contains("1Z")) {
             ScanFromUPS = Number;
             return ScanFromUPS;
@@ -1083,11 +1079,9 @@ public class MainActivity extends Activity {
         Counter = Integer.valueOf(val);
 
         UserLog.setText("User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN"));
-       // tinydb.remove("counter");
+        tinydb.remove("counter");
 
         CreateListView();
-        UpdateLog();
-
     }
 
     private void savePreferences() {
@@ -1115,11 +1109,11 @@ public class MainActivity extends Activity {
 
     private void ClearButtonData() {
         final SQLite db = new SQLite(this);
-
+        final String[] log = new String[200];
+        Arrays.fill(log, "null");
         db.deleteBarcodes();
         CreateListView();
         db.close();
-
         CounterTxt.setText("0");
         badge.setText("0");
     }
@@ -1171,9 +1165,6 @@ public class MainActivity extends Activity {
     }
 
     private void ClearHistoryButton() {
-        //Todo Add Permission checking to delete history
-        //Todo Such as Assistant can't delete.
-        //Todo Admin can.
         HideHistory();
         ClearHistoryData();
     }

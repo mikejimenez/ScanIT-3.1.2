@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
 
+import alpha.com.ScanIT.MainActivity;
 import alpha.com.ScanIT.interfaces.Barcodes;
 
 public class History extends SQLiteOpenHelper {
@@ -102,20 +103,23 @@ public class History extends SQLiteOpenHelper {
 
     public void DeleteRecord(Long _id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE _id=" + _id);
+        db.delete(TABLE_NAME, "_id = ?", new String[] { String.valueOf(_id) });
         db.close();
     }
     /**
      * Updating
      */
 
-    public void UpdateRecord(Editable Data, Long _id, Editable Department, String Name, String Listview, String Count) {
+    public void UpdateRecord(Editable Data, Long _id, Editable Department, String Name, String Listview, String Count, String Username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Company='" + Data.toString() + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Name='" + Name + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Department='" + Department.toString() + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Listview='" + Listview + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Count='" + Count + "' WHERE _id=" + _id);
+        ContentValues cv = new ContentValues();
+        cv.put("Company", Data.toString());
+        cv.put("Name", Name);
+        cv.put("Department", Department.toString());
+        cv.put("Username", Username);
+        cv.put("Listview", Listview);
+        cv.put("Count", Count);
+        db.update(TABLE_NAME, cv, "_id="+_id, null);
         db.close();
     }
     /**

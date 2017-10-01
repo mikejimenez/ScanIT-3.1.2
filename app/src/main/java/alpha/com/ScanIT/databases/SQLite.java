@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +118,6 @@ public class SQLite extends SQLiteOpenHelper {
                 Barcodes.setUsername(cursor.getString(5));
                 Barcodes.setListView(cursor.getString(6));
                 Barcodes.setCount(cursor.getString(7));
-
                 BarcodesList.add(Barcodes);
             } while (cursor.moveToNext());
         }
@@ -142,22 +143,24 @@ public class SQLite extends SQLiteOpenHelper {
 
     public void DeleteRecord(Long _id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE _id=" + _id);
-        db.close();
+         db.delete(TABLE_NAME, "_id = ?", new String[] { String.valueOf(_id) });
+         db.close();
     }
 
     /**
      * Updating
      */
 
-    public void UpdateRecord(Editable Data, Long _id, Editable Departments, String Name, String Listview, String Count) {
+    public void UpdateRecord(Editable Data, Long _id, Editable Departments, String Name, String Listview, String Count, String Username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Company='" + Data + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Name='" + Name + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Department='" + Departments.toString() + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Listview='" + Listview + "' WHERE _id=" + _id);
-        db.execSQL("UPDATE " + TABLE_NAME + " SET Count='" + Count + "' WHERE _id=" + _id);
-
+        ContentValues cv = new ContentValues();
+        cv.put("Company", Data.toString()); //These Fields should be your String values of actual column names
+        cv.put("Name", Name);
+        cv.put("Department", Departments.toString());
+        cv.put("Username", Username);
+        cv.put("Listview", Listview);
+        cv.put("Count", Count);
+        db.update(TABLE_NAME, cv, "_id="+_id, null);
         db.close();
     }
     /**
@@ -169,7 +172,6 @@ public class SQLite extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         c = db.rawQuery(countQuery, null);
-
         return c;
     }
 

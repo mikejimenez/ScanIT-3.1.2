@@ -26,7 +26,6 @@ public class Services extends Service {
     Boolean DEBUG_TRUE = false;
     int Your_X_SECS = 1;
 
-
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
@@ -58,27 +57,16 @@ public class Services extends Service {
         }
         stoptimertask();
         super.onDestroy();
-
-
     }
-
-    //we are going to use a handler to be able to run in our TimerTask
     final Handler handler = new Handler();
 
     public void startTimer() {
-        //set a new Timer
         timer = new Timer();
-
-        //initialize the TimerTask's job
         initializeTimerTask();
-
-        //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
-        timer.schedule(timerTask, 5000, Your_X_SECS * 1000); //
-        //timer.schedule(timerTask, 5000,1000); //
+        timer.schedule(timerTask, 5000, Your_X_SECS * 1000);
     }
 
     public void stoptimertask() {
-        //stop the timer, if it's not already null
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -94,7 +82,6 @@ public class Services extends Service {
         String subText;
         Integer ID = 001;
         int Packages = tinydb.getInt("counter", 0);
-        //Bitmap icon = BitmapFactory.decodeResource(getResources(),R.drawable.ic_package);
 
         if (Packages == 1) { subText = " package"; }
         else { subText = " packages"; }
@@ -128,13 +115,12 @@ public class Services extends Service {
         timerTask = new TimerTask() {
             public void run() {
 
-                //use a handler to run a toast that shows the current timestamp
                 handler.post(new Runnable() {
                     public void run() {
 
                         //TODO CALL NOTIFICATION FUNC
                         //TODO FIX DISPLAYING NOTIFICATION
-                        if (!Notification_SHOWN && !String.valueOf(Packages).equals("0")) {
+                        if (!Notification_SHOWN && Packages != 0) {
                             showNotification();
                             Notification_SHOWN = true;
                             if (DEBUG_TRUE) {
