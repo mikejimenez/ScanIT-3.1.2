@@ -101,16 +101,16 @@ public class History extends SQLiteOpenHelper {
      * Deleting
      */
 
-    public void DeleteRecord(Long _id) {
+    public void DeleteRecord(String _id,String _name,String _company) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, "_id = ?", new String[] { String.valueOf(_id) });
+        db.delete(TABLE_NAME, "Barcode = ? AND Name = ? AND Company = ?", new String[] { _id, _name, _company });
         db.close();
     }
     /**
      * Updating
      */
 
-    public void UpdateRecord(Editable Data, Long _id, Editable Department, String Name, String Listview, String Count, String Username) {
+    public void UpdateRecord(Editable Data, Long _id, Editable Department, String Name, String Listview, String Count, String Username, String Barcode, String _name, String _company) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("Company", Data.toString());
@@ -119,7 +119,7 @@ public class History extends SQLiteOpenHelper {
         cv.put("Username", Username);
         cv.put("Listview", Listview);
         cv.put("Count", Count);
-        db.update(TABLE_NAME, cv, "_id="+_id, null);
+        db.update(TABLE_NAME, cv, "Barcode = ? AND Name = ? AND Company = ?", new String[] { Barcode, _name, _company });
         db.close();
     }
     /**

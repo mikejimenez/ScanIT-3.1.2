@@ -19,10 +19,8 @@ import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -63,13 +61,9 @@ import alpha.com.ScanIT.interfaces.Barcodes;
 import alpha.com.ScanIT.interfaces.FormatString;
 
 public class MainActivity extends Activity {
-    //Todo: Add load old scan history for current
-    //Todo: Convert dialogs to ButtKnife
+
     private static final String TAG = "MAKE_BARCODES";
     private ArrayList<String> log = new ArrayList<String>();
-    /**
-     * Private Strings
-     */
 
     TextView CounterTxt;
     TextView CounterTxtSet;
@@ -83,7 +77,10 @@ public class MainActivity extends Activity {
     String ScanFromFedEXE;
     String ScanFromFedEXEAir;
     String ScanFromUPS;
+    String OldBarcode;
     String DataUpdate2;
+    String OldName;
+    String OldCompany;
     String Error = "";
 
     Integer HistoryCounter;
@@ -94,17 +91,6 @@ public class MainActivity extends Activity {
 
     View setCount;
     View setCount_history;
-
-
-    /**
-     *          Completed
-     *  HideHistory(), ShowHistory()
-     *  user_logout(), HistoryButton()
-     *  loadPreferences(), savePreferences()
-     *  ClearButtonData(), ClearHistoryData()
-     *  ClearHistoryButton(), ClearButton()
-     *  ExportDatabaseCSVTask()
-     */
 
     /**
      * onCreate - create Activity
@@ -182,32 +168,9 @@ public class MainActivity extends Activity {
      * onStop - when activity stops
      * ----------------------------
      * - Save preferences
+     * - Start notification service
      * ----------------------------
      */
-//ToDO Don't think it is working test
-    protected boolean checkFocus() {
-        String PackageName = "com.google.zxing.client.android";
-        String PackageName_ = "com.google.android.gm";
-        ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-        ComponentName componentInfo;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
-            List<ActivityManager.AppTask> tasks = manager.getAppTasks();
-            componentInfo = tasks.get(0).getTaskInfo().topActivity;
-        }
-        else
-        {
-            List<ActivityManager.RunningTaskInfo> tasks = manager.getRunningTasks(1);
-            componentInfo = tasks.get(0).topActivity;
-        }
-
-        if (componentInfo.getPackageName().equals(PackageName) || componentInfo.getPackageName().equals(PackageName_) ) {
-            //Log.e(TAG, "True2");
-            return true;
-        }
-
-        return false;
-    }
 
     @Override
     protected void onStop() {
@@ -216,11 +179,15 @@ public class MainActivity extends Activity {
 
         if (checkFocus()) {
             //Log.e(TAG, "True");
-            }
+        }
         else {
             startService(new Intent(this, Services.class));
         }
 
+    }
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
     }
 
     /**
@@ -386,18 +353,20 @@ public class MainActivity extends Activity {
         final SQLite db = new SQLite(this);
         final SQLite db2 = new SQLite(this);
         final SQLite db3 = new SQLite(this);
-        //final History db4 = new History(this);
+        final History db4 = new History(this);
         final SQLite db5 = new SQLite(this);
-        final TinyDB tinydb = new TinyDB(this);
+        final SQLite db6 = new SQLite(this);
         final Long _id = id;
         final SQLiteDatabase X = db.getReadableDatabase();
         final SQLiteDatabase X2 = db2.getReadableDatabase();
         final SQLiteDatabase X3 = db3.getReadableDatabase();
         final SQLiteDatabase X4 = db5.getReadableDatabase();
+        final SQLiteDatabase X5 = db6.getReadableDatabase();
         final Cursor c;
         final Cursor c2;
         final Cursor c3;
         final Cursor c4;
+        final Cursor c5;
 
         builder.setView(Manual);
         final AlertDialog alertDialog = builder.create();
@@ -406,23 +375,32 @@ public class MainActivity extends Activity {
         c2 = X2.rawQuery("SELECT Department FROM Barcodes WHERE _id =" + _id, null);
         c3 = X3.rawQuery("SELECT Name FROM Barcodes WHERE _id =" + _id, null);
         c4 = X4.rawQuery("SELECT Count FROM Barcodes WHERE _id =" + _id, null);
+        c5 = X5.rawQuery("SELECT Barcode FROM Barcodes WHERE _id =" + _id, null);
+
 
         c.moveToFirst();
         c2.moveToFirst();
         c3.moveToFirst();
         c4.moveToFirst();
+        c5.moveToFirst();
 
         final String Company = c.getString(c.getColumnIndexOrThrow("Company"));
         final String Department = c2.getString(c2.getColumnIndexOrThrow("Department"));
         final String Name = c3.getString(c3.getColumnIndexOrThrow("Name"));
         final String OldCount = c4.getString(c4.getColumnIndexOrThrow("Count"));
+        final String Barcode = c5.getString(c5.getColumnIndexOrThrow("Barcode"));
 
         c.close();
         c2.close();
         c3.close();
         c4.close();
+        c5.close();
+
 
         DataUpdate2 = Company + " - " + Name + " - " + Department + " - " + OldCount;
+        OldBarcode = Barcode;
+        OldName = Name;
+        OldCompany = Company;
 
         /**
          *  Spinners
@@ -469,9 +447,6 @@ public class MainActivity extends Activity {
         });
 
         Accept.setOnClickListener(new View.OnClickListener() {
-            //Todo: Add User Check or OVERIDE
-            //Todo: Assistant can't update.
-            //Todo: Admin can.
 
             @Override
             public void onClick(View view) {
@@ -480,20 +455,18 @@ public class MainActivity extends Activity {
                     final String Name = infoDataName.getText().toString();
                     final String Count = SpinnerValue_;
                     final String ListView = Data + " - " + Name + " - " + SpinnerValue + " - " + Count;
-                    final String infoUsername = "User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN");
+                    final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null);
+                    final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null);
+                    final String infoUsername = "User: " + logged_a + " - " + logged_b;
                     db.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername);
                     db.close();
-                    //db4.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername);
-                    // db4.close();
+                    db4.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername, OldBarcode, OldName, OldCompany );
+                    db4.close();
                     alertDialog.dismiss();
                     CreateListView();
                     //Log.e(TAG, "Old: " + DataUpdate2 + " - New: " + ListView);
                 } else {
                     Snackbar.make(Manual, "Please check input", Snackbar.LENGTH_LONG).setDuration(2300).show();
-                    //Toast toast = Toast.makeText(getApplicationContext(),
-                    //        "Please check input", Toast.LENGTH_SHORT);
-                    //toast.show();
-
                 }
             }
         });
@@ -501,10 +474,10 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 db.DeleteRecord(_id);
-                //db4.DeleteRecord(_id);
+                db4.DeleteRecord(Barcode, Name, Company);
                 alertDialog.dismiss();
                 db.close();
-                // db4.close();
+                db4.close();
                 CreateListView();
                 badge.decrement(1);
                 Counter = Counter - 1;
@@ -518,23 +491,13 @@ public class MainActivity extends Activity {
         db.close();
         db2.close();
         db3.close();
-        //db4.close();
+        db4.close();
         db5.close();
     }
 
     /**
      * Manual Functions
      */
-
-    public void onDestroyView(View view) {
-
-        if (view != null) {
-            ViewGroup parentViewGroup = (ViewGroup) view.getParent();
-            if (parentViewGroup != null) {
-                parentViewGroup.removeAllViews();
-            }
-        }
-    }
 
     private void InputManual() {
 
@@ -548,8 +511,6 @@ public class MainActivity extends Activity {
         final Spinner spinner = (Spinner) textEntryView.findViewById(R.id.infoDepartment_manual);
         final Spinner spinner_ = (Spinner) textEntryView.findViewById(R.id.infoPackage_count_);
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        final TinyDB tinydb = new TinyDB(this);
-
 
         /**
          * Spinner Data
@@ -605,10 +566,12 @@ public class MainActivity extends Activity {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
 
+                        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null);
+                        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null);
                         final String infoCompany = infoData.getText().toString();
                         final String infoTracking = infoTrack.getText().toString();
                         final String infoName = infoSender.getText().toString();
-                        final String infoUsername = "User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN");
+                        final String infoUsername = "User: " + logged_a + " - " + logged_b;
                         final String Department = SpinnerValue;
                         final String Count = SpinnerValue_;
                         final String ListView = infoCompany + " - " + infoName + " - " + Department + " - " + Count;
@@ -720,16 +683,16 @@ public class MainActivity extends Activity {
         final SQLite db = new SQLite(this);
         final History db2 = new History(this);
 
-            db.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
-            db2.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
-            //DisplayDebug(getWindow().getDecorView().getRootView(), Result, Company, Name, Department, Username, Count);
-            Counter++;
-            db.close();
-            db2.close();
-            CreateListView();
-            CounterTxt.setText(String.format(Integer.valueOf(Counter).toString()));
-            badge.increment(1);
-        }
+        db.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
+        db2.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
+        //DisplayDebug(getWindow().getDecorView().getRootView(), Result, Company, Name, Department, Username, Count);
+        Counter++;
+        db.close();
+        db2.close();
+        CreateListView();
+        CounterTxt.setText(String.format(Integer.valueOf(Counter).toString()));
+        badge.increment(1);
+    }
 
     /**
      * Email Log
@@ -775,27 +738,27 @@ public class MainActivity extends Activity {
         final List<Barcodes> Barcodes = db.getBarCodes();
         db.close();
 
-        int i = 0;
-        for (Barcodes cn : Barcodes) {
-           final String bar = cn.getBarcode();
+            int i = 0;
+            for (Barcodes cn : Barcodes) {
+                final String bar = cn.getBarcode();
 
-            /**
-             *      UPS Manual (No Spaces) - 18 Characters
-             *
-             *      Format : 1ZXXXXXXXXXXXXXXXX
-             *
-             */
+                /**
+                 *      UPS Manual (No Spaces) - 18 Characters
+                 *
+                 *      Format : 1ZXXXXXXXXXXXXXXXX
+                 *
+                 */
 
-            if (bar.length() == 18) {
-                Output = FormatString.UPS(bar);
-                final String values =
-                          "\nSender: " + cn.getCompany()
-                        + "\n" + "Name: " + cn.getName()
-                        + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
-                        + Output + "\n" + "Packages: " + cn.getCount() + "\n";
-                log.add(values);
-                i++;
-            }
+                if (bar.length() == 18) {
+                    Output = FormatString.UPS(bar);
+                    final String values =
+                            "\nSender: " + cn.getCompany()
+                                    + "\n" + "Name: " + cn.getName()
+                                    + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                    + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                    log.add(values);
+                    i++;
+                }
 
             /**
              *      UPS Manual - 23 Characters
@@ -808,12 +771,6 @@ public class MainActivity extends Activity {
             if (bar.length() == 23) {
                 if (bar.contains("1Z") || bar.contains("1z")) {
                     Output = FormatString.ManualUPS(bar);
-                    //log[i] = "\n" + cn.getCompany() + " - " + cn.getName() + " - " + cn.getDepartment() + " : " + Output + " \n";
-                    //log[i] = "\n " + cn.getCompany() + " : " + cn.getDepartment() + "\n " + cn.getName() + " : " + Output + " \n";
-//                    log[i] = "\nName: " + cn.getName()
-//                            + "\n" + "Company: " + cn.getCompany()
-//                            + "\n" + "Department: " + cn.getDepartment() + "\n" + "Tracking: "
-//                            + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                     final String values =
                             "\nSender: " + cn.getCompany()
                                     + "\n" + "Name: " + cn.getName()
@@ -967,17 +924,6 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Error Message
-     */
-
-    private void ScanDataEmpty() {
-        final ListView listView;
-        listView = (ListView) findViewById(R.id.listView);
-
-        Snackbar.make(listView, "No scan data received!", Snackbar.LENGTH_LONG).setDuration(2000).show();
-    }
-
-    /**
      * Hide History Buttons
      * Show Current Data
      */
@@ -990,6 +936,7 @@ public class MainActivity extends Activity {
         listView = (ListView) findViewById(R.id.listView_history);
         hideView = (ListView) findViewById(R.id.listView);
         textView = (TextView) findViewById(R.id.historyCounter);
+
         hideView.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
         fabClear.setVisibility(View.INVISIBLE);
@@ -1020,14 +967,19 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Save / Load State Data
+     *
+     * user_logout - Log user out and start intent for UserLogin
+     * loadPreferences - Load user preferences
+     * savePreferences - Save user preferences
+     * data_exec - TinyDB, SQLite, History database methods
+     * checkFocus() - Check for application focus or start notification service
+     *
      */
     private void user_logout() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final RelativeLayout customView = (RelativeLayout) View.inflate(this, R.layout.user_logout, null);
         final Button logout = (Button) customView.findViewById(R.id.logout);
         final Button cancel = (Button) customView.findViewById(R.id.cancel);
-        final TinyDB tinydb = new TinyDB(this);
 
         builder.setView(customView);
         final AlertDialog alertDialog = builder.create();
@@ -1035,9 +987,9 @@ public class MainActivity extends Activity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tinydb.remove("LOGIN_SKIP");
-                tinydb.remove("LOGGED_IN");
-                tinydb.remove("LOGGED_ACTUAL");
+                data_exec("tinyDB", "remove", "LOGIN_SKIP", false, null);
+                data_exec("tinyDB", "remove", "LOGGED_IN", false, null);
+                data_exec("tinyDB", "remove", "LOGGED_ACTUAL", false, null);
                 final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this, R.style.MyGravity);
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Logging out...");
@@ -1062,12 +1014,13 @@ public class MainActivity extends Activity {
     }
 
     private void loadPreferences() {
-        final TinyDB tinydb = new TinyDB(this);
 
         CounterTxtSave = (TextView) findViewById(R.id.textView2);
         UserLog = (TextView) findViewById(R.id.UserLog);
 
-        String val = String.valueOf(tinydb.getInt("counter", 0));
+        String val = data_exec("tinyDB", "getInt", "counter", false, null);
+        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null);
+        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null);
 
         badge.setText(val);
         badge.setTextSize(16);
@@ -1078,18 +1031,94 @@ public class MainActivity extends Activity {
         CounterTxtSave.setText(val);
         Counter = Integer.valueOf(val);
 
-        UserLog.setText("User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN"));
-        tinydb.remove("counter");
+        UserLog.setText("User: " + logged_a + " - " + logged_b);
+        data_exec("tinyDB", "remove", "counter", false, null);
 
         CreateListView();
     }
 
     private void savePreferences() {
-        final TinyDB tinydb = new TinyDB(this);
-        tinydb.remove("counter");
         CounterTxtSet = (TextView) findViewById(R.id.textView2);
         Integer value = Integer.parseInt(CounterTxtSet.getText().toString());
-        tinydb.putInt("counter", value);
+
+        data_exec("tinyDB", "remove", "counter", false, null);
+        data_exec("tinyDB", "putInt", "counter", false, value);
+    }
+
+    /**
+     *  Database functions for current and history
+     *
+     * @param request Request what database to use/method
+     * @param Options Options for databases if apply (TinyDB example)
+     * @param Entry   Data to pass for entry to a database or settings file
+     * @param history True or False to remove history database
+     * @param DataInt Integer Data to be pass for entry to a database or settings file
+     *
+     */
+    private String data_exec (String request, String Options, String Entry, Boolean history, Integer DataInt) {
+
+        final History sql_history = new History(this);
+        final SQLite  sql_current = new SQLite(this);
+        final TinyDB tinyDB_pref = new TinyDB(this);
+        final String Error = "No method found.";
+
+        if (request.equals("tinyDB")) {
+            if (Options.equals("remove")) {
+                tinyDB_pref.remove(Entry);
+            }
+            if (Options.equals("putInt")) {
+                tinyDB_pref.putInt(Entry, DataInt);
+            }
+            if (Options.equals("getInt")) {
+                final Integer getInt = tinyDB_pref.getInt(Entry, 0);
+                return String.valueOf(getInt);
+            }
+            if (Options.equals("getString")) {
+                final String getString = tinyDB_pref.getString(Entry);
+                return getString;
+            }
+
+        }
+        if (request.equals("deleteBarcodes")) {
+            if (history) {
+                sql_history.deleteBarcodes();
+                sql_history.close();
+            }
+
+            sql_current.deleteBarcodes();
+            sql_current.close();
+
+            badge.setText("0");
+            CounterTxt.setText("0");
+
+        }
+
+        return Error;
+    }
+
+    //ToDO Don't think it is working test
+    protected boolean checkFocus() {
+        String PackageName = "com.google.zxing.client.android";
+        String PackageName_ = "com.google.android.gm";
+        ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        ComponentName componentInfo;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            List<ActivityManager.AppTask> tasks = manager.getAppTasks();
+            componentInfo = tasks.get(0).getTaskInfo().topActivity;
+        }
+        else
+        {
+            List<ActivityManager.RunningTaskInfo> tasks = manager.getRunningTasks(1);
+            componentInfo = tasks.get(0).topActivity;
+        }
+
+        if (componentInfo.getPackageName().equals(PackageName) || componentInfo.getPackageName().equals(PackageName_) ) {
+            //Log.e(TAG, "True2");
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -1108,31 +1137,31 @@ public class MainActivity extends Activity {
     }
 
     private void ClearButtonData() {
-        final SQLite db = new SQLite(this);
         final String[] log = new String[200];
         Arrays.fill(log, "null");
-        db.deleteBarcodes();
+
+        data_exec("deleteBarcodes", null, null, false, null);
         CreateListView();
-        db.close();
-        CounterTxt.setText("0");
-        badge.setText("0");
+
     }
 
     private void HistoryButton() {
-        final ListView listView;
-        listView = (ListView) findViewById(R.id.listView_history);
+        ListView view;
+        view = (ListView) findViewById(R.id.listView_history);
 
-
-        if (listView.getVisibility() == View.GONE) {
+        if (view.getVisibility() == View.GONE) {
             ShowHistory();
+
             final History db = new History(MainActivity.this);
             final Cursor cursor = db.getBarcodesRaw();
+
             HistoryCounter = cursor.getCount();
             badge_history.setText(String.valueOf(HistoryCounter));
             badge_history.setTextSize(16);
             badge_history.setBackgroundColor(Color.TRANSPARENT);
             badge_history.setTextColor(Color.BLACK);
             badge_history.show();
+
             SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this,
                     android.R.layout.two_line_list_item,
                     cursor,
@@ -1140,9 +1169,9 @@ public class MainActivity extends Activity {
                     new int[]{android.R.id.text1, android.R.id.text2},
                     0);
 
-            listView.setDivider(null);
-            listView.setSelector(android.R.color.transparent);
-            listView.setAdapter(adapter);
+            view.setDivider(null);
+            view.setSelector(android.R.color.transparent);
+            view.setAdapter(adapter);
             db.close();
 
         } else {
@@ -1151,17 +1180,9 @@ public class MainActivity extends Activity {
     }
 
     private void ClearHistoryData() {
-        final History db = new History(this);
-        final SQLite db2 = new SQLite(this);
-        ListView listView;
-
-        listView = (ListView) findViewById(R.id.listView);
-        db.deleteBarcodes();
-        db2.deleteBarcodes();
-        db.close();
-        db2.close();
+        data_exec("deleteBarcodes", null, null, true, null);
         CreateListView();
-        Snackbar.make(listView, "Deleted History", Snackbar.LENGTH_LONG).setDuration(2000).show();
+        Snackbar.make(getWindow().getDecorView().getRootView(), "Deleted History", Snackbar.LENGTH_LONG).setDuration(2000).show();
     }
 
     private void ClearHistoryButton() {
@@ -1169,14 +1190,17 @@ public class MainActivity extends Activity {
         ClearHistoryData();
     }
 
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(false);
-    }
-
     public void DisplayDebug(View view, String Barcode, String Company, String Name, String Department, String Username, String PackageCount) {
         // View getWindow().getDecorView().getRootView()
         Snackbar.make(view, "Barcode: " + Barcode + ", Company: " + Company + ", Name: " + Name + ", Department: " + Department + ", Username: " + Username + ", Package Count: " + PackageCount, Snackbar.LENGTH_LONG).setDuration(20000).show();
+    }
+
+    /**
+     * Error Message
+     */
+
+    private void ScanDataEmpty() {
+        Snackbar.make(getWindow().getDecorView().getRootView(), "No scan data received!", Snackbar.LENGTH_LONG).setDuration(2000).show();
     }
 
     public void copy(File src, File dst) throws IOException {
@@ -1238,16 +1262,16 @@ public class MainActivity extends Activity {
                 final String KEY_ID = "_id";
                 final String KEY_Product = "Barcode";
                 final String KEY_Count = "Company";
-                //c = X.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
                 c = X.rawQuery("SELECT _id , Barcode, Company, Name, Department, Count FROM " + TABLE_NAME, null);
                 c.moveToFirst();
                 String arrStr1[] = {"#", "Barcode", "Company", "Name", "Department", "Count"};
 
                 csvWrite.writeNext(arrStr1);
                 while (!c.isAfterLast()) {
-                    Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_ID)));
-                    Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Product)));
-                    Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Count)));
+                   // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_ID)));
+                   // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Product)));
+                   // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Count)));
                     final String[] fields = getFieldsAsStringArray(c);
                     csvWrite.writeNext(fields);
                     c.moveToNext();
@@ -1257,7 +1281,7 @@ public class MainActivity extends Activity {
                 copy(file, exportDir2);
                 return "";
             } catch (IOException e) {
-                Log.e("MainActivity", e.getMessage(), e);
+               // Log.e("MainActivity", e.getMessage(), e);
                 return "";
             }
         }

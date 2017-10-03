@@ -14,6 +14,7 @@ import android.widget.EditText;
 import alpha.com.ScanIT.databases.TinyDB;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class UserLogin extends Activity {
 
@@ -26,6 +27,24 @@ public class UserLogin extends Activity {
     private static String USER_ACTUAL = "";
     private static Integer LOGIN_SKIP = 0;
 
+//    @BindView(R.id.UserText) EditText _UserText;
+//    public void SetOptions (View view) {
+//        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Titillium-SemiboldUpright.otf");
+//        _UserText.setTypeface(custom_font);
+//        _UserText.setTextSize(20);
+//    }
+//    @BindView(R.id.UserPassword) EditText _UserPassword;
+//    public void SetOptionsX(View view) {
+//        _UserPassword.setTextSize(20);
+//    }
+//    @BindView(R.id.login_button) Button _UserLogin;
+    @OnClick(R.id.login_button)
+    public void login_button(View view) {
+        if (!validate()) {
+        } else {
+            login();
+        }
+    }
     @InjectView(R.id.UserText)
     EditText _UserText;
     @InjectView(R.id.UserPassword)
@@ -50,23 +69,26 @@ public class UserLogin extends Activity {
         }
 
         ButterKnife.inject(this);
+       // ButterKnife.bind(this);
+
 
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Titillium-SemiboldUpright.otf");
         _UserText.setTypeface(custom_font);
         _UserText.setTextSize(20);
         _UserPassword.setTypeface(custom_font);
         _UserPassword.setTextSize(20);
-        _UserLogin.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                if (!validate()) {
-                } else {
-                    login();
-                }
-            }
-        });
-
+//        _UserLogin.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                if (!validate()) {
+//                } else {
+//                    login();
+//                }
+//            }
+//        });
+//
     }
 
     private void login() {

@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.TextView;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import alpha.com.ScanIT.MainActivity;
@@ -82,36 +84,41 @@ public class Services extends Service {
         String subText;
         Integer ID = 001;
         int Packages = tinydb.getInt("counter", 0);
+        if (Packages != 0) {
+            if (Packages == 1) {
+                subText = " package";
+            } else {
+                subText = " packages";
+            }
 
-        if (Packages == 1) { subText = " package"; }
-        else { subText = " packages"; }
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(),(int) System.currentTimeMillis(), intent, 0);
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.ic_info)
+                            //.setLargeIcon(icon)
+                            .setContentTitle("You have scanned" + " " + Packages + subText + "")
+                            .setContentText("Touch to scan more.")
+                            .setColor(rgb(105, 105, 105))
+                            .setAutoCancel(true);
 
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_info)
-                        //.setLargeIcon(icon)
-                        .setContentTitle("You have scanned" + " " + Packages + subText + "")
-                        .setContentText("Touch to scan more.")
-                        .setColor(rgb(105,105,105))
-                        .setAutoCancel(true);
+            Intent resultIntent = new Intent(this, Services.class);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addParentStack(MainActivity.class);
+            stackBuilder.addNextIntent(resultIntent);
+            mBuilder.setContentIntent(pIntent);
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(ID, mBuilder.build());
 
-        Intent resultIntent = new Intent(this, Services.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity.class);
-        stackBuilder.addNextIntent(resultIntent);
-        mBuilder.setContentIntent(pIntent);
-        NotificationManager mNotificationManager =
-        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(ID, mBuilder.build());
-
+        }
     }
 
     public void initializeTimerTask() {
         final TinyDB tinydb = new TinyDB(this);
         final int Packages = tinydb.getInt("counter", 0);
+
         timerTask = new TimerTask() {
             public void run() {
 
@@ -119,6 +126,7 @@ public class Services extends Service {
                     public void run() {
 
                         //TODO CALL NOTIFICATION FUNC
+                        // Counter
                         //TODO FIX DISPLAYING NOTIFICATION
                         if (!Notification_SHOWN && Packages != 0) {
                             showNotification();

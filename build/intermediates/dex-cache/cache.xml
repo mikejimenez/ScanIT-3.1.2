@@ -39,15 +39,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="G:\AndroidStudio\sdk\extras\android\m2repository\com\android\support\support-annotations\23.3.0\support-annotations-23.3.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.0"
-        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\support-annotations-23.3.0_1c0fd4363d2816acda91b2bd939df160292902d3.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\mikej\.android\build-cache\1ecf6069cd66929611b4d20037b5e892addf1a43\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"

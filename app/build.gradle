@@ -16,7 +16,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 3
-        versionName '3.1.4'
+        versionName '3.1.6'
         signingConfig signingConfigs.config
     }
     buildTypes {
@@ -37,11 +37,13 @@ android {
     }
 }
 
+def BUTTER_KNIFE_VERSION="5.1.1" //current version of butterknife
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('src/main/res/opencsv-3.9.jar')
-    compile 'com.jakewharton:butterknife:5.1.1'
+    compile "com.jakewharton:butterknife:$BUTTER_KNIFE_VERSION"
     compile files('src/main/res/android-viewbadger.jar')
 }

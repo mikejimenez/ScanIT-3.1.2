@@ -65,129 +65,81 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-302">
-              <caret line="519" column="20" selection-start-line="519" selection-start-column="20" selection-end-line="519" selection-end-column="20" />
+            <state relative-caret-position="278">
+              <caret line="1046" column="0" selection-start-line="1046" selection-start-column="0" selection-end-line="1046" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2345#2353#0" expanded="true" />
-                <element signature="e#5757#6052#0" expanded="true" />
-                <element signature="e#6051#6052#0" expanded="true" />
-                <element signature="docComment;method#checkFocus#0;class#MainActivity#0" expanded="false" />
+                <element signature="docComment;method#onStop#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#onStop#0;class#MainActivity#0" expanded="false" />
                 <element signature="docComment;method#onActivityResult#0;class#MainActivity#0" expanded="false" />
-                <element signature="e#18103#19681#0" expanded="true" />
-                <element signature="e#19680#19681#0" expanded="true" />
-                <element signature="e#19718#20210#0" expanded="true" />
-                <element signature="e#20209#20210#0" expanded="true" />
-                <element signature="e#23436#28080#0" expanded="true" />
-                <element signature="e#28079#28080#0" expanded="true" />
+                <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
+                <element signature="class#7974:8419" expanded="false" />
+                <element signature="method#onItemSelected#0;class#7974:8419" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#7974:8419" expanded="false" />
+                <element signature="class#8950:9398" expanded="false" />
+                <element signature="method#onItemSelected#0;class#8950:9398" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#8950:9398" expanded="false" />
+                <element signature="docComment;method#CreateListView#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#CreateListView#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#CreatePopup#0;class#MainActivity#0" expanded="false" />
+                <element signature="class#15905:16314" expanded="false" />
+                <element signature="method#onItemSelected#0;class#15905:16314" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#15905:16314" expanded="false" />
+                <element signature="class#16801:17213" expanded="false" />
+                <element signature="method#onItemSelected#0;class#16801:17213" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#16801:17213" expanded="false" />
+                <element signature="class#20707:21116" expanded="false" />
+                <element signature="method#onItemSelected#0;class#20707:21116" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#20707:21116" expanded="false" />
+                <element signature="class#21603:22015" expanded="false" />
+                <element signature="method#onItemSelected#0;class#21603:22015" expanded="false" />
+                <element signature="method#onNothingSelected#0;class#21603:22015" expanded="false" />
                 <element signature="docComment;method#mAdd#0;class#MainActivity#0" expanded="false" />
                 <element signature="docComment;method#emailResults#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#emailResults#0;class#MainActivity#0" expanded="false" />
-                <element signature="e#32369#32480#0" expanded="false" />
+                <element signature="method#UpdateLog#0;class#MainActivity#0" expanded="false" />
                 <element signature="docComment;method#Filter#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#ScanDataEmpty#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#Filter#0;class#MainActivity#0" expanded="false" />
                 <element signature="docComment;method#HideHistory#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#HideHistory#0;class#MainActivity#0" expanded="false" />
                 <element signature="docComment;method#ShowHistory#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#ShowHistory#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#user_logout#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#savePreferences#0;class#MainActivity#0" expanded="false" />
+                <element signature="docComment;method#data_exec#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#checkFocus#0;class#MainActivity#0" expanded="false" />
+                <element signature="docComment;method#ClearButton#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#ClearButton#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#ClearButtonData#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#HistoryButton#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#ClearHistoryData#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#ClearHistoryButton#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#DisplayDebug#0;class#MainActivity#0" expanded="false" />
+                <element signature="docComment;method#ScanDataEmpty#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#ScanDataEmpty#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#copy#0;class#MainActivity#0" expanded="false" />
+                <element signature="docComment;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
                 <element signature="class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#onPreExecute#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+                <element signature="method#doInBackground#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+                <element signature="e#47766#47811#0" expanded="false" />
+                <element signature="e#49503#49561#0" expanded="false" />
+                <element signature="method#getFieldsAsStringArray#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+                <element signature="e#50525#50548#0" expanded="false" />
+                <element signature="method#onPostExecute#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+                <marker date="1507010856163" expanded="false" signature="38110:38434" ph="/**...*/" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="update.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/update.xml">
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="1071">
-              <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FormatString.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/FormatString.java">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="manual_entry.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/manual_entry.xml">
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="45" column="64" selection-start-line="45" selection-start-column="64" selection-end-line="45" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Barcodes.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/Barcodes.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="28" column="139" selection-start-line="28" selection-start-column="139" selection-end-line="28" selection-end-column="139" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SQLite.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/SQLite.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="637">
-              <caret line="173" column="42" selection-start-line="173" selection-start-column="42" selection-end-line="173" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TinyDB.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/TinyDB.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserLogin.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/UserLogin.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1896">
-              <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="History.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/History.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="115" column="43" selection-start-line="115" selection-start-column="43" selection-end-line="115" selection-end-column="43" />
+            <state relative-caret-position="463">
+              <caret line="47" column="56" selection-start-line="47" selection-start-column="56" selection-end-line="47" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -196,11 +148,9 @@
       <file leaf-file-name="Services.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/Notifications/Services.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="357">
+              <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1633,7 +1583,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="C:\Users\Post\AndroidStudioProjects\ScanIt" value="4409591539756" />
-        <entry key="G:\AndroidAPP\Workspace\ScanIt" value="4453438783476" />
+        <entry key="G:\AndroidAPP\Workspace\ScanIt" value="4460453947713" />
         <entry key="H:\Android\Projects\ScanIt" value="4429865386869" />
         <entry key="H:\Workspace\ScanIt" value="4448692306382" />
       </map>
@@ -1985,7 +1935,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/captures/CDAResort.com.ScanIT_2016.12.18_03.01.txt" />
         <option value="$PROJECT_DIR$/captures/CDAResort.com.ScanIT_2016.12.18_03.01-1.txt" />
         <option value="$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/alpha/com/ScanIT/BuildConfig.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ADASD/MainActivity.java" />
@@ -2001,7 +1950,6 @@
         <option value="$PROJECT_DIR$/captures/ScanIt_2017.06.04_15.31-2.txt" />
         <option value="$PROJECT_DIR$/captures/ScanIt_2017.06.04_15.31-3.txt" />
         <option value="$PROJECT_DIR$/app/build/intermediates/res/merged/release/values-v23/values-v23.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/captures/ScanIt_2017.06.24_20.59.txt" />
         <option value="$PROJECT_DIR$/captures/ScanIt_2017.06.24_20.59-1.txt" />
         <option value="$PROJECT_DIR$/app/src/release/res/layout/asd.xml" />
@@ -2017,7 +1965,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/manual_entry2.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/user_logout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/MyUnlockListener.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/unlock.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/MyUnlockListener.java" />
@@ -2026,16 +1973,19 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/alpha/ZXing/android/IntentIntegrator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/Barcodes.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/UserLogin.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/manual_entry.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/scan_entry.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/update.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/FormatString.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/UserLogin.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/SQLite.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/Notifications/Services.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/History.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/Notifications/Services.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -2070,7 +2020,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ScanIt" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
         <subPane subId="Project Files">
@@ -2082,64 +2043,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ScanIt" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ScanIt" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ScanIt" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ScanIt" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2155,7 +2059,7 @@
     <property name="options.searchVisible" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="G:/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/support-annotations-23.3.0.jar" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
@@ -2602,12 +2506,12 @@
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.48507464" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819384" sideWeight="0.36993605" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12846482" sideWeight="0.36963695" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819384" sideWeight="0.3011727" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12846482" sideWeight="0.39508197" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3314978" sideWeight="0.29744136" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33259913" sideWeight="0.70255864" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32819384" sideWeight="0.69882727" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33480176" sideWeight="0.6785714" order="16" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.59808105" sideWeight="0.49425286" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819384" sideWeight="0.48933902" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -2615,9 +2519,9 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.47446457" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277592" sideWeight="0.51495725" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12846482" sideWeight="0.63036305" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12846482" sideWeight="0.604918" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10341151" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1337953" sideWeight="0.47116968" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1369936" sideWeight="0.47116968" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16311301" sideWeight="0.5288303" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39910814" sideWeight="0.4957265" order="3" side_tool="false" content_ui="tabs" />
@@ -2654,61 +2558,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="20" />
+      <option name="time" value="26" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://H:/sdk/sources/android-23/android/database/sqlite/SQLiteClosable.java" />
-    <entry file="file://$PROJECT_DIR$/captures/ScanIt_2017.06.04_15.31.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/ScanIt_2017.06.04_15.31-1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/ScanIt_2017.06.04_15.31-2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/ScanIt_2017.06.04_15.31-3.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="86" selection-start-line="19" selection-start-column="86" selection-end-line="19" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/release/values-v23/values-v23.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/ScanIt_2017.06.24_20.59.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/captures/ScanIt_2017.06.24_20.59-1.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="144" column="22" selection-start-line="144" selection-start-column="22" selection-end-line="144" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/captures/CDAResort.com.ScanIT_2016.12.14_03.06-1.li">
       <provider selected="true" editor-type-id="capture-editor">
         <state />
@@ -2732,7 +2586,6 @@
       </provider>
     </entry>
     <entry file="android-dummy://H:/Workspace/ScanIt//Theme Editor" />
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/release/values-v24/values-v24.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/release/res/layout/asd.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/asd.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/activity_login.xml" />
@@ -2754,22 +2607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="43" column="49" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://H:/sdk/sources/android-23/android/widget/AdapterView.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/MyUnlockListener.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/unlock.xml" />
@@ -2780,19 +2617,18 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="32" column="16" selection-start-line="32" selection-start-column="16" selection-end-line="32" selection-end-column="16" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alpha/ZXing/android/IntentResult.java">
@@ -2817,29 +2653,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alpha/ZXing/android/IntentIntegrator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-690">
-          <caret line="159" column="34" selection-start-line="159" selection-start-column="34" selection-end-line="159" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/user_logout.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="65" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="65" />
           <folding />
         </state>
       </provider>
@@ -2872,41 +2689,9 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scan_entry.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="55" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/Notifications/Services.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/TinyDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
+        <state relative-caret-position="289">
           <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
           <folding />
         </state>
@@ -2914,7 +2699,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/FormatString.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
+        <state relative-caret-position="748">
           <caret line="44" column="20" selection-start-line="44" selection-start-column="20" selection-end-line="44" selection-end-column="33" />
           <folding />
         </state>
@@ -2922,43 +2707,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/interfaces/Barcodes.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
+        <state relative-caret-position="476">
           <caret line="28" column="139" selection-start-line="28" selection-start-column="139" selection-end-line="28" selection-end-column="139" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/UserLogin.java">
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/release/values-v24/values-v24.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1896">
-          <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/SQLite.java">
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="173" column="42" selection-start-line="173" selection-start-column="42" selection-end-line="173" selection-end-column="42" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/History.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="115" column="43" selection-start-line="115" selection-start-column="43" selection-end-line="115" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/manual_entry.xml">
-      <provider selected="true" editor-type-id="android-designer2">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/user_logout.xml">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="64" selection-start-line="45" selection-start-column="64" selection-end-line="45" selection-end-column="64" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="65" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="65" />
           <folding />
         </state>
       </provider>
@@ -2974,43 +2751,216 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/apt/release/alpha/com/ScanIT/MainActivity$$ViewInjector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="786">
+          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/AndroidStudio/sdk/sources/android-23/android/os/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/AndroidStudio/sdk/sources/android-23/android/os/Looper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/UserLogin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="113" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/proguard-rules.pro">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/scan_entry.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="55" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/manual_entry.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="64" selection-start-line="45" selection-start-column="64" selection-end-line="45" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/alpha/ZXing/android/IntentIntegrator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1394">
+          <caret line="324" column="57" selection-start-line="324" selection-start-column="57" selection-end-line="324" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/SQLite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="134" column="47" selection-start-line="134" selection-start-column="47" selection-end-line="134" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/databases/History.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="120" column="31" selection-start-line="120" selection-start-column="31" selection-end-line="120" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="56" selection-start-line="7" selection-start-column="56" selection-end-line="7" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-302">
-          <caret line="519" column="20" selection-start-line="519" selection-start-column="20" selection-end-line="519" selection-end-column="20" />
+        <state relative-caret-position="278">
+          <caret line="1046" column="0" selection-start-line="1046" selection-start-column="0" selection-end-line="1046" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2345#2353#0" expanded="true" />
-            <element signature="e#5757#6052#0" expanded="true" />
-            <element signature="e#6051#6052#0" expanded="true" />
-            <element signature="docComment;method#checkFocus#0;class#MainActivity#0" expanded="false" />
+            <element signature="docComment;method#onStop#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onStop#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#onActivityResult#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#18103#19681#0" expanded="true" />
-            <element signature="e#19680#19681#0" expanded="true" />
-            <element signature="e#19718#20210#0" expanded="true" />
-            <element signature="e#20209#20210#0" expanded="true" />
-            <element signature="e#23436#28080#0" expanded="true" />
-            <element signature="e#28079#28080#0" expanded="true" />
+            <element signature="method#onActivityResult#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#7974:8419" expanded="false" />
+            <element signature="method#onItemSelected#0;class#7974:8419" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#7974:8419" expanded="false" />
+            <element signature="class#8950:9398" expanded="false" />
+            <element signature="method#onItemSelected#0;class#8950:9398" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#8950:9398" expanded="false" />
+            <element signature="docComment;method#CreateListView#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#CreateListView#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#CreatePopup#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#15905:16314" expanded="false" />
+            <element signature="method#onItemSelected#0;class#15905:16314" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#15905:16314" expanded="false" />
+            <element signature="class#16801:17213" expanded="false" />
+            <element signature="method#onItemSelected#0;class#16801:17213" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#16801:17213" expanded="false" />
+            <element signature="class#20707:21116" expanded="false" />
+            <element signature="method#onItemSelected#0;class#20707:21116" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#20707:21116" expanded="false" />
+            <element signature="class#21603:22015" expanded="false" />
+            <element signature="method#onItemSelected#0;class#21603:22015" expanded="false" />
+            <element signature="method#onNothingSelected#0;class#21603:22015" expanded="false" />
             <element signature="docComment;method#mAdd#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#emailResults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#emailResults#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#32369#32480#0" expanded="false" />
+            <element signature="method#UpdateLog#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#Filter#0;class#MainActivity#0" expanded="false" />
-            <element signature="method#ScanDataEmpty#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#Filter#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#HideHistory#0;class#MainActivity#0" expanded="false" />
             <element signature="method#HideHistory#0;class#MainActivity#0" expanded="false" />
             <element signature="docComment;method#ShowHistory#0;class#MainActivity#0" expanded="false" />
             <element signature="method#ShowHistory#0;class#MainActivity#0" expanded="false" />
             <element signature="method#user_logout#0;class#MainActivity#0" expanded="false" />
             <element signature="method#savePreferences#0;class#MainActivity#0" expanded="false" />
+            <element signature="docComment;method#data_exec#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#checkFocus#0;class#MainActivity#0" expanded="false" />
+            <element signature="docComment;method#ClearButton#0;class#MainActivity#0" expanded="false" />
             <element signature="method#ClearButton#0;class#MainActivity#0" expanded="false" />
             <element signature="method#ClearButtonData#0;class#MainActivity#0" expanded="false" />
             <element signature="method#HistoryButton#0;class#MainActivity#0" expanded="false" />
             <element signature="method#ClearHistoryData#0;class#MainActivity#0" expanded="false" />
             <element signature="method#ClearHistoryButton#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#DisplayDebug#0;class#MainActivity#0" expanded="false" />
+            <element signature="docComment;method#ScanDataEmpty#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#ScanDataEmpty#0;class#MainActivity#0" expanded="false" />
             <element signature="method#copy#0;class#MainActivity#0" expanded="false" />
+            <element signature="docComment;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
             <element signature="class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#onPreExecute#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#47766#47811#0" expanded="false" />
+            <element signature="e#49503#49561#0" expanded="false" />
+            <element signature="method#getFieldsAsStringArray#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#50525#50548#0" expanded="false" />
+            <element signature="method#onPostExecute#0;class#ExportDatabaseCSVTask#0;class#MainActivity#0" expanded="false" />
+            <marker date="1507010856163" expanded="false" signature="38110:38434" ph="/**...*/" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/alpha/com/ScanIT/Notifications/Services.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="97" column="8" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="47" column="56" selection-start-line="47" selection-start-column="56" selection-end-line="47" selection-end-column="56" />
+          <folding />
         </state>
       </provider>
     </entry>

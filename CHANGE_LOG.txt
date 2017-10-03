@@ -1,3 +1,81 @@
+
+===== 3.1.6 ===== (10.02.2017)
+- Codes Changes
+- Cleaned imports
+- Removed useless comments
+- Replaced some TinyDB, SQLite, History database creations with data_exec() method
+- Rearranged Methods
+- Added new Strings: OldBarcode, OldName, OldCompany
+- Fixed Updating & Deleting History database
+- Removed onDestroyView() method
+
+Added data_exec() method
+  TinyDB, SQLite, History methods included:
+  Remove, putInt, getInt, getString, deleteBarcodes
+  
+- CheckFocus() still don't think this is working...
+- Added another check for notification service display, should be fixed*
+
+===== 3.1.4 ===== (09.30.2017)
+
+Fixed scaling issues with:
+- Scan Entry
+- Manual Entry
+- Update Entry
+
+Because of adding the ability to add count for tracking numbers, had to re-do UI on previously mention forms.
+
+- Also fixed notification issue (hopefully)
+- Changed output again for email.
+- Fixed Updating Database (apparently never worked!)
+- Fixed Deleteing Database (apparently never worked!)
+- Removed deleteing for History. (issue with index position, no time to fix!)
+- Random code cleanup.
+
+Almost done with this app.
+
+===== 3.1.3 ===== (09.27.2017)
+
+UI Scaling Fixes
+-Pushed live, found scaling issues.
+
+===== 3.1.2 ===== (09.26.2017)
+
+Finally almost done.
+- Near finished just uploading to track changes.
+
+Back with updates
+
+===== 1.1.1 ===== (11.01.2015)
+Ending Verison: 1.1.6
+
+11.05.2015
+MainActivity.java Changes
+- Added validation for Numbers on for FedEX on InputManual()
+- Fixed loadPreferences() to work 100% FOR SURE!
+- Changed storing of Counter to Integer
+
+11.04.2015
+MainActivity.java Changes
+- Removed Load()
+- Removed DisplaySharedPreferences()
+- Edited loadPreferences(), to work...
+- Removed variable paused
+
+11.03.2015
+MainActivity.java Changes
+- Added variable Done
+- Added Method mAdd()
+- Edited Method InputManual()
+
+11.02.2015
+Fixes again! 
+- Fixed adding invalid scans
+
+11.01.2015
+Fixing conflict to latest verison
+- What I get for editing on the site then on my local without updating doh
+
 ===== 1.1.0 ===== (10.18.2015)
 11.01.2015
 Barcodes.java
