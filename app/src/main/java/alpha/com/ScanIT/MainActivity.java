@@ -1126,9 +1126,10 @@ public class MainActivity extends Activity {
      */
 
     private void ClearButton() {
-        if (Counter == 0) {
+        if (Integer.valueOf(CounterTxt.getText().toString()).equals(0)) {
             ScanDataEmpty();
-        } else {
+        }
+        if (Integer.valueOf(CounterTxt.getText().toString()) >= 1){
             final ExportDatabaseCSVTask task = new ExportDatabaseCSVTask();
             task.execute();
             emailResults();
