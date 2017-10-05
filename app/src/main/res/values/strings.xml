@@ -65,4 +65,5 @@
     <!--<string name="updateCompany">Update Department</string>-->
     <string name="previous">Previous</string>
     <string name="unlock">Unlock</string>
+    <string name="checkbox">Repeat previous</string>
 </resources>

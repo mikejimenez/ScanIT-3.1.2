@@ -26,6 +26,8 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -82,7 +84,6 @@ public class MainActivity extends Activity {
     String OldName;
     String OldCompany;
     String Error = "";
-
     Integer HistoryCounter;
     Integer Counter = 0;
 
@@ -211,6 +212,7 @@ public class MainActivity extends Activity {
             final EditText infoName = (EditText) textEntryView.findViewById(R.id.infoName_scan);
             final Spinner spinner = (Spinner) textEntryView.findViewById(R.id.infoDepartment_scan);
             final Spinner spinner_ = (Spinner) textEntryView.findViewById(R.id.infoPackage_count);
+            final CheckBox ChkBox = (CheckBox) textEntryView.findViewById((R.id.checkBox));
             final SQLite db = new SQLite(this);
             final History db2 = new History(this);
             final TinyDB tinydb = new TinyDB(this);
@@ -225,7 +227,7 @@ public class MainActivity extends Activity {
              *  Department listing
              */
 
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
+            final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -265,7 +267,25 @@ public class MainActivity extends Activity {
                 }
             });
 
+            /**
+             * Repeat information for last package scanned
+             */
 
+            ChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (ChkBox.isChecked()) {
+                        infoCompany.setText(tinydb.getString("PREVIOUS_COMPANY"));
+                        infoName.setText(tinydb.getString("PREVIOUS_NAME"));
+                        spinner.setSelection(adapter.getPosition(tinydb.getString("PREVIOUS_DEPARTMENT")));
+                    }
+                    else {
+
+                    }
+                }
+            });
+            //
 
             alert.setIcon(R.drawable.perm_group_user_dictionary).setTitle("Information").setView(textEntryView).setPositiveButton("Save",
                     new DialogInterface.OnClickListener() {
@@ -283,6 +303,7 @@ public class MainActivity extends Activity {
                             final String Username = "User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN");
                             final String ListView = scanCompany + " - " + scanName + " - " + Department + " - " + PackageCount;
 
+
                             if (!Error.contains("Y")) {
                                 db.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, PackageCount));
                                 db2.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, PackageCount));
@@ -293,6 +314,9 @@ public class MainActivity extends Activity {
                                 String setText = Integer.valueOf(Counter).toString();
                                 CounterTxt.setText(setText);
                                 badge.increment(1);
+                                tinydb.putString("PREVIOUS_NAME", scanName);
+                                tinydb.putString("PREVIOUS_COMPANY", scanCompany);
+                                tinydb.putString("PREVIOUS_DEPARTMENT", Department);
                             }
                         }
                     }).setNegativeButton("Cancel",
@@ -719,6 +743,7 @@ public class MainActivity extends Activity {
         final String FilterC = FilterB.replace("]", "");
         final String FilterD = FilterC.replace(",", "");
         i.putExtra(Intent.EXTRA_TEXT, FilterD);
+
         log.clear();
         Counter = 0;
         try {
@@ -1090,6 +1115,9 @@ public class MainActivity extends Activity {
 
             badge.setText("0");
             CounterTxt.setText("0");
+            tinyDB_pref.remove("PREVIOUS_NAME");
+            tinyDB_pref.remove("PREVIOUS_COMPANY");
+            tinyDB_pref.remove("PREVIOUS_DEPARTMENT");
 
         }
 
@@ -1260,9 +1288,9 @@ public class MainActivity extends Activity {
                 final SQLiteDatabase X = db.getReadableDatabase();
                 final Cursor c;
                 final String TABLE_NAME = "Barcodes";
-                final String KEY_ID = "_id";
-                final String KEY_Product = "Barcode";
-                final String KEY_Count = "Company";
+//                final String KEY_ID = "_id";
+//                final String KEY_Product = "Barcode";
+//                final String KEY_Count = "Company";
 
                 c = X.rawQuery("SELECT _id , Barcode, Company, Name, Department, Count FROM " + TABLE_NAME, null);
                 c.moveToFirst();
