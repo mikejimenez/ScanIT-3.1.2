@@ -14,6 +14,7 @@
         android:layout_marginBottom="1dp"
         android:layout_marginTop="5dp"
         android:hint="@string/uiDepartment"
+        android:imeOptions="flagNoFullscreen"
         android:maxLines="1"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
@@ -24,13 +25,14 @@
         style="@android:style/TextAppearance.Small"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/scan_entry_company"
         android:hint="@string/Name"
         android:maxLines="1"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
         android:theme="@android:style/Theme.Holo.InputMethod"
-        android:layout_below="@+id/scan_entry_company"
-        android:layout_alignParentStart="true" />
+        android:imeOptions="flagNoFullscreen"/>
 
     <CheckBox
         android:id="@+id/scan_entry_checkBox"

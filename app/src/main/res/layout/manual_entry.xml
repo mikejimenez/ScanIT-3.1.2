@@ -14,7 +14,8 @@
         android:selectAllOnFocus="false"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
-        android:theme="@android:style/Theme.Holo.InputMethod" />
+        android:theme="@android:style/Theme.Holo.InputMethod"
+        android:imeOptions="flagNoFullscreen"/>
 
     <EditText
         android:id="@+id/manual_entry_company"
@@ -29,7 +30,8 @@
         android:paddingTop="10dp"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
-        android:theme="@android:style/Theme.Holo.InputMethod" />
+        android:theme="@android:style/Theme.Holo.InputMethod"
+        android:imeOptions="flagNoFullscreen"/>
 
     <EditText
         android:id="@+id/manual_entry_name"
@@ -41,6 +43,7 @@
         android:paddingLeft="5dp"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
-        android:theme="@android:style/Theme.Holo.InputMethod" />
+        android:theme="@android:style/Theme.Holo.InputMethod"
+        android:imeOptions="flagNoFullscreen"/>
 
 </LinearLayout>

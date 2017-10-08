@@ -1,3 +1,10 @@
+===== 3.2.1 ===== (10.08.2017)
+
+Activity_main.xml changes:
+Fixed scaling on fab's & listView (Because of new test phone has a curved screen)
+
+Manual_entry, scan_entry, and update added flagNoFullscreen to EditText fields
+
 ===== 3.2.0 ===== (10.08.2017)
 
 Major changes again!

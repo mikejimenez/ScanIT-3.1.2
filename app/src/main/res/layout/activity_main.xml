@@ -46,6 +46,8 @@
         android:id="@+id/fabHistory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="-50dp"
+        android:layout_marginTop="5dp"
         android:layout_toStartOf="@+id/fabClearHistory"
         android:scaleType="center"
         android:src="@drawable/ic_sd_storage_black_24dp"
@@ -57,14 +59,15 @@
         android:id="@+id/fabEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="21dp"
+        android:layout_marginTop="5dp"
         android:scaleType="center"
         android:src="@drawable/ic_email_black_24dp"
         app:backgroundTint="#f5f5f5"
         app:borderWidth="0dp"
-        app:elevation="0dp"
-        android:layout_marginEnd="21dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        app:elevation="0dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabManual"
@@ -72,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
         android:layout_toStartOf="@+id/fabHistory"
         android:scaleType="center"
         android:src="@drawable/ic_edit_black_24dp"
@@ -83,20 +87,23 @@
         android:id="@+id/fabScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:scaleType="center"
         android:src="@drawable/ic_control_point_black_24dp"
         app:backgroundTint="#f5f5f5"
         app:borderWidth="0dp"
-        app:elevation="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        app:elevation="0dp" />
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/listView"
+        android:layout_width="775dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fabScan"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/fabScan" />
+        android:layout_marginBottom="5dp" />
 
     <ListView
         android:id="@+id/listView_history"
