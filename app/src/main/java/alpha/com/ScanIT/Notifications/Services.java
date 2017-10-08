@@ -6,12 +6,11 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.TextView;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import alpha.com.ScanIT.MainActivity;
@@ -96,12 +95,15 @@ public class Services extends Service {
 
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.ic_info)
-                            //.setLargeIcon(icon)
+                            .setPriority(2)
+                            .setVibrate(new long[0])
+                            .setSmallIcon(R.drawable.ic_dialog_alert_holo_light)
+                            .setLargeIcon(BitmapFactory.decodeResource( getResources(), R.drawable.ic_info))
                             .setContentTitle("You have scanned" + " " + Packages + subText + "")
                             .setContentText("Touch to scan more.")
                             .setColor(rgb(105, 105, 105))
-                            .setAutoCancel(true);
+                            .setAutoCancel(true)
+                            .setVisibility(1);
 
             Intent resultIntent = new Intent(this, Services.class);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
@@ -125,12 +127,10 @@ public class Services extends Service {
                 handler.post(new Runnable() {
                     public void run() {
 
-                        //TODO CALL NOTIFICATION FUNC
-                        // Counter
-                        //TODO FIX DISPLAYING NOTIFICATION
                         if (!Notification_SHOWN && Packages != 0) {
                             showNotification();
                             Notification_SHOWN = true;
+                            stoptimertask();
                             if (DEBUG_TRUE) {
                                 Log.e(TAG, String.valueOf(Packages));
                                 Log.e(TAG, "Showing..");

@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -61,11 +62,44 @@ import alpha.com.ScanIT.databases.SQLite;
 import alpha.com.ScanIT.databases.TinyDB;
 import alpha.com.ScanIT.interfaces.Barcodes;
 import alpha.com.ScanIT.interfaces.FormatString;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MainActivity extends Activity {
 
     private static final String TAG = "MAKE_BARCODES";
     private ArrayList<String> log = new ArrayList<String>();
+
+
+    @Bind(R.id.manual_entry_tracking)
+    @Nullable
+    EditText infoTrack;
+
+
+    @Bind(R.id.manual_entry_company)
+    @Nullable
+    EditText infoData;
+
+
+    @Bind(R.id.manual_entry_name)
+    @Nullable
+    EditText infoSender;
+
+    @Nullable
+    @Bind(R.id.scan_entry_department)
+    Spinner scan_spinner;
+
+    @Nullable
+    @Bind(R.id.scan_entry_count)
+    Spinner scan_spinner_;
+
+    @Nullable
+    @Bind(R.id.spinner_data_departments)
+    Spinner manual_spinner;
+
+    @Nullable
+    @Bind(R.id.spinner_data_package_count)
+    Spinner manual_spinner_;
 
     TextView CounterTxt;
     TextView CounterTxtSet;
@@ -109,6 +143,7 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         final FloatingActionButton fabHistory = (FloatingActionButton) findViewById(R.id.fabHistory);
         final FloatingActionButton fabScan = (FloatingActionButton) findViewById(R.id.fabScan);
@@ -128,7 +163,7 @@ public class MainActivity extends Activity {
         fabMan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputManual();
+                InputManual(false);
             }
         });
         fabScan.setOnClickListener(new View.OnClickListener() {
@@ -180,23 +215,23 @@ public class MainActivity extends Activity {
 
         if (checkFocus()) {
             //Log.e(TAG, "True");
-        }
-        else {
+        } else {
             startService(new Intent(this, Services.class));
         }
 
     }
+
     @Override
     public void onBackPressed() {
         moveTaskToBack(false);
     }
 
     /**
-     * onActivityResult - scanning
-     * ---------------------------
-     * - Creates data on screen
-     * - Writes to database
-     * ---------------------------
+     * Code that processes the intent from barcode scanner
+     *
+     * @param requestCode Barcode scanner argument
+     * @param resultCode RESULT_OK, processes data - RESULT_CANCELED, we didn't get any data
+     * @param intent Barcode scanner argument
      */
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -206,131 +241,198 @@ public class MainActivity extends Activity {
             @SuppressLint("InflateParams")
 
             final String scanContent = scanningResult.getContents();
-            final LayoutInflater Results = LayoutInflater.from(this);
-            final View textEntryView = Results.inflate(R.layout.scan_entry, null);
-            final EditText infoCompany = (EditText) textEntryView.findViewById(R.id.infoCompany_scan);
-            final EditText infoName = (EditText) textEntryView.findViewById(R.id.infoName_scan);
-            final Spinner spinner = (Spinner) textEntryView.findViewById(R.id.infoDepartment_scan);
-            final Spinner spinner_ = (Spinner) textEntryView.findViewById(R.id.infoPackage_count);
-            final CheckBox ChkBox = (CheckBox) textEntryView.findViewById((R.id.checkBox));
-            final SQLite db = new SQLite(this);
-            final History db2 = new History(this);
-            final TinyDB tinydb = new TinyDB(this);
-            final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            final String infoBarcode = Filter(scanContent);
+            final String Username = "User: " + data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null, null) + " - " + data_exec("tinyDB", "getString", "LOGGED_IN", false, null, null);
 
-            /**
-             * Spinner Data
-             *
-             */
+            scan_entry_view(infoBarcode, Username, false);
 
-            /**
-             *  Department listing
-             */
-
-            final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(adapter);
-            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Object Location = parent.getItemAtPosition(position);
-                    SpinnerValue = Location.toString();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            /**
-             *  Package Count
-             */
-
-            List<String> Package_List = new ArrayList<>();
-            for (int i=1; i<=100; i++){
-                Package_List.add("" + i);
-            }
-            ArrayAdapter<String> adapter_ = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Package_List);
-            adapter_.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_.setAdapter(adapter_);
-            spinner_.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    Object Location_ = parent.getItemAtPosition(position);
-                    SpinnerValue_ = Location_.toString();
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-
-            /**
-             * Repeat information for last package scanned
-             */
-
-            ChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (ChkBox.isChecked()) {
-                        infoCompany.setText(tinydb.getString("PREVIOUS_COMPANY"));
-                        infoName.setText(tinydb.getString("PREVIOUS_NAME"));
-                        spinner.setSelection(adapter.getPosition(tinydb.getString("PREVIOUS_DEPARTMENT")));
-                    }
-                    else {
-
-                    }
-                }
-            });
-            //
-
-            alert.setIcon(R.drawable.perm_group_user_dictionary).setTitle("Information").setView(textEntryView).setPositiveButton("Save",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,
-                                            int whichButton) {
-
-                            Error = "";
-
-
-                            final String infoBarcode = Filter(scanContent);
-                            final String scanCompany = infoCompany.getText().toString();
-                            final String scanName = infoName.getText().toString();
-                            final String Department = SpinnerValue;
-                            final String PackageCount = SpinnerValue_;
-                            final String Username = "User: " + tinydb.getString("LOGGED_ACTUAL") + " - " + tinydb.getString("LOGGED_IN");
-                            final String ListView = scanCompany + " - " + scanName + " - " + Department + " - " + PackageCount;
-
-
-                            if (!Error.contains("Y")) {
-                                db.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, PackageCount));
-                                db2.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, PackageCount));
-                                Counter++;
-                                db.close();
-                                db2.close();
-                                CreateListView();
-                                String setText = Integer.valueOf(Counter).toString();
-                                CounterTxt.setText(setText);
-                                badge.increment(1);
-                                tinydb.putString("PREVIOUS_NAME", scanName);
-                                tinydb.putString("PREVIOUS_COMPANY", scanCompany);
-                                tinydb.putString("PREVIOUS_DEPARTMENT", Department);
-                            }
-                        }
-                    }).setNegativeButton("Cancel",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,
-                                            int whichButton) {
-                            ScanDataEmpty();
-                        }
-                    });
-            alert.show();
         } else if (resultCode == RESULT_CANCELED) {
             ScanDataEmpty();
         }
     }
+
+    /**
+     * Scan Entry to create view after receiving data from barcode scanner
+     *
+     * @param ScanContent Barcode to be saved
+     * @param Username Username to be saved
+     * @param Back True/False if we are going backwards
+     */
+
+    public void scan_entry_view(final String ScanContent, final String Username, final Boolean Back) {
+
+    final LayoutInflater Results = LayoutInflater.from(this);
+    final View textEntryView = Results.inflate(R.layout.scan_entry, null);
+    final EditText infoCompany = (EditText) textEntryView.findViewById(R.id.scan_entry_company);
+    final EditText infoName = (EditText) textEntryView.findViewById(R.id.scan_entry_name);
+    final CheckBox ChkBox = (CheckBox) textEntryView.findViewById((R.id.scan_entry_checkBox));
+    final CheckBox ChkBox_ = (CheckBox) textEntryView.findViewById((R.id.scan_entry_checkBox2));
+    final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+    if (Back) {
+        if (data_exec("tinyDB", "getString", "SCAN_SAVED", false, null, null).equals("TRUE")) {
+            final String load_previous_company = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null);
+            final String load_previous_name = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null);
+            infoCompany.setText(load_previous_company);
+            infoName.setText(load_previous_name);
+            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY", false, null, null);
+            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME", false, null, null);
+        }
+        else {
+            final String load_previous_company = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
+            final String load_previous_name = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
+            infoCompany.setText(load_previous_company);
+            infoName.setText(load_previous_name);
+            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
+            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
+        }
+    }
+
+    /**
+     * Repeat information for last package scanned
+     */
+
+    ChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (ChkBox.isChecked() && !Back && !data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null).isEmpty()) {
+                infoCompany.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null));
+                infoName.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null));
+
+            }
+            else if (ChkBox.isChecked() && Back && !data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null).isEmpty()) {
+                infoCompany.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null));
+                infoName.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null));
+            }
+            else {
+
+            }
+        }
+    });
+
+    /**
+     * Mark as an outgoing package
+     */
+
+    ChkBox_.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (ChkBox_.isChecked()) {
+                final String getTextName = infoName.getText().toString();
+                final String newTextName = getTextName + " (Outgoing)";
+                infoName.setText(newTextName);
+            }
+            else {
+                final String getOldText = infoName.getText().toString();
+                final String newOutText = getOldText.replace(" (Outgoing)", "");
+                infoName.setText(newOutText);
+            }
+        }
+    });
+    alert.setIcon(R.drawable.perm_group_user_dictionary).setTitle("Information").setView(textEntryView).setPositiveButton("Continue",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,
+                                    int whichButton) {
+                    if (ChkBox.isChecked()) {
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_CHECKED", false, null, "TRUE");
+                    }
+                    else {
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_CHECKED", false, null, "FALSE");
+                    }
+                    Error = "";
+                    if (Back) {
+                        final String scanCompany = infoCompany.getText().toString();
+                        final String scanName = infoName.getText().toString();
+                        data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "FALSE");
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, scanName);
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, scanCompany);
+
+                        if (!Error.contains("Y")) {
+                            scan_entry_spinner_data(ScanContent, scanCompany, scanName, Username);
+                        }
+                    } else {
+                        final String scanCompany = infoCompany.getText().toString();
+                        final String scanName = infoName.getText().toString();
+                        data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "FALSE");
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, scanName);
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, scanCompany);
+
+                        if (!Error.contains("Y")) {
+                            scan_entry_spinner_data(ScanContent, scanCompany, scanName, Username);
+                        }
+                    }
+                }
+            }).setNegativeButton("Cancel",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,
+                                    int whichButton) {
+                    ScanDataEmpty();
+                }
+            });
+    alert.show();
+}
+
+    /**
+     * Scan Entry Spinner Data + Saving to database
+     *
+     * @param infoBarcode Barcode to be saved
+     * @param scanCompany Company to be saved
+     * @param scanName Name to be saved
+     * @param Username Username to be saved
+     */
+
+    public void scan_entry_spinner_data(final String infoBarcode, final String scanCompany, final String scanName, final String Username) {
+
+    LayoutInflater view_spinner = LayoutInflater.from(this);
+    final View view_spinner_inflate = view_spinner.inflate(R.layout.scan_entry_spinner, null);
+    final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    final SQLite db = new SQLite(this);
+    final History db2 = new History(this);
+
+    int resourceId = this.getResources().getIdentifier("scan_entry_department", "id", this.getPackageName());
+    int resourceId2 = this.getResources().getIdentifier("scan_entry_count", "id", this.getPackageName());
+
+    Spinners(view_spinner_inflate, true, resourceId, resourceId2);
+
+    alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Package Information").setView(view_spinner_inflate).setPositiveButton("Save",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,
+                                    int whichButton) {
+                    final String Department = SpinnerValue;
+                    final String Count = SpinnerValue_;
+                    final String ListView = scanCompany + " - " + scanName + " - " + Department + " - " + Count;
+
+                    db.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, Count));
+                    db2.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, Count));
+                    Counter++;
+                    db.close();
+                    db2.close();
+                    CreateListView();
+                    String setText = Integer.valueOf(Counter).toString();
+                    CounterTxt.setText(setText);
+                    badge.increment(1);
+                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME", false, null, scanName);
+                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY", false, null, scanCompany);
+                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_DEPARTMENT", false, null, Department);
+                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COUNT", false, null, Count);
+                    data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "TRUE");
+                    data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
+                    data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
+
+                }
+            }).setNegativeButton("Back",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,
+                                    int whichButton) {
+                    scan_entry_view(infoBarcode, Username, true);
+                }
+            });
+
+    alert.show();
+
+}
 
     /**
      * Reading from database and Displaying
@@ -479,8 +581,8 @@ public class MainActivity extends Activity {
                     final String Name = infoDataName.getText().toString();
                     final String Count = SpinnerValue_;
                     final String ListView = Data + " - " + Name + " - " + SpinnerValue + " - " + Count;
-                    final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null);
-                    final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null);
+                    final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null, null);
+                    final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null, null);
                     final String infoUsername = "User: " + logged_a + " - " + logged_b;
                     db.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername);
                     db.close();
@@ -523,163 +625,53 @@ public class MainActivity extends Activity {
      * Manual Functions
      */
 
-    private void InputManual() {
+    /**
+     * InputManual - Manually input a tracking number with information
+     * @param Back When True it will load the previous inputted information being proceeding to package information
+     */
+
+    private void InputManual(Boolean Back) {
 
         LayoutInflater Manual = LayoutInflater.from(this);
         @SuppressLint("AndroidLintInflateParams")
 
         final View textEntryView = Manual.inflate(R.layout.manual_entry, null);
-        final EditText infoTrack = (EditText) textEntryView.findViewById(R.id.infoTracking_manual);
-        final EditText infoData = (EditText) textEntryView.findViewById(R.id.infoCompany_manual);
-        final EditText infoSender = (EditText) textEntryView.findViewById(R.id.infoName_manual);
-        final Spinner spinner = (Spinner) textEntryView.findViewById(R.id.infoDepartment_manual);
-        final Spinner spinner_ = (Spinner) textEntryView.findViewById(R.id.infoPackage_count_);
+        ButterKnife.bind(this, textEntryView);
+
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        /**
-         * Spinner Data
-         *
-         */
+        final String load_previous_company = data_exec("tinyDB", "getString", "MANUAL_PREVIOUS_COMPANY", false, null, null);
+        final String load_previous_name = data_exec("tinyDB", "getString", "MANUAL_PREVIOUS_NAME", false, null, null);
+        final String load_previous_tracking = data_exec("tinyDB", "getString", "MANUAL_PREVIOUS_TRACKING", false, null, null);
 
-        /**
-         * Department data
-         */
+        data_exec("tinyDB", "remove", "MANUAL_PREVIOUS_COMPANY", false, null, null);
+        data_exec("tinyDB", "remove", "MANUAL_PREVIOUS_NAME", false, null, null);
+        data_exec("tinyDB", "remove", "MANUAL_PREVIOUS_TRACKING", false, null, null);
 
-        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object Location = parent.getItemAtPosition(position);
-                SpinnerValue = Location.toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        /**
-         *  Package Count
-         */
-
-        List<String> Package_List = new ArrayList<>();
-        for (int i=1; i<=100; i++){
-            Package_List.add("" + i);
+        if (Back) {
+            infoData.setText(load_previous_company);
+            infoSender.setText(load_previous_name);
+            infoTrack.setText(load_previous_tracking);
         }
-        ArrayAdapter<String> adapter_ = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Package_List);
-        adapter_.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_.setAdapter(adapter_);
-        spinner_.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object Location_ = parent.getItemAtPosition(position);
-                SpinnerValue_ = Location_.toString();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Information").setView(textEntryView).setPositiveButton("Save",
+        alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Tracking Number").setView(textEntryView).setPositiveButton("Continue",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int whichButton) {
 
-                        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null);
-                        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null);
-                        final String infoCompany = infoData.getText().toString();
-                        final String infoTracking = infoTrack.getText().toString();
-                        final String infoName = infoSender.getText().toString();
-                        final String infoUsername = "User: " + logged_a + " - " + logged_b;
-                        final String Department = SpinnerValue;
-                        final String Count = SpinnerValue_;
-                        final String ListView = infoCompany + " - " + infoName + " - " + Department + " - " + Count;
-                        String Done = "";
+                        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null, null);
+                        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null, null);
+                        final String manual_infoCompany = infoData.getText().toString();
+                        final String manual_infoTracking = infoTrack.getText().toString();
+                        final String manual_infoName = infoSender.getText().toString();
+                        final String manual_infoUsername = "User: " + logged_a + " - " + logged_b;
 
-                        if (infoTrack.length() == 0) {
-                            ScanDataEmpty();
-                        }
+                        data_exec("tinyDB", "putString", "MANUAL_PREVIOUS_COMPANY", false, null, infoData.getText().toString());
+                        data_exec("tinyDB", "putString", "MANUAL_PREVIOUS_NAME", false, null, infoSender.getText().toString());
+                        data_exec("tinyDB", "putString", "MANUAL_PREVIOUS_TRACKING", false, null, infoTrack.getText().toString());
 
-                        /**
-                         *      Fedex Ground Manual (No Spaces) - 21 Characters
-                         *
-                         *      Format: XXXXXXXXXXXXXXXXXXXXX
-                         *
-                         */
+                        manual_spinner_data(manual_infoCompany, manual_infoTracking, manual_infoName, manual_infoUsername);
 
-                        if (infoTrack.length() == 21 && TextUtils.isDigitsOnly(infoTrack.getText())) {
-                            mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
-                            Done = "1";
-                        }
-
-                        /**
-                         *      UPS Manual (No Spaces) - 18 Characters
-                         *
-                         *      Format: 1ZXXXXXXXXXXXXXXXX
-                         *              1zXXXXXXXXXXXXXXXX
-                         *
-                         */
-
-                        if (infoTrack.length() == 18) {
-                            if (infoTrack.getText().toString().contains("1Z") || infoTrack.getText().toString().contains("1z")) {
-                                mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
-                                Done = "1";
-                            }
-                        }
-
-                        /**
-                         *      UPS Manual (Spaces) - 23 Characters
-                         *
-                         *      Format: 1Z XXX XXX XX XXXX XXXX
-                         *              1z XXX XXX XX XXXX XXXX
-                         *
-                         *      Fedex Ground Manual (Spaces) - 23 Characters
-                         *
-                         *      Format: XXXXXXX XXXXXXX XXXXXXX
-                         *
-                         */
-
-                        if (infoTrack.length() == 23) {
-                            if (TextUtils.isDigitsOnly(infoTrack.getText().toString().replaceAll("\\s+", ""))) {
-                                mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
-                                Done = "1";
-                            }
-                            if (infoTrack.getText().toString().contains("1Z") || infoTrack.getText().toString().contains("1z")) {
-                                mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
-                                Done = "1";
-                            }
-                        }
-
-                        /**
-                         *      Fedex Express Manual (No Spaces) - 12 Characters
-                         *
-                         *      Format: XXXXXXXXXXXX
-                         *
-                         */
-
-                        if (infoTrack.length() == 12 && TextUtils.isDigitsOnly(infoTrack.getText())) {
-                            mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
-                            Done = "1";
-                        }
-
-                        /**
-                         *      Fedex Express Manual (Spaces) - 14 Characters
-                         *
-                         *      Format: XXXX XXXX XXXX
-                         *
-                         */
-
-                        if (infoTrack.length() == 14 && TextUtils.isDigitsOnly(infoTrack.getText().toString().replaceAll("\\s+", ""))) {
-                            mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
-                            Done = "1";
-                        } else if (!Done.equals("1")) {
-                            ScanDataEmpty();
-                        }
                     }
                 }).setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
@@ -719,6 +711,214 @@ public class MainActivity extends Activity {
     }
 
     /**
+     *
+     * Creates alert dialog for manual spinner data
+     *
+     * @param infoCompany Company to be saved
+     * @param infoTracking Tracking number to be saved
+     * @param infoName Name to be saved
+     * @param infoUsername Username to be saved
+     */
+    private void manual_spinner_data(final String infoCompany,final String infoTracking,final String infoName,final String infoUsername) {
+
+        LayoutInflater view_spinner = LayoutInflater.from(this);
+        final View view_spinner_inflate = view_spinner.inflate(R.layout.manual_entry_spinner, null);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        int resourceId = this.getResources().getIdentifier("spinner_data_departments", "id", this.getPackageName());
+        int resourceId2 = this.getResources().getIdentifier("spinner_data_package_count", "id", this.getPackageName());
+
+        Spinners(view_spinner_inflate, false, resourceId, resourceId2);
+
+        alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Package Information").setView(view_spinner_inflate).setPositiveButton("Save",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                        final String Department = SpinnerValue;
+                        final String Count = SpinnerValue_;
+                        final String ListView = infoCompany + " - " + infoName + " - " + Department + " - " + Count;
+
+                        if (manual_entry_view(infoCompany, infoTracking, infoName, infoUsername, Department, Count, ListView).equals("1")) {
+
+                        }
+                        else  {
+                            ScanDataEmpty();
+                        }
+                    }
+                }).setNegativeButton("Back",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                        InputManual(true);
+                    }
+                });
+
+        alert.show();
+
+    }
+
+    /**
+     *
+     * Updates the Tracking number so it can be viewed on the list
+     *
+     * @param infoCompany Company to be saved
+     * @param infoTracking Tracking number to be saved
+     * @param infoName Name to be saved
+     * @param infoUsername Username to be saved
+     * @param Department Department to be saved
+     * @param Count Package count
+     * @param ListView Format for the listView
+     * @return Returns 1 if successful and 0 if not
+     */
+
+    private String manual_entry_view(String infoCompany, String infoTracking, String infoName, String infoUsername, String Department, String Count, String ListView) {
+        if (infoTrack.length() == 0) {
+            ScanDataEmpty();
+            return "0";
+        }
+
+        /**
+         *      Fedex Ground Manual (No Spaces) - 21 Characters
+         *
+         *      Format: XXXXXXXXXXXXXXXXXXXXX
+         *
+         */
+
+        if (infoTrack.length() == 21 && TextUtils.isDigitsOnly(infoTrack.getText())) {
+            mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
+            return "1";
+        }
+
+        /**
+         *      UPS Manual (No Spaces) - 18 Characters
+         *
+         *      Format: 1ZXXXXXXXXXXXXXXXX
+         *              1zXXXXXXXXXXXXXXXX
+         *
+         */
+
+        if (infoTrack.length() == 18) {
+            if (infoTrack.getText().toString().contains("1Z") || infoTrack.getText().toString().contains("1z")) {
+                mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
+                return "1";
+            }
+        }
+
+        /**
+         *      UPS Manual (Spaces) - 23 Characters
+         *
+         *      Format: 1Z XXX XXX XX XXXX XXXX
+         *              1z XXX XXX XX XXXX XXXX
+         *
+         *      Fedex Ground Manual (Spaces) - 23 Characters
+         *
+         *      Format: XXXXXXX XXXXXXX XXXXXXX
+         *
+         */
+
+        if (infoTrack.length() == 23) {
+            if (TextUtils.isDigitsOnly(infoTrack.getText().toString().replaceAll("\\s+", ""))) {
+                mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
+                return "1";
+            }
+            if (infoTrack.getText().toString().contains("1Z") || infoTrack.getText().toString().contains("1z")) {
+                mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
+                return "1";
+            }
+        }
+
+        /**
+         *      Fedex Express Manual (No Spaces) - 12 Characters
+         *
+         *      Format: XXXXXXXXXXXX
+         *
+         */
+
+        if (infoTrack.length() == 12 && TextUtils.isDigitsOnly(infoTrack.getText())) {
+            mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
+            return "1";
+        }
+
+        /**
+         *      Fedex Express Manual (Spaces) - 14 Characters
+         *
+         *      Format: XXXX XXXX XXXX
+         *
+         */
+
+        if (infoTrack.length() == 14 && TextUtils.isDigitsOnly(infoTrack.getText().toString().replaceAll("\\s+", ""))) {
+            mAdd(infoTracking, infoCompany, infoName, Department, infoUsername, ListView, Count);
+            return "1";
+        }
+        return "0";
+    }
+
+    /**
+     * Creates spinner data for Manual & Scan entry
+     *
+     * @param view_spinner_inflate View to inflate
+     * @param Scan True or false for previous scanning
+     * @param resource Resource ID #
+     * @param resource_ Resource ID #2
+     */
+
+    public void Spinners(View view_spinner_inflate, Boolean Scan, int resource, int resource_) {
+
+        final Spinner spinner = (Spinner) view_spinner_inflate.findViewById(resource);
+        final Spinner spinner_ = (Spinner) view_spinner_inflate.findViewById(resource_);
+
+    /**
+     * Department data
+     */
+
+    final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner.setAdapter(adapter);
+    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Object Location = parent.getItemAtPosition(position);
+            SpinnerValue = Location.toString();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    });
+
+    /**
+     *  Package Count
+     */
+
+    List<String> Package_List = new ArrayList<>();
+    for (int i = 1; i <= 100; i++) {
+        Package_List.add("" + i);
+    }
+    ArrayAdapter<String> adapter_ = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Package_List);
+    adapter_.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinner_.setAdapter(adapter_);
+    spinner_.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Object Location_ = parent.getItemAtPosition(position);
+            SpinnerValue_ = Location_.toString();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    });
+
+    if (Scan && data_exec("tinyDB", "getString", "SCAN_PREVIOUS_CHECKED", false, null, null).equals("TRUE")) {
+        spinner.setSelection(adapter.getPosition(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_DEPARTMENT", false, null, null)));
+        spinner_.setSelection(adapter_.getPosition(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COUNT", false, null, null)));
+    }
+    else {
+
+    }
+}
+    /**
      * Email Log
      * Update log
      * Create List View
@@ -732,7 +932,7 @@ public class MainActivity extends Activity {
         final SimpleDateFormat df = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
         final String formattedDate = df.format(c.getTime());
         final String[] TO = {"Receiving@cdaresort.com"};
-        i.setType("text/plain");
+        i.setType("text/csv");
         i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File("/storage/emulated/0/Receiving-Data-" + formattedDate + ".csv")));
         i.putExtra(Intent.EXTRA_SUBJECT, "Tracking Numbers - " + formattedDate + "");
         i.putExtra(Intent.EXTRA_EMAIL, TO);
@@ -763,7 +963,6 @@ public class MainActivity extends Activity {
         final List<Barcodes> Barcodes = db.getBarCodes();
         db.close();
 
-            int i = 0;
             for (Barcodes cn : Barcodes) {
                 final String bar = cn.getBarcode();
 
@@ -782,7 +981,6 @@ public class MainActivity extends Activity {
                                     + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                                     + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                     log.add(values);
-                    i++;
                 }
 
             /**
@@ -802,7 +1000,6 @@ public class MainActivity extends Activity {
                                     + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                                     + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                     log.add(values);
-                    i++;
                 }
             }
             /**
@@ -819,7 +1016,6 @@ public class MainActivity extends Activity {
                                 + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                                 + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                 log.add(values);
-                i++;
             }
 
             /**
@@ -836,7 +1032,6 @@ public class MainActivity extends Activity {
                                 + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                                 + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                 log.add(values);
-                i++;
             }
 
             /**
@@ -854,7 +1049,6 @@ public class MainActivity extends Activity {
                                 + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                                 + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                 log.add(values);
-                i++;
             }
 
 
@@ -876,7 +1070,6 @@ public class MainActivity extends Activity {
                                 + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
                                 + Output + "\n" + "Packages: " + cn.getCount() + "\n";
                 log.add(values);
-                i++;
             }
         }
     }
@@ -1012,13 +1205,17 @@ public class MainActivity extends Activity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data_exec("tinyDB", "remove", "LOGIN_SKIP", false, null);
-                data_exec("tinyDB", "remove", "LOGGED_IN", false, null);
-                data_exec("tinyDB", "remove", "LOGGED_ACTUAL", false, null);
+                data_exec("tinyDB", "remove", "LOGIN_SKIP", false, null, null);
+                data_exec("tinyDB", "remove", "LOGGED_IN", false, null, null);
+                data_exec("tinyDB", "remove", "LOGGED_ACTUAL", false, null, null);
+                final String[] log = new String[200];
+                Arrays.fill(log, "null");
+                data_exec("deleteBarcodes", null, null, true, null, null);
                 final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this, R.style.MyGravity);
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Logging out...");
                 progressDialog.show();
+
                 new android.os.Handler().postDelayed(
                         new Runnable() {
                             public void run() {
@@ -1043,9 +1240,9 @@ public class MainActivity extends Activity {
         CounterTxtSave = (TextView) findViewById(R.id.textView2);
         UserLog = (TextView) findViewById(R.id.UserLog);
 
-        String val = data_exec("tinyDB", "getInt", "counter", false, null);
-        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null);
-        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null);
+        String val = data_exec("tinyDB", "getInt", "counter", false, null, null);
+        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null, null);
+        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null, null);
 
         badge.setText(val);
         badge.setTextSize(16);
@@ -1057,7 +1254,7 @@ public class MainActivity extends Activity {
         Counter = Integer.valueOf(val);
 
         UserLog.setText("User: " + logged_a + " - " + logged_b);
-        data_exec("tinyDB", "remove", "counter", false, null);
+        data_exec("tinyDB", "remove", "counter", false, null, null);
 
         CreateListView();
     }
@@ -1066,8 +1263,8 @@ public class MainActivity extends Activity {
         CounterTxtSet = (TextView) findViewById(R.id.textView2);
         Integer value = Integer.parseInt(CounterTxtSet.getText().toString());
 
-        data_exec("tinyDB", "remove", "counter", false, null);
-        data_exec("tinyDB", "putInt", "counter", false, value);
+        data_exec("tinyDB", "remove", "counter", false, null, null);
+        data_exec("tinyDB", "putInt", "counter", false, value, null);
     }
 
     /**
@@ -1080,7 +1277,7 @@ public class MainActivity extends Activity {
      * @param DataInt Integer Data to be pass for entry to a database or settings file
      *
      */
-    private String data_exec (String request, String Options, String Entry, Boolean history, Integer DataInt) {
+    private String data_exec (String request, String Options, String Entry, Boolean history, Integer DataInt, String DataString) {
 
         final History sql_history = new History(this);
         final SQLite  sql_current = new SQLite(this);
@@ -1097,6 +1294,9 @@ public class MainActivity extends Activity {
             if (Options.equals("getInt")) {
                 final Integer getInt = tinyDB_pref.getInt(Entry, 0);
                 return String.valueOf(getInt);
+            }
+            if (Options.equals("putString")) {
+                tinyDB_pref.putString(Entry, DataString);
             }
             if (Options.equals("getString")) {
                 final String getString = tinyDB_pref.getString(Entry);
@@ -1115,9 +1315,14 @@ public class MainActivity extends Activity {
 
             badge.setText("0");
             CounterTxt.setText("0");
-            tinyDB_pref.remove("PREVIOUS_NAME");
-            tinyDB_pref.remove("PREVIOUS_COMPANY");
-            tinyDB_pref.remove("PREVIOUS_DEPARTMENT");
+            tinyDB_pref.remove("SCAN_SAVED");
+            tinyDB_pref.remove("SCAN_PREVIOUS_NAME");
+            tinyDB_pref.remove("SCAN_PREVIOUS_COMPANY");
+            tinyDB_pref.remove("SCAN_PREVIOUS_DEPARTMENT");
+            tinyDB_pref.remove("SCAN_PREVIOUS_COUNT");
+            tinyDB_pref.remove("MANUAL_PREVIOUS_NAME");
+            tinyDB_pref.remove("MANUAL_PREVIOUS_COMPANY");
+            tinyDB_pref.remove("MANUAL_PREVIOUS_DEPARTMENT");
 
         }
 
@@ -1126,8 +1331,7 @@ public class MainActivity extends Activity {
 
     //ToDO Don't think it is working test
     protected boolean checkFocus() {
-        String PackageName = "com.google.zxing.client.android";
-        String PackageName_ = "com.google.android.gm";
+
         ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         ComponentName componentInfo;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
@@ -1141,7 +1345,7 @@ public class MainActivity extends Activity {
             componentInfo = tasks.get(0).topActivity;
         }
 
-        if (componentInfo.getPackageName().equals(PackageName) || componentInfo.getPackageName().equals(PackageName_) ) {
+        if (!componentInfo.getPackageName().equals(getApplicationContext().getPackageName())) {
             //Log.e(TAG, "True2");
             return true;
         }
@@ -1158,10 +1362,10 @@ public class MainActivity extends Activity {
             ScanDataEmpty();
         }
         if (Integer.valueOf(CounterTxt.getText().toString()) >= 1){
-            final ExportDatabaseCSVTask task = new ExportDatabaseCSVTask();
-            task.execute();
-            emailResults();
-            ClearButtonData();
+                final ExportDatabaseCSVTask task = new ExportDatabaseCSVTask();
+                task.execute();
+                emailResults();
+                ClearButtonData();
         }
     }
 
@@ -1169,7 +1373,8 @@ public class MainActivity extends Activity {
         final String[] log = new String[200];
         Arrays.fill(log, "null");
 
-        data_exec("deleteBarcodes", null, null, false, null);
+        data_exec("deleteBarcodes", null, null, false, null, null);
+
         CreateListView();
 
     }
@@ -1209,7 +1414,7 @@ public class MainActivity extends Activity {
     }
 
     private void ClearHistoryData() {
-        data_exec("deleteBarcodes", null, null, true, null);
+        data_exec("deleteBarcodes", null, null, true, null, null);
         CreateListView();
         Snackbar.make(getWindow().getDecorView().getRootView(), "Deleted History", Snackbar.LENGTH_LONG).setDuration(2000).show();
     }

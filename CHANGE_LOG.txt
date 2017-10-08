@@ -1,9 +1,56 @@
+===== 3.2.0 ===== (10.08.2017)
+
+Major changes again!
+
+Updated API from 23 (Android 6.0) to 24 (Android 7.0)
+
+MainActivity.java changes:
+
+Added Butterknife
+Changed onActivityResult()
+Added scan_entry_view()
+Added Outgoing checkbox
+Added scan_entry_spinner_data()
+Changed InputManaul()
+Added manual_spinner_data()
+Added manual_entry_view()
+Added Spinners()
+Changed datatype in emailResults()
+Modified data_exec()
+Changed checkFocus()
+
+Services.java changes:
+Added setPriority to 2
+Added setVibrate to 0
+Changed small icon
+Added large con
+Changed visibility to 1
+Added stoptimertask() to run()
+
+UserLogin.java changes:
+Updated Butterknife to v7.0.0
+
+UI Changes:
+Fixed scaling again on:
+manual_entry.xml
+scan_entry.xml
+
+Added:
+manual_entry_spinner.xml
+scan_entry_spinner.xml
+
+Added strings:
+checkbox
+outgoing
+Changed hint_manual
+
+Build.gradle:
+Added butterknife 7.0.0
 
 ===== 3.1.8 ===== (10.04.2017)
 
 MainActivity.java changes
 - Added checkbox to Scan Entry, which allows for repeating information on the previous scan.
-
 - Changed some scaling on scan_entry, manual_entry, update.
 
 ===== 3.1.7 ===== (10.03.2017)

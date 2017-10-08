@@ -5,8 +5,7 @@
         Name / Guest\n
     </string>
     <string name="hint_manual">
-    Tracking Number\n\n
-    Fedex Express: XXXX XXXX XXXX\n
+    \n Fedex Express: XXXX XXXX XXXX\n
     Fedex Ground: XXXXXXX XXXXXXX XXXXXXX\n
     UPS:  1Z XXX XXX XX XXXX XXXX\n
     UPS:  1z XXX XXX XX XXXX XXXX\n
@@ -65,5 +64,6 @@
     <!--<string name="updateCompany">Update Department</string>-->
     <string name="previous">Previous</string>
     <string name="unlock">Unlock</string>
-    <string name="checkbox">Repeat previous</string>
+    <string name="checkbox">Repeat previous package</string>
+    <string name="outgoing">Outgoing package</string>
 </resources>
