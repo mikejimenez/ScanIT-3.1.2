@@ -50,6 +50,8 @@
         <item>Weddings</item>
         <item>Whispers</item>
     </string-array>
+    <string name="empty"></string>
+    <string name="Senders">Modify Senders</string>
     <string name="logout">Logout</string>
     <string name="cancel">Cancel</string>
     <!--<string name="user">User</string>-->

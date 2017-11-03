@@ -38,10 +38,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.Snackbar;
+
 import com.alpha.ZXing.android.IntentIntegrator;
 import com.alpha.ZXing.android.IntentResult;
 import com.opencsv.CSVWriter;
 import com.readystatesoftware.viewbadger.BadgeView;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -56,9 +58,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+
 import alpha.com.ScanIT.Notifications.Services;
 import alpha.com.ScanIT.databases.History;
 import alpha.com.ScanIT.databases.SQLite;
+import alpha.com.ScanIT.databases.Senders;
 import alpha.com.ScanIT.databases.TinyDB;
 import alpha.com.ScanIT.interfaces.Barcodes;
 import alpha.com.ScanIT.interfaces.FormatString;
@@ -68,44 +72,38 @@ import butterknife.ButterKnife;
 public class MainActivity extends Activity {
 
     private static final String TAG = "MAKE_BARCODES";
-    private ArrayList<String> log = new ArrayList<String>();
-
+    final Preferences pref = new Preferences();
+    final HistoryData historyData = new HistoryData();
 
     @Bind(R.id.manual_entry_tracking)
     @Nullable
     EditText infoTrack;
-
-
     @Bind(R.id.manual_entry_company)
     @Nullable
     EditText infoData;
-
-
     @Bind(R.id.manual_entry_name)
     @Nullable
     EditText infoSender;
-
     @Nullable
     @Bind(R.id.scan_entry_department)
     Spinner scan_spinner;
-
+    @Nullable
+    @Bind(R.id.manual_entry_spinner_data)
+    Spinner spinner_sender;
     @Nullable
     @Bind(R.id.scan_entry_count)
     Spinner scan_spinner_;
-
     @Nullable
     @Bind(R.id.spinner_data_departments)
     Spinner manual_spinner;
-
     @Nullable
     @Bind(R.id.spinner_data_package_count)
-    Spinner manual_spinner_;
 
+    Spinner manual_spinner_;
     TextView CounterTxt;
     TextView CounterTxtSet;
     TextView CounterTxtSave;
     TextView UserLog;
-
     String Output;
     String SpinnerValue;
     String SpinnerValue_;
@@ -120,12 +118,11 @@ public class MainActivity extends Activity {
     String Error = "";
     Integer HistoryCounter;
     Integer Counter = 0;
-
     BadgeView badge;
     BadgeView badge_history;
-
     View setCount;
     View setCount_history;
+    private ArrayList<String> log = new ArrayList<String>();
 
     /**
      * onCreate - create Activity
@@ -145,59 +142,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        final FloatingActionButton fabHistory = (FloatingActionButton) findViewById(R.id.fabHistory);
-        final FloatingActionButton fabScan = (FloatingActionButton) findViewById(R.id.fabScan);
-        final FloatingActionButton fabMan = (FloatingActionButton) findViewById(R.id.fabManual);
-        final FloatingActionButton fabSend = (FloatingActionButton) findViewById(R.id.fabEmail);
-        final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
-        final FloatingActionButton fabAbout = (FloatingActionButton) findViewById(R.id.fabAbout);
-
-        CounterTxt = (TextView) findViewById(R.id.textView2);
         setCount = findViewById(R.id.TotalCounter);
         setCount_history = findViewById(R.id.historyCounter);
+        CounterTxt = (TextView) findViewById(R.id.textView2);
+
         badge = new BadgeView(this, setCount);
         badge_history = new BadgeView(this, setCount_history);
 
-        loadPreferences();
-        fabClear.setVisibility(View.INVISIBLE);
-        fabMan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                InputManual(false);
-            }
-        });
-        fabScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
-                scanIntegrator.initiateScan();
-            }
-        });
-        fabSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClearButton();
-            }
-        });
-        fabHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HistoryButton();
-            }
-        });
-        fabClear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ClearHistoryButton();
-            }
-        });
-        fabAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Created by Michael Jimenez, for The Coeur D\'Alene Resort", Snackbar.LENGTH_LONG).setDuration(2500).show();
-                user_logout();
-            }
-        });
+        pref.Load();
+        FloatingActionButtons();
     }
 
     /**
@@ -211,7 +164,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        savePreferences();
+        pref.Save();
 
         if (checkFocus()) {
             //Log.e(TAG, "True");
@@ -230,8 +183,9 @@ public class MainActivity extends Activity {
      * Code that processes the intent from barcode scanner
      *
      * @param requestCode Barcode scanner argument
-     * @param resultCode RESULT_OK, processes data - RESULT_CANCELED, we didn't get any data
-     * @param intent Barcode scanner argument
+     * @param resultCode  RESULT_OK, processes data
+     *                    RESULT_CANCELED, we didn't get any data
+     * @param intent      Barcode scanner argument
      */
 
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -255,184 +209,214 @@ public class MainActivity extends Activity {
      * Scan Entry to create view after receiving data from barcode scanner
      *
      * @param ScanContent Barcode to be saved
-     * @param Username Username to be saved
-     * @param Back True/False if we are going backwards
+     * @param Username    Username to be saved
+     * @param Back        True/False if we are going backwards
      */
 
     public void scan_entry_view(final String ScanContent, final String Username, final Boolean Back) {
 
-    final LayoutInflater Results = LayoutInflater.from(this);
-    final View textEntryView = Results.inflate(R.layout.scan_entry, null);
-    final EditText infoCompany = (EditText) textEntryView.findViewById(R.id.scan_entry_company);
-    final EditText infoName = (EditText) textEntryView.findViewById(R.id.scan_entry_name);
-    final CheckBox ChkBox = (CheckBox) textEntryView.findViewById((R.id.scan_entry_checkBox));
-    final CheckBox ChkBox_ = (CheckBox) textEntryView.findViewById((R.id.scan_entry_checkBox2));
-    final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final LayoutInflater Results = LayoutInflater.from(this);
+        final View textEntryView = Results.inflate(R.layout.scan_entry, null);
+        final EditText infoCompany = (EditText) textEntryView.findViewById(R.id.scan_entry_company);
+        final EditText infoName = (EditText) textEntryView.findViewById(R.id.scan_entry_name);
+        final CheckBox ChkBox = (CheckBox) textEntryView.findViewById((R.id.scan_entry_checkBox));
+        final CheckBox ChkBox_ = (CheckBox) textEntryView.findViewById((R.id.scan_entry_checkBox2));
+        final Spinner spinner_sender_scan = (Spinner) textEntryView.findViewById(R.id.scan_entry_spinner_data);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-    if (Back) {
-        if (data_exec("tinyDB", "getString", "SCAN_SAVED", false, null, null).equals("TRUE")) {
-            final String load_previous_company = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null);
-            final String load_previous_name = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null);
-            infoCompany.setText(load_previous_company);
-            infoName.setText(load_previous_name);
-            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY", false, null, null);
-            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME", false, null, null);
+        if (Back) {
+            if (data_exec("tinyDB", "getString", "SCAN_SAVED", false, null, null).equals("TRUE")) {
+                final String load_previous_company = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null);
+                final String load_previous_name = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null);
+
+                infoCompany.setText(load_previous_company);
+                infoName.setText(load_previous_name);
+
+                data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY", false, null, null);
+                data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME", false, null, null);
+            } else {
+                final String load_previous_company = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
+                final String load_previous_name = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
+
+                infoCompany.setText(load_previous_company);
+                infoName.setText(load_previous_name);
+
+                data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
+                data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
+            }
         }
-        else {
-            final String load_previous_company = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
-            final String load_previous_name = data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
-            infoCompany.setText(load_previous_company);
-            infoName.setText(load_previous_name);
-            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
-            data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
-        }
+
+        /**
+         * Sender Information
+         */
+
+        manual_spinner_load_senders(spinner_sender_scan);
+        spinner_sender_scan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object Location = parent.getItemAtPosition(position);
+                SpinnerValue = Location.toString();
+
+                if (SpinnerValue.equals("")) {
+                    infoCompany.setVisibility(View.VISIBLE);
+                } else {
+                    infoCompany.setText(SpinnerValue);
+                    infoCompany.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        /**
+         * Repeat information for last package scanned
+         */
+
+        ChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (ChkBox.isChecked() && !Back && !data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null).isEmpty()) {
+                    infoCompany.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null));
+                    infoName.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null));
+
+                } else if (ChkBox.isChecked() && Back && !data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null).isEmpty()) {
+                    infoCompany.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null));
+                    infoName.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null));
+                } else {
+
+                }
+            }
+        });
+
+        /**
+         * Mark as an outgoing package
+         */
+
+        ChkBox_.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (ChkBox_.isChecked()) {
+                    final String getTextName = infoName.getText().toString();
+                    final String newTextName = getTextName + " (Outgoing)";
+                    infoName.setText(newTextName);
+                } else {
+                    final String getOldText = infoName.getText().toString();
+                    final String newOutText = getOldText.replace(" (Outgoing)", "");
+                    infoName.setText(newOutText);
+                }
+            }
+        });
+        alert.setIcon(R.drawable.perm_group_user_dictionary).setTitle("Information").setView(textEntryView).setPositiveButton("Continue",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+
+                        if (ChkBox.isChecked()) {
+                            data_exec("tinyDB", "putString", "SCAN_PREVIOUS_CHECKED", false, null, "TRUE");
+                        } else {
+                            data_exec("tinyDB", "putString", "SCAN_PREVIOUS_CHECKED", false, null, "FALSE");
+                        }
+                        Error = "";
+                        if (Back) {
+                            final String scanCompany = infoCompany.getText().toString();
+                            final String scanName = infoName.getText().toString();
+                            data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "FALSE");
+                            data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, scanName);
+                            data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, scanCompany);
+
+                            if (!Error.contains("Y")) {
+                                scan_entry_spinner_data(ScanContent, scanCompany, scanName, Username);
+                            }
+                        } else {
+                            final String scanCompany = infoCompany.getText().toString();
+                            final String scanName = infoName.getText().toString();
+
+                            data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "FALSE");
+                            data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, scanName);
+                            data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, scanCompany);
+
+                            if (!Error.contains("Y")) {
+                                scan_entry_spinner_data(ScanContent, scanCompany, scanName, Username);
+                            }
+                        }
+                    }
+                }).setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                        ScanDataEmpty();
+                    }
+                });
+        alert.show();
     }
-
-    /**
-     * Repeat information for last package scanned
-     */
-
-    ChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (ChkBox.isChecked() && !Back && !data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null).isEmpty()) {
-                infoCompany.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null));
-                infoName.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null));
-
-            }
-            else if (ChkBox.isChecked() && Back && !data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null).isEmpty()) {
-                infoCompany.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COMPANY", false, null, null));
-                infoName.setText(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_NAME", false, null, null));
-            }
-            else {
-
-            }
-        }
-    });
-
-    /**
-     * Mark as an outgoing package
-     */
-
-    ChkBox_.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (ChkBox_.isChecked()) {
-                final String getTextName = infoName.getText().toString();
-                final String newTextName = getTextName + " (Outgoing)";
-                infoName.setText(newTextName);
-            }
-            else {
-                final String getOldText = infoName.getText().toString();
-                final String newOutText = getOldText.replace(" (Outgoing)", "");
-                infoName.setText(newOutText);
-            }
-        }
-    });
-    alert.setIcon(R.drawable.perm_group_user_dictionary).setTitle("Information").setView(textEntryView).setPositiveButton("Continue",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,
-                                    int whichButton) {
-                    if (ChkBox.isChecked()) {
-                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_CHECKED", false, null, "TRUE");
-                    }
-                    else {
-                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_CHECKED", false, null, "FALSE");
-                    }
-                    Error = "";
-                    if (Back) {
-                        final String scanCompany = infoCompany.getText().toString();
-                        final String scanName = infoName.getText().toString();
-                        data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "FALSE");
-                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, scanName);
-                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, scanCompany);
-
-                        if (!Error.contains("Y")) {
-                            scan_entry_spinner_data(ScanContent, scanCompany, scanName, Username);
-                        }
-                    } else {
-                        final String scanCompany = infoCompany.getText().toString();
-                        final String scanName = infoName.getText().toString();
-                        data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "FALSE");
-                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, scanName);
-                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, scanCompany);
-
-                        if (!Error.contains("Y")) {
-                            scan_entry_spinner_data(ScanContent, scanCompany, scanName, Username);
-                        }
-                    }
-                }
-            }).setNegativeButton("Cancel",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,
-                                    int whichButton) {
-                    ScanDataEmpty();
-                }
-            });
-    alert.show();
-}
 
     /**
      * Scan Entry Spinner Data + Saving to database
      *
      * @param infoBarcode Barcode to be saved
      * @param scanCompany Company to be saved
-     * @param scanName Name to be saved
-     * @param Username Username to be saved
+     * @param scanName    Name to be saved
+     * @param Username    Username to be saved
      */
 
     public void scan_entry_spinner_data(final String infoBarcode, final String scanCompany, final String scanName, final String Username) {
 
-    LayoutInflater view_spinner = LayoutInflater.from(this);
-    final View view_spinner_inflate = view_spinner.inflate(R.layout.scan_entry_spinner, null);
-    final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-    final SQLite db = new SQLite(this);
-    final History db2 = new History(this);
+        LayoutInflater view_spinner = LayoutInflater.from(this);
+        final View view_spinner_inflate = view_spinner.inflate(R.layout.scan_entry_spinner, null);
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final SQLite db = new SQLite(this);
+        final History db2 = new History(this);
+        final Senders ship_db = new Senders(this);
 
-    int resourceId = this.getResources().getIdentifier("scan_entry_department", "id", this.getPackageName());
-    int resourceId2 = this.getResources().getIdentifier("scan_entry_count", "id", this.getPackageName());
+        int resourceId = this.getResources().getIdentifier("scan_entry_department", "id", this.getPackageName());
+        int resourceId2 = this.getResources().getIdentifier("scan_entry_count", "id", this.getPackageName());
 
-    Spinners(view_spinner_inflate, true, resourceId, resourceId2);
+        Spinners(view_spinner_inflate, true, resourceId, resourceId2);
 
-    alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Package Information").setView(view_spinner_inflate).setPositiveButton("Save",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,
-                                    int whichButton) {
-                    final String Department = SpinnerValue;
-                    final String Count = SpinnerValue_;
-                    final String ListView = scanCompany + " - " + scanName + " - " + Department + " - " + Count;
+        alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Package Information").setView(view_spinner_inflate).setPositiveButton("Save",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                        final String Department = SpinnerValue;
+                        final String Count = SpinnerValue_;
+                        final String ListView = scanCompany + " - " + scanName + " - " + Department + " - " + Count;
 
-                    db.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, Count));
-                    db2.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, Count));
-                    Counter++;
-                    db.close();
-                    db2.close();
-                    CreateListView();
-                    String setText = Integer.valueOf(Counter).toString();
-                    CounterTxt.setText(setText);
-                    badge.increment(1);
-                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME", false, null, scanName);
-                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY", false, null, scanCompany);
-                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_DEPARTMENT", false, null, Department);
-                    data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COUNT", false, null, Count);
-                    data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "TRUE");
-                    data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
-                    data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
+                        db.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, Count));
+                        db2.addBarcodes(new Barcodes(infoBarcode, scanCompany, scanName, Department, Username, ListView, Count));
+                        ship_db.addSender(scanCompany);
+                        Counter++;
+                        db.close();
+                        db2.close();
+                        ship_db.close();
+                        CreateListView();
+                        String setText = Integer.valueOf(Counter).toString();
+                        CounterTxt.setText(setText);
+                        badge.increment(1);
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_NAME", false, null, scanName);
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COMPANY", false, null, scanCompany);
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_DEPARTMENT", false, null, Department);
+                        data_exec("tinyDB", "putString", "SCAN_PREVIOUS_COUNT", false, null, Count);
+                        data_exec("tinyDB", "putString", "SCAN_SAVED", false, null, "TRUE");
+                        data_exec("tinyDB", "remove", "SCAN_PREVIOUS_NAME_BEFORE_SAVE", false, null, null);
+                        data_exec("tinyDB", "remove", "SCAN_PREVIOUS_COMPANY_BEFORE_SAVE", false, null, null);
 
-                }
-            }).setNegativeButton("Back",
-            new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,
-                                    int whichButton) {
-                    scan_entry_view(infoBarcode, Username, true);
-                }
-            });
+                    }
+                }).setNegativeButton("Back",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int whichButton) {
+                        scan_entry_view(infoBarcode, Username, true);
+                    }
+                });
 
-    alert.show();
+        alert.show();
 
-}
+    }
 
     /**
      * Reading from database and Displaying
@@ -455,10 +439,47 @@ public class MainActivity extends Activity {
         listView.setDivider(null);
         listView.setSelector(android.R.color.transparent);
         listView.setAdapter(adapter);
+        listView.setVerticalScrollBarEnabled(false);
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 CreatePopup(id);
+                return false;
+            }
+        });
+        db.close();
+
+    }
+
+    private void CreateListView_Senders() {
+
+        final Senders db = new Senders(MainActivity.this);
+        final Cursor cursor = db.getSendersRaw();
+        final ListView view = (ListView) findViewById(R.id.sender_data);
+        final ListView hideHistory = (ListView) findViewById(R.id.listView_history);
+        final ListView hideView = (ListView) findViewById(R.id.listView);
+        final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
+
+        hideView.setVisibility(View.GONE);
+        hideHistory.setVisibility(View.GONE);
+        badge_history.hide();
+        fabClear.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.VISIBLE);
+
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                cursor,
+                new String[]{"Company"},
+                new int[]{android.R.id.text1},
+                0);
+
+        view.setDivider(null);
+        view.setSelector(android.R.color.transparent);
+        view.setAdapter(adapter);
+        view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                CreatePopup_sender(id);
                 return false;
             }
         });
@@ -553,7 +574,7 @@ public class MainActivity extends Activity {
          */
 
         List<String> Package_List = new ArrayList<>();
-        for (int i=1; i<=100; i++){
+        for (int i = 1; i <= 100; i++) {
             Package_List.add("" + i);
         }
         ArrayAdapter<String> adapter_ = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Package_List);
@@ -586,7 +607,7 @@ public class MainActivity extends Activity {
                     final String infoUsername = "User: " + logged_a + " - " + logged_b;
                     db.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername);
                     db.close();
-                    db4.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername, OldBarcode, OldName, OldCompany );
+                    db4.UpdateRecord(Data, _id, Editable.Factory.getInstance().newEditable(SpinnerValue), Name, ListView, Count, infoUsername, OldBarcode, OldName, OldCompany);
                     db4.close();
                     alertDialog.dismiss();
                     CreateListView();
@@ -621,25 +642,75 @@ public class MainActivity extends Activity {
         db5.close();
     }
 
+    private void CreatePopup_sender(Long id) {
+        final Senders db = new Senders(MainActivity.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        final RelativeLayout Senders = (RelativeLayout) View.inflate(MainActivity.this, R.layout.sender_update, null);
+        final Button delete_sender = (Button) Senders.findViewById(R.id.delete_sender);
+        final Button update_sender = (Button) Senders.findViewById(R.id.update_sender);
+        final EditText info_company = (EditText) Senders.findViewById(R.id.info_company);
+        final TextView previous_data = (TextView) Senders.findViewById(R.id.previous_data);
+        final long _id = id;
+        builder.setView(Senders);
+
+        final AlertDialog alertDialog = builder.create();
+        final SQLiteDatabase X = db.getReadableDatabase();
+        final Cursor c;
+
+        c = X.rawQuery("SELECT Company FROM ShippingData WHERE _id =" + _id, null);
+        c.moveToFirst();
+        final String Company = c.getString(c.getColumnIndexOrThrow("Company"));
+        c.close();
+
+        previous_data.setText(Company);
+
+        delete_sender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.DeleteRecord(_id);
+                alertDialog.dismiss();
+                db.close();
+                CreateListView_Senders();
+            }
+        });
+        update_sender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (info_company.length() != 0) {
+                    final Editable Data = info_company.getText();
+                    db.UpdateRecord(Data, _id);
+                    db.close();
+                    alertDialog.dismiss();
+                    CreateListView_Senders();
+                } else {
+                    Snackbar.make(Senders, "Please check input", Snackbar.LENGTH_LONG).setDuration(2300).show();
+                }
+            }
+        });
+        alertDialog.show();
+    }
+
     /**
      * Manual Functions
      */
 
     /**
-     * InputManual - Manually input a tracking number with information
+     * InputManual
+     * Manually input a tracking number with information
+     *
      * @param Back When True it will load the previous inputted information being proceeding to package information
      */
 
-    private void InputManual(Boolean Back) {
+    private void InputManual(final Boolean Back) {
 
         LayoutInflater Manual = LayoutInflater.from(this);
         @SuppressLint("AndroidLintInflateParams")
 
         final View textEntryView = Manual.inflate(R.layout.manual_entry, null);
+
         ButterKnife.bind(this, textEntryView);
 
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
         final String load_previous_company = data_exec("tinyDB", "getString", "MANUAL_PREVIOUS_COMPANY", false, null, null);
         final String load_previous_name = data_exec("tinyDB", "getString", "MANUAL_PREVIOUS_NAME", false, null, null);
         final String load_previous_tracking = data_exec("tinyDB", "getString", "MANUAL_PREVIOUS_TRACKING", false, null, null);
@@ -647,12 +718,34 @@ public class MainActivity extends Activity {
         data_exec("tinyDB", "remove", "MANUAL_PREVIOUS_COMPANY", false, null, null);
         data_exec("tinyDB", "remove", "MANUAL_PREVIOUS_NAME", false, null, null);
         data_exec("tinyDB", "remove", "MANUAL_PREVIOUS_TRACKING", false, null, null);
+        data_exec("tinyDB", "remove", "MANUAL_SPINNER_DATA", false, null, null);
 
         if (Back) {
             infoData.setText(load_previous_company);
             infoSender.setText(load_previous_name);
             infoTrack.setText(load_previous_tracking);
         }
+        manual_spinner_load_senders(spinner_sender);
+
+        spinner_sender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object Location = parent.getItemAtPosition(position);
+                SpinnerValue = Location.toString();
+
+                if (SpinnerValue.equals("")) {
+                    infoData.setVisibility(View.VISIBLE);
+                } else {
+                    infoData.setText(SpinnerValue);
+                    infoData.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         alert.setIcon(R.drawable.ic_dialog_alert_holo_light).setTitle("Tracking Number").setView(textEntryView).setPositiveButton("Continue",
                 new DialogInterface.OnClickListener() {
@@ -684,6 +777,16 @@ public class MainActivity extends Activity {
         alert.show();
 
     }
+//
+
+    private void manual_spinner_load_senders(Spinner spinner) {
+        final Senders ship_db = new Senders(this);
+        final List<String> data = ship_db.getAllSenders();
+        ship_db.close();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+    }
 
     /**
      * To add a barcode from manual input
@@ -698,28 +801,30 @@ public class MainActivity extends Activity {
     private void mAdd(String Result, String Company, String Name, String Department, String Username, String ListView, String Count) {
         final SQLite db = new SQLite(this);
         final History db2 = new History(this);
+        final Senders ship_db = new Senders(this);
 
         db.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
         db2.addBarcodes(new Barcodes(Result, Company, Name, Department, Username, ListView, Count));
+        ship_db.addSender(Company);
         //DisplayDebug(getWindow().getDecorView().getRootView(), Result, Company, Name, Department, Username, Count);
         Counter++;
         db.close();
         db2.close();
+        ship_db.close();
         CreateListView();
         CounterTxt.setText(String.format(Integer.valueOf(Counter).toString()));
         badge.increment(1);
     }
 
     /**
-     *
      * Creates alert dialog for manual spinner data
      *
-     * @param infoCompany Company to be saved
+     * @param infoCompany  Company to be saved
      * @param infoTracking Tracking number to be saved
-     * @param infoName Name to be saved
+     * @param infoName     Name to be saved
      * @param infoUsername Username to be saved
      */
-    private void manual_spinner_data(final String infoCompany,final String infoTracking,final String infoName,final String infoUsername) {
+    private void manual_spinner_data(final String infoCompany, final String infoTracking, final String infoName, final String infoUsername) {
 
         LayoutInflater view_spinner = LayoutInflater.from(this);
         final View view_spinner_inflate = view_spinner.inflate(R.layout.manual_entry_spinner, null);
@@ -739,8 +844,7 @@ public class MainActivity extends Activity {
 
                         if (manual_entry_view(infoCompany, infoTracking, infoName, infoUsername, Department, Count, ListView).equals("1")) {
 
-                        }
-                        else  {
+                        } else {
                             ScanDataEmpty();
                         }
                     }
@@ -757,20 +861,20 @@ public class MainActivity extends Activity {
     }
 
     /**
-     *
      * Updates the Tracking number so it can be viewed on the list
      *
-     * @param infoCompany Company to be saved
+     * @param infoCompany  Company to be saved
      * @param infoTracking Tracking number to be saved
-     * @param infoName Name to be saved
+     * @param infoName     Name to be saved
      * @param infoUsername Username to be saved
-     * @param Department Department to be saved
-     * @param Count Package count
-     * @param ListView Format for the listView
+     * @param Department   Department to be saved
+     * @param Count        Package count
+     * @param ListView     Format for the listView
      * @return Returns 1 if successful and 0 if not
      */
 
     private String manual_entry_view(String infoCompany, String infoTracking, String infoName, String infoUsername, String Department, String Count, String ListView) {
+
         if (infoTrack.length() == 0) {
             ScanDataEmpty();
             return "0";
@@ -856,9 +960,9 @@ public class MainActivity extends Activity {
      * Creates spinner data for Manual & Scan entry
      *
      * @param view_spinner_inflate View to inflate
-     * @param Scan True or false for previous scanning
-     * @param resource Resource ID #
-     * @param resource_ Resource ID #2
+     * @param Scan                 True or false for previous scanning
+     * @param resource             Resource ID #
+     * @param resource_            Resource ID #2
      */
 
     public void Spinners(View view_spinner_inflate, Boolean Scan, int resource, int resource_) {
@@ -866,58 +970,58 @@ public class MainActivity extends Activity {
         final Spinner spinner = (Spinner) view_spinner_inflate.findViewById(resource);
         final Spinner spinner_ = (Spinner) view_spinner_inflate.findViewById(resource_);
 
-    /**
-     * Department data
-     */
+        /**
+         * Department data
+         */
 
-    final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    spinner.setAdapter(adapter);
-    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Object Location = parent.getItemAtPosition(position);
-            SpinnerValue = Location.toString();
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.departments, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object Location = parent.getItemAtPosition(position);
+                SpinnerValue = Location.toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        /**
+         *  Package Count
+         */
+
+        List<String> Package_List = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            Package_List.add("" + i);
         }
+        ArrayAdapter<String> adapter_ = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Package_List);
+        adapter_.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_.setAdapter(adapter_);
+        spinner_.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object Location_ = parent.getItemAtPosition(position);
+                SpinnerValue_ = Location_.toString();
+            }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if (Scan && data_exec("tinyDB", "getString", "SCAN_PREVIOUS_CHECKED", false, null, null).equals("TRUE")) {
+            spinner.setSelection(adapter.getPosition(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_DEPARTMENT", false, null, null)));
+            spinner_.setSelection(adapter_.getPosition(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COUNT", false, null, null)));
+        } else {
 
         }
-    });
-
-    /**
-     *  Package Count
-     */
-
-    List<String> Package_List = new ArrayList<>();
-    for (int i = 1; i <= 100; i++) {
-        Package_List.add("" + i);
     }
-    ArrayAdapter<String> adapter_ = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Package_List);
-    adapter_.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    spinner_.setAdapter(adapter_);
-    spinner_.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Object Location_ = parent.getItemAtPosition(position);
-            SpinnerValue_ = Location_.toString();
-        }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
-        }
-    });
-
-    if (Scan && data_exec("tinyDB", "getString", "SCAN_PREVIOUS_CHECKED", false, null, null).equals("TRUE")) {
-        spinner.setSelection(adapter.getPosition(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_DEPARTMENT", false, null, null)));
-        spinner_.setSelection(adapter_.getPosition(data_exec("tinyDB", "getString", "SCAN_PREVIOUS_COUNT", false, null, null)));
-    }
-    else {
-
-    }
-}
     /**
      * Email Log
      * Update log
@@ -963,25 +1067,25 @@ public class MainActivity extends Activity {
         final List<Barcodes> Barcodes = db.getBarCodes();
         db.close();
 
-            for (Barcodes cn : Barcodes) {
-                final String bar = cn.getBarcode();
+        for (Barcodes cn : Barcodes) {
+            final String bar = cn.getBarcode();
 
-                /**
-                 *      UPS Manual (No Spaces) - 18 Characters
-                 *
-                 *      Format : 1ZXXXXXXXXXXXXXXXX
-                 *
-                 */
+            /**
+             *      UPS Manual (No Spaces) - 18 Characters
+             *
+             *      Format : 1ZXXXXXXXXXXXXXXXX
+             *
+             */
 
-                if (bar.length() == 18) {
-                    Output = FormatString.UPS(bar);
-                    final String values =
-                            "\nSender: " + cn.getCompany()
-                                    + "\n" + "Name: " + cn.getName()
-                                    + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
-                                    + Output + "\n" + "Packages: " + cn.getCount() + "\n";
-                    log.add(values);
-                }
+            if (bar.length() == 18) {
+                Output = FormatString.UPS(bar);
+                final String values =
+                        "\nSender: " + cn.getCompany()
+                                + "\n" + "Name: " + cn.getName()
+                                + "\n" + "Dept.: " + cn.getDepartment() + "\n" + "Tracking: "
+                                + Output + "\n" + "Packages: " + cn.getCount() + "\n";
+                log.add(values);
+            }
 
             /**
              *      UPS Manual - 23 Characters
@@ -1114,7 +1218,7 @@ public class MainActivity extends Activity {
             ScanFromFedEXG = Number.substring(Number.length() - 22, Number.length());
             return ScanFromFedEXG;
         }
-        if (Number.length() == 16) {
+        if (Number.length() == 16 && !Number.contains("Z")) {
 
             /**
              * Scanner
@@ -1125,7 +1229,7 @@ public class MainActivity extends Activity {
             return ScanFromFedEXEAir;
         }
         //if (Number.length() == 12) { ScanFromFedEXE = Number.substring(Number.length() - 12, Number.length()); return ScanFromFedEXE; }
-        if (Number.contains("1Z")) {
+        if (Number.contains("1Z") && Number.length() == 18) {
             ScanFromUPS = Number;
             return ScanFromUPS;
         } else {
@@ -1142,66 +1246,25 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Hide History Buttons
-     * Show Current Data
-     */
-    private void HideHistory() {
-        final ListView listView;
-        final ListView hideView;
-        final TextView textView;
-        final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
-
-        listView = (ListView) findViewById(R.id.listView_history);
-        hideView = (ListView) findViewById(R.id.listView);
-        textView = (TextView) findViewById(R.id.historyCounter);
-
-        hideView.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
-        fabClear.setVisibility(View.INVISIBLE);
-        textView.setVisibility(View.INVISIBLE);
-        badge_history.hide();
-        Snackbar.make(listView, "Switched to Current", Snackbar.LENGTH_LONG).setDuration(2000).show();
-    }
-
-    /**
-     * Show History Buttons
-     * Hide Current Data
-     */
-
-    private void ShowHistory() {
-        final ListView listView;
-        final ListView hideView;
-        final TextView textView;
-        final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
-
-        listView = (ListView) findViewById(R.id.listView_history);
-        hideView = (ListView) findViewById(R.id.listView);
-        textView = (TextView) findViewById(R.id.historyCounter);
-        listView.setVisibility(View.VISIBLE);
-        hideView.setVisibility(View.GONE);
-        fabClear.setVisibility(View.VISIBLE);
-        textView.setVisibility(View.VISIBLE);
-        Snackbar.make(listView, "Switched to History", Snackbar.LENGTH_LONG).setDuration(2000).show();
-    }
-
-    /**
-     *
      * user_logout - Log user out and start intent for UserLogin
      * loadPreferences - Load user preferences
      * savePreferences - Save user preferences
      * data_exec - TinyDB, SQLite, History database methods
      * checkFocus() - Check for application focus or start notification service
-     *
      */
     private void user_logout() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final RelativeLayout customView = (RelativeLayout) View.inflate(this, R.layout.user_logout, null);
         final Button logout = (Button) customView.findViewById(R.id.logout);
         final Button cancel = (Button) customView.findViewById(R.id.cancel);
+        final Button senders = (Button) customView.findViewById(R.id.senders);
+
+        //final ListView view = (ListView) findViewById(R.id.sender_data);
 
         builder.setView(customView);
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1233,54 +1296,28 @@ public class MainActivity extends Activity {
             }
         });
 
-    }
-
-    private void loadPreferences() {
-
-        CounterTxtSave = (TextView) findViewById(R.id.textView2);
-        UserLog = (TextView) findViewById(R.id.UserLog);
-
-        String val = data_exec("tinyDB", "getInt", "counter", false, null, null);
-        final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null, null);
-        final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null, null);
-
-        badge.setText(val);
-        badge.setTextSize(16);
-        badge.setBackgroundColor(Color.TRANSPARENT);
-        badge.setTextColor(Color.BLACK);
-        badge.show();
-
-        CounterTxtSave.setText(val);
-        Counter = Integer.valueOf(val);
-
-        UserLog.setText("User: " + logged_a + " - " + logged_b);
-        data_exec("tinyDB", "remove", "counter", false, null, null);
-
-        CreateListView();
-    }
-
-    private void savePreferences() {
-        CounterTxtSet = (TextView) findViewById(R.id.textView2);
-        Integer value = Integer.parseInt(CounterTxtSet.getText().toString());
-
-        data_exec("tinyDB", "remove", "counter", false, null, null);
-        data_exec("tinyDB", "putInt", "counter", false, value, null);
+        senders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateListView_Senders();
+                alertDialog.dismiss();
+            }
+        });
     }
 
     /**
-     *  Database functions for current and history
+     * Database functions for current and history
      *
      * @param request Request what database to use/method
      * @param Options Options for databases if apply (TinyDB example)
      * @param Entry   Data to pass for entry to a database or settings file
      * @param history True or False to remove history database
      * @param DataInt Integer Data to be pass for entry to a database or settings file
-     *
      */
-    private String data_exec (String request, String Options, String Entry, Boolean history, Integer DataInt, String DataString) {
+    private String data_exec(String request, String Options, String Entry, Boolean history, Integer DataInt, String DataString) {
 
         final History sql_history = new History(this);
-        final SQLite  sql_current = new SQLite(this);
+        final SQLite sql_current = new SQLite(this);
         final TinyDB tinyDB_pref = new TinyDB(this);
         final String Error = "No method found.";
 
@@ -1329,18 +1366,14 @@ public class MainActivity extends Activity {
         return Error;
     }
 
-    //ToDO Don't think it is working test
     protected boolean checkFocus() {
 
         ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         ComponentName componentInfo;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<ActivityManager.AppTask> tasks = manager.getAppTasks();
             componentInfo = tasks.get(0).getTaskInfo().topActivity;
-        }
-        else
-        {
+        } else {
             List<ActivityManager.RunningTaskInfo> tasks = manager.getRunningTasks(1);
             componentInfo = tasks.get(0).topActivity;
         }
@@ -1357,15 +1390,93 @@ public class MainActivity extends Activity {
      * Buttons / Misc.
      */
 
+    public void FloatingActionButtons() {
+
+        final FloatingActionButton fabHistory = (FloatingActionButton) findViewById(R.id.fabHistory);
+        final FloatingActionButton fabScan = (FloatingActionButton) findViewById(R.id.fabScan);
+        final FloatingActionButton fabMan = (FloatingActionButton) findViewById(R.id.fabManual);
+        final FloatingActionButton fabSend = (FloatingActionButton) findViewById(R.id.fabEmail);
+        final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
+        final FloatingActionButton fabAbout = (FloatingActionButton) findViewById(R.id.fabAbout);
+
+        fabClear.setVisibility(View.INVISIBLE);
+        fabMan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ListView sender = (ListView) findViewById(R.id.sender_data);
+                final ListView current = (ListView) findViewById(R.id.listView);
+                if (sender.getVisibility() == View.VISIBLE) {
+                    sender.setVisibility(View.GONE);
+                    current.setVisibility(View.VISIBLE);
+                    Snackbar.make(current, "Switched to Current", Snackbar.LENGTH_LONG).setDuration(2000).show();
+                }
+                InputManual(false);
+            }
+        });
+        fabScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ListView sender = (ListView) findViewById(R.id.sender_data);
+                final ListView current = (ListView) findViewById(R.id.listView);
+                if (sender.getVisibility() == View.VISIBLE) {
+                    sender.setVisibility(View.GONE);
+                    current.setVisibility(View.VISIBLE);
+                    Snackbar.make(current, "Switched to Current", Snackbar.LENGTH_LONG).setDuration(2000).show();
+                }
+                IntentIntegrator scanIntegrator = new IntentIntegrator(MainActivity.this);
+                scanIntegrator.initiateScan();
+            }
+        });
+        fabSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ListView sender = (ListView) findViewById(R.id.sender_data);
+                final ListView current = (ListView) findViewById(R.id.listView);
+                if (sender.getVisibility() == View.VISIBLE) {
+                    sender.setVisibility(View.GONE);
+                    current.setVisibility(View.VISIBLE);
+                    Snackbar.make(current, "Switched to Current", Snackbar.LENGTH_LONG).setDuration(2000).show();
+                }
+                ClearButton();
+            }
+        });
+        fabHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HistoryButton();
+            }
+        });
+        fabClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClearHistoryButton();
+            }
+        });
+        fabAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ListView sender = (ListView) findViewById(R.id.sender_data);
+                final ListView current = (ListView) findViewById(R.id.listView);
+                if (sender.getVisibility() == View.VISIBLE) {
+                    sender.setVisibility(View.GONE);
+                    current.setVisibility(View.VISIBLE);
+                    Snackbar.make(current, "Switched to Current", Snackbar.LENGTH_LONG).setDuration(2000).show();
+                }
+                Snackbar.make(view, "Created by Michael Jimenez, for The Coeur D\'Alene Resort", Snackbar.LENGTH_LONG).setDuration(2500).show();
+                user_logout();
+            }
+        });
+    }
+
     private void ClearButton() {
         if (Integer.valueOf(CounterTxt.getText().toString()).equals(0)) {
             ScanDataEmpty();
         }
-        if (Integer.valueOf(CounterTxt.getText().toString()) >= 1){
-                final ExportDatabaseCSVTask task = new ExportDatabaseCSVTask();
-                task.execute();
-                emailResults();
-                ClearButtonData();
+        if (Integer.valueOf(CounterTxt.getText().toString()) >= 1) {
+            final ExportDatabaseCSVTask task = new ExportDatabaseCSVTask();
+            task.execute();
+            emailResults();
+            ClearButtonData();
         }
     }
 
@@ -1384,8 +1495,7 @@ public class MainActivity extends Activity {
         view = (ListView) findViewById(R.id.listView_history);
 
         if (view.getVisibility() == View.GONE) {
-            ShowHistory();
-
+            historyData.Show();
             final History db = new History(MainActivity.this);
             final Cursor cursor = db.getBarcodesRaw();
 
@@ -1409,7 +1519,7 @@ public class MainActivity extends Activity {
             db.close();
 
         } else {
-            HideHistory();
+            historyData.Hide();
         }
     }
 
@@ -1420,11 +1530,11 @@ public class MainActivity extends Activity {
     }
 
     private void ClearHistoryButton() {
-        HideHistory();
+        historyData.Hide();
         ClearHistoryData();
     }
 
-    public void DisplayDebug(View view, String Barcode, String Company, String Name, String Department, String Username, String PackageCount) {
+    private void DisplayDebug(View view, String Barcode, String Company, String Name, String Department, String Username, String PackageCount) {
         // View getWindow().getDecorView().getRootView()
         Snackbar.make(view, "Barcode: " + Barcode + ", Company: " + Company + ", Name: " + Name + ", Department: " + Department + ", Username: " + Username + ", Package Count: " + PackageCount, Snackbar.LENGTH_LONG).setDuration(20000).show();
     }
@@ -1433,25 +1543,97 @@ public class MainActivity extends Activity {
      * Error Message
      */
 
-    private void ScanDataEmpty() {
+    public void ScanDataEmpty() {
         Snackbar.make(getWindow().getDecorView().getRootView(), "No scan data received!", Snackbar.LENGTH_LONG).setDuration(2000).show();
     }
 
-    public void copy(File src, File dst) throws IOException {
-        final InputStream in = new FileInputStream(src);
-        try {
-            final OutputStream out = new FileOutputStream(dst);
-            try {
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
-                }
-            } finally {
-                out.close();
-            }
-        } finally {
-            in.close();
+    private class HistoryData {
+
+        /**
+         * Hide History Buttons
+         * Show Current Data
+         */
+
+        void Hide() {
+            final ListView listView;
+            final ListView hideView;
+            final TextView textView;
+            final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
+
+            listView = (ListView) findViewById(R.id.listView_history);
+            hideView = (ListView) findViewById(R.id.listView);
+            textView = (TextView) findViewById(R.id.historyCounter);
+
+            hideView.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+            fabClear.setVisibility(View.INVISIBLE);
+            textView.setVisibility(View.INVISIBLE);
+            badge_history.hide();
+            Snackbar.make(listView, "Switched to Current", Snackbar.LENGTH_LONG).setDuration(2000).show();
+        }
+
+        /**
+         * Show History Buttons
+         * Hide Current Data
+         */
+
+        void Show() {
+            final ListView listView;
+            final ListView hideView;
+            final ListView sender;
+            final TextView textView;
+            final FloatingActionButton fabClear = (FloatingActionButton) findViewById(R.id.fabClearHistory);
+
+            listView = (ListView) findViewById(R.id.listView_history);
+            hideView = (ListView) findViewById(R.id.listView);
+            textView = (TextView) findViewById(R.id.historyCounter);
+            sender = (ListView) findViewById(R.id.sender_data);
+            listView.setVisibility(View.VISIBLE);
+            hideView.setVisibility(View.GONE);
+            fabClear.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+            sender.setVisibility(View.GONE);
+            Snackbar.make(listView, "Switched to History", Snackbar.LENGTH_LONG).setDuration(2000).show();
+
+        }
+    }
+
+    private class Preferences {
+
+
+        void Save() {
+            // Log.i(TAG, "Saved");
+
+            CounterTxtSet = (TextView) findViewById(R.id.textView2);
+            Integer value = Integer.parseInt(CounterTxtSet.getText().toString());
+
+            data_exec("tinyDB", "remove", "counter", false, null, null);
+            data_exec("tinyDB", "putInt", "counter", false, value, null);
+        }
+
+        void Load() {
+            // Log.i(TAG,"Loaded");
+
+            CounterTxtSave = (TextView) findViewById(R.id.textView2);
+            UserLog = (TextView) findViewById(R.id.UserLog);
+
+            String val = data_exec("tinyDB", "getInt", "counter", false, null, null);
+            final String logged_a = data_exec("tinyDB", "getString", "LOGGED_ACTUAL", false, null, null);
+            final String logged_b = data_exec("tinyDB", "getString", "LOGGED_IN", false, null, null);
+
+            badge.setText(val);
+            badge.setTextSize(16);
+            badge.setBackgroundColor(Color.TRANSPARENT);
+            badge.setTextColor(Color.BLACK);
+            badge.show();
+
+            CounterTxtSave.setText(val);
+            Counter = Integer.valueOf(val);
+
+            UserLog.setText("User: " + logged_a + " - " + logged_b);
+            data_exec("tinyDB", "remove", "counter", false, null, null);
+
+            CreateListView();
         }
     }
 
@@ -1493,19 +1675,15 @@ public class MainActivity extends Activity {
                 final SQLiteDatabase X = db.getReadableDatabase();
                 final Cursor c;
                 final String TABLE_NAME = "Barcodes";
-//                final String KEY_ID = "_id";
-//                final String KEY_Product = "Barcode";
-//                final String KEY_Count = "Company";
-
                 c = X.rawQuery("SELECT _id , Barcode, Company, Name, Department, Count FROM " + TABLE_NAME, null);
                 c.moveToFirst();
                 String arrStr1[] = {"#", "Barcode", "Company", "Name", "Department", "Count"};
 
                 csvWrite.writeNext(arrStr1);
                 while (!c.isAfterLast()) {
-                   // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_ID)));
-                   // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Product)));
-                   // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Count)));
+                    // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_ID)));
+                    // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Product)));
+                    // Log.v(TAG, "" + c.getString(c.getColumnIndex(KEY_Count)));
                     final String[] fields = getFieldsAsStringArray(c);
                     csvWrite.writeNext(fields);
                     c.moveToNext();
@@ -1515,7 +1693,7 @@ public class MainActivity extends Activity {
                 copy(file, exportDir2);
                 return "";
             } catch (IOException e) {
-               // Log.e("MainActivity", e.getMessage(), e);
+                // Log.e("MainActivity", e.getMessage(), e);
                 return "";
             }
         }
@@ -1537,9 +1715,27 @@ public class MainActivity extends Activity {
                 this.dialog.dismiss();
             }
             if (success.isEmpty()) {
-                // Toast.makeText(MainActivity.this, "Export successful!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Export successful!", Toast.LENGTH_SHORT).show();
             } else {
-                //  Toast.makeText(MainActivity.this, "Export failed!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Export failed!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        protected void copy(File src, File dst) throws IOException {
+            final InputStream in = new FileInputStream(src);
+            try {
+                final OutputStream out = new FileOutputStream(dst);
+                try {
+                    byte[] buf = new byte[1024];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                } finally {
+                    out.close();
+                }
+            } finally {
+                in.close();
             }
         }
     }

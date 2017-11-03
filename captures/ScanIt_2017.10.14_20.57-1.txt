@@ -1,0 +1,165 @@
+Applications Memory Usage (in Kilobytes):
+Uptime: 3104329 Realtime: 3104329
+
+Total PSS by process:
+     75,908K: system (pid 1625)
+     71,897K: com.google.android.gms (pid 2454)
+     66,210K: com.android.systemui (pid 1719 / activities)
+     64,863K: com.google.android.gm (pid 28571 / activities)
+     48,420K: com.google.android.gms.persistent (pid 2039)
+     41,804K: com.google.android.googlequicksearchbox:search (pid 2300)
+     33,731K: com.android.settings (pid 317 / activities)
+     29,982K: com.android.phone (pid 1838)
+     28,968K: com.google.android.apps.docs (pid 5431)
+     25,793K: com.android.launcher3 (pid 2145 / activities)
+     21,594K: com.google.android.apps.photos (pid 2694)
+     21,265K: zygote (pid 1375)
+     17,939K: com.android.documentsui (pid 768 / activities)
+     17,500K: com.android.inputmethod.latin (pid 1713)
+     11,576K: com.google.android.packageinstaller (pid 404 / activities)
+     11,297K: alpha.com.ScanIT (pid 4558 / activities)
+      9,880K: android:ui (pid 12060)
+      9,567K: com.google.android.gms.feedback (pid 1747)
+      8,730K: android.process.acore (pid 1317)
+      7,275K: com.google.process.gapps (pid 2338)
+      6,697K: com.android.chrome (pid 3019)
+      6,188K: com.google.android.googlequicksearchbox:interactor (pid 2099)
+      5,269K: com.android.gallery3d (pid 1269)
+      4,669K: com.android.deskclock (pid 2680)
+      4,166K: com.android.keychain (pid 2924)
+      3,988K: com.google.android.partnersetup (pid 1463)
+      3,805K: audioserver (pid 1376)
+      3,589K: com.android.printspooler (pid 3780)
+      3,519K: com.android.defcontainer (pid 5355)
+      3,460K: com.android.externalstorage (pid 2837)
+      3,422K: com.google.android.ext.services (pid 1940)
+      3,125K: mediaserver (pid 1384)
+      2,793K: logd (pid 1253)
+      2,707K: media.extractor (pid 1383)
+      2,611K: mediadrmserver (pid 1382)
+      2,397K: media.codec (pid 1381)
+      2,393K: cameraserver (pid 1377)
+      1,967K: surfaceflinger (pid 1307)
+      1,528K: vold (pid 1260)
+      1,496K: wpa_supplicant (pid 1826)
+      1,442K: drmserver (pid 1378)
+      1,357K: netd (pid 1385)
+      1,278K: sdcard (pid 1756)
+      1,246K: sdcard (pid 1831)
+      1,074K: /init (pid 1)
+      1,005K: adbd (pid 1312)
+        898K: keystore (pid 1380)
+        728K: rild (pid 1386)
+        715K: installd (pid 1379)
+        704K: fingerprintd (pid 1388)
+        670K: gatekeeperd (pid 1389)
+        637K: lmkd (pid 1305)
+        636K: ueventd (pid 930)
+        567K: sh (pid 1308)
+        512K: healthd (pid 1302)
+        502K: logcat (pid 4473)
+        493K: dumpsys (pid 5135)
+        483K: servicemanager (pid 1306)
+        442K: perfprofd (pid 1411)
+        276K: debuggerd (pid 1259)
+        235K: debuggerd:signaller (pid 1264)
+
+Total PSS by OOM adjustment:
+     61,987K: Native
+         21,265K: zygote (pid 1375)
+          3,805K: audioserver (pid 1376)
+          3,125K: mediaserver (pid 1384)
+          2,793K: logd (pid 1253)
+          2,707K: media.extractor (pid 1383)
+          2,611K: mediadrmserver (pid 1382)
+          2,397K: media.codec (pid 1381)
+          2,393K: cameraserver (pid 1377)
+          1,967K: surfaceflinger (pid 1307)
+          1,528K: vold (pid 1260)
+          1,496K: wpa_supplicant (pid 1826)
+          1,442K: drmserver (pid 1378)
+          1,357K: netd (pid 1385)
+          1,278K: sdcard (pid 1756)
+          1,246K: sdcard (pid 1831)
+          1,074K: /init (pid 1)
+          1,005K: adbd (pid 1312)
+            898K: keystore (pid 1380)
+            728K: rild (pid 1386)
+            715K: installd (pid 1379)
+            704K: fingerprintd (pid 1388)
+            670K: gatekeeperd (pid 1389)
+            637K: lmkd (pid 1305)
+            636K: ueventd (pid 930)
+            567K: sh (pid 1308)
+            512K: healthd (pid 1302)
+            502K: logcat (pid 4473)
+            493K: dumpsys (pid 5135)
+            483K: servicemanager (pid 1306)
+            442K: perfprofd (pid 1411)
+            276K: debuggerd (pid 1259)
+            235K: debuggerd:signaller (pid 1264)
+     75,908K: System
+         75,908K: system (pid 1625)
+     96,192K: Persistent
+         66,210K: com.android.systemui (pid 1719 / activities)
+         29,982K: com.android.phone (pid 1838)
+     11,297K: Foreground
+         11,297K: alpha.com.ScanIT (pid 4558 / activities)
+     58,030K: Visible
+         48,420K: com.google.android.gms.persistent (pid 2039)
+          6,188K: com.google.android.googlequicksearchbox:interactor (pid 2099)
+          3,422K: com.google.android.ext.services (pid 1940)
+     17,500K: Perceptible
+         17,500K: com.android.inputmethod.latin (pid 1713)
+     25,793K: Home
+         25,793K: com.android.launcher3 (pid 2145 / activities)
+     21,399K: Previous
+         17,939K: com.android.documentsui (pid 768 / activities)
+          3,460K: com.android.externalstorage (pid 2837)
+    341,782K: Cached
+         71,897K: com.google.android.gms (pid 2454)
+         64,863K: com.google.android.gm (pid 28571 / activities)
+         41,804K: com.google.android.googlequicksearchbox:search (pid 2300)
+         33,731K: com.android.settings (pid 317 / activities)
+         28,968K: com.google.android.apps.docs (pid 5431)
+         21,594K: com.google.android.apps.photos (pid 2694)
+         11,576K: com.google.android.packageinstaller (pid 404 / activities)
+          9,880K: android:ui (pid 12060)
+          9,567K: com.google.android.gms.feedback (pid 1747)
+          8,730K: android.process.acore (pid 1317)
+          7,275K: com.google.process.gapps (pid 2338)
+          6,697K: com.android.chrome (pid 3019)
+          5,269K: com.android.gallery3d (pid 1269)
+          4,669K: com.android.deskclock (pid 2680)
+          4,166K: com.android.keychain (pid 2924)
+          3,988K: com.google.android.partnersetup (pid 1463)
+          3,589K: com.android.printspooler (pid 3780)
+          3,519K: com.android.defcontainer (pid 5355)
+
+Total PSS by category:
+    165,137K: .dex mmap
+    148,806K: Native
+    128,674K: Dalvik
+     48,401K: .so mmap
+     45,018K: .oat mmap
+     37,381K: .apk mmap
+     36,650K: .art mmap
+     30,704K: Ashmem
+     24,912K: Unknown
+     18,137K: Dalvik Other
+     13,551K: Other mmap
+      9,748K: Stack
+      2,055K: .ttf mmap
+        538K: Other dev
+        168K: .jar mmap
+          8K: Cursor
+          0K: Gfx dev
+          0K: EGL mtrack
+          0K: GL mtrack
+          0K: Other mtrack
+
+Total RAM: 1,550,680K (status normal)
+ Free RAM: 1,101,270K (  341,782K cached pss +   473,528K cached kernel +   285,960K free)
+ Used RAM:   450,098K (  368,106K used pss +    81,992K kernel)
+ Lost RAM:      -688K
+   Tuning: 384 (large 384), oom   184,320K, restore limit    61,440K (high-end-gfx)

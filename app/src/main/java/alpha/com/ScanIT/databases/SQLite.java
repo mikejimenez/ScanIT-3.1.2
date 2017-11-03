@@ -25,7 +25,6 @@ public class SQLite extends SQLiteOpenHelper {
      */
 
     private static final int DATABASE_VERSION = 1;
-   // private static final String DATABASE_NAME = "BCData.db";
     private static final String DATABASE_NAME = "BC-Data.db";
     private static final String TABLE_NAME = "Barcodes";
     private static final String KEY_ID = "_id";
@@ -63,6 +62,7 @@ public class SQLite extends SQLiteOpenHelper {
                         + KEY_LISTVIEW + " TEXT,"
                         + KEY_COUNT + " TEXT"  + ")";
         db.execSQL(CREATE_TABLE);
+
     }
 
     /**
@@ -154,7 +154,7 @@ public class SQLite extends SQLiteOpenHelper {
     public void UpdateRecord(Editable Data, Long _id, Editable Departments, String Name, String Listview, String Count, String Username) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("Company", Data.toString()); //These Fields should be your String values of actual column names
+        cv.put("Company", Data.toString());
         cv.put("Name", Name);
         cv.put("Department", Departments.toString());
         cv.put("Username", Username);
@@ -173,6 +173,5 @@ public class SQLite extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         c = db.rawQuery(countQuery, null);
         return c;
-    }
-
+        }
     }

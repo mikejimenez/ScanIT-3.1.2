@@ -16,7 +16,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 24
         versionCode 3
-        versionName '3.2.1'
+        versionName '3.2.6'
         signingConfig signingConfigs.config
     }
     buildTypes {

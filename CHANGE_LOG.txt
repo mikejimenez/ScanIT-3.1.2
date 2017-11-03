@@ -1,9 +1,44 @@
+===== 3.2.7 ===== (11.02.2017)
+
+Once again major changes!
+
+Senders.java new:
+- Added Senders databasse to collect company names
+
+Methods are the same as other databases:
+- addSender()
+- getAllSenders()
+- getSendersRaw()
+- DeleteRecord()
+- UpdateRecord()
+
+SQLite.java changes:
+
+- Changes the database name from 'BDData' to 'BC-Data'
+
+Scaling changes to:
+- activity_main.xml
+- manual_entry.xml, added spinners and created new xmls
+- scan_entry.xml, added spinners and created new xmls
+
+New file sender_update.xml, added 'Senders' to Strings.xml
+
+MainActivity changes!:
+- Added new Preferences class for loading/saving
+- Addded Spinners to scan/input entry
+- Added previous/out-going options to keep data from previous screen and add out-going to company strings
+- Added Sender information database to save company input
+- Split Scan/Input methods into two methods so we could add new spinners
+- Created FloatingActionButtons() for fab buttons
+- Added HistoryData class with hide/show for history objects
+
+
 ===== 3.2.1 ===== (10.08.2017)
 
 Activity_main.xml changes:
-Fixed scaling on fab's & listView (Because of new test phone has a curved screen)
+- Fixed scaling on fab's & listView (Because of new test phone has a curved screen)
 
-Manual_entry, scan_entry, and update added flagNoFullscreen to EditText fields
+- Manual_entry, scan_entry, and update added flagNoFullscreen to EditText fields
 
 ===== 3.2.0 ===== (10.08.2017)
 
@@ -12,57 +47,59 @@ Major changes again!
 Updated API from 23 (Android 6.0) to 24 (Android 7.0)
 
 MainActivity.java changes:
-
-Added Butterknife
-Changed onActivityResult()
-Added scan_entry_view()
-Added Outgoing checkbox
-Added scan_entry_spinner_data()
-Changed InputManaul()
-Added manual_spinner_data()
-Added manual_entry_view()
-Added Spinners()
-Changed datatype in emailResults()
-Modified data_exec()
-Changed checkFocus()
+- Added Butterknife
+- Changed onActivityResult()
+- Added scan_entry_view()
+- Added Outgoing checkbox
+- Added scan_entry_spinner_data()
+- Changed InputManaul()
+- Added manual_spinner_data()
+- Added manual_entry_view()
+- Added Spinners()
+- Changed datatype in emailResults()
+- Modified data_exec()
+- Changed checkFocus()
 
 Services.java changes:
-Added setPriority to 2
-Added setVibrate to 0
-Changed small icon
-Added large con
-Changed visibility to 1
-Added stoptimertask() to run()
+- Added setPriority to 2
+- Added setVibrate to 0
+- Changed small icon
+- Added large con
+- Changed visibility to 1
+- Added stoptimertask() to run()
 
 UserLogin.java changes:
-Updated Butterknife to v7.0.0
+- Updated Butterknife to v7.0.0
 
 UI Changes:
+
 Fixed scaling again on:
-manual_entry.xml
-scan_entry.xml
+- manual_entry.xml
+- scan_entry.xml
+
 
 Added:
-manual_entry_spinner.xml
-scan_entry_spinner.xml
+- manual_entry_spinner.xml
+- scan_entry_spinner.xml
 
 Added strings:
-checkbox
-outgoing
-Changed hint_manual
+- checkbox
+- outgoing
+- Changed hint_manual
 
 Build.gradle:
-Added butterknife 7.0.0
+- Added butterknife 7.0.0
 
 ===== 3.1.8 ===== (10.04.2017)
 
 MainActivity.java changes
+
 - Added checkbox to Scan Entry, which allows for repeating information on the previous scan.
 - Changed some scaling on scan_entry, manual_entry, update.
 
 ===== 3.1.7 ===== (10.03.2017)
 ClearButton()
-	Bug Fix
+- Bug Fix
 	
 ===== 3.1.6 ===== (10.02.2017)
 - Codes Changes

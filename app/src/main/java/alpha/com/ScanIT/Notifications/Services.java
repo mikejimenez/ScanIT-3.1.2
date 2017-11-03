@@ -50,7 +50,6 @@ public class Services extends Service {
             Log.e(TAG, "onCreate");
         }
     }
-
     @Override
     public void onDestroy() {
         if (DEBUG_TRUE) {

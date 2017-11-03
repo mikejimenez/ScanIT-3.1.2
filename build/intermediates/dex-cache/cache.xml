@@ -12,15 +12,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\499b26e2e47797122729375634eb6ca606befcf2\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_083c8834f2d997b4b47e3a7d6475e5fa0bb67aac.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\mikej\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\7.0.0\f1e24ac977505d1fdcabadaa5be1f41dc11c4286\butterknife-7.0.0.jar"
         jumboMode="false"
         optimize="true"
@@ -36,15 +27,6 @@
         revision="26.0.0"
         sha1="01e0df53c5ef2431f072d1da3fd31bea9da5b529">
         <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\opencsv-3.9_e54b22ea19834f9cf3d6f30672b9d537e9106eaa.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\c195d62927a886227f6066199caea60b3d60a1a9\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_dd545cc994cff8b2b79fc833d80308e2fd87674c.jar" />
     </item>
     <item
         is-multidex="false"
@@ -66,24 +48,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\2f0618e34db5fc1f76f29d6fa5e5d5025960fc70\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_e3cbd1664c1d2e5204d1c949f55c846f3f93bbbd.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="G:\AndroidAPP\Workspace\ScanIt\app\src\main\res\android-viewbadger.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.0"
-        sha1="f1303b50d535716ca7601c5014357b8435658313">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\android-viewbadger_9f8fed16caebbd083d41485da618f2d2766ff2bf.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\mikej\.android\build-cache\a7c8adde0dbc5604ff3fb042bdbc68b01c48ce58\output\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="false"
         optimize="true"
@@ -99,42 +63,6 @@
         revision="26.0.2"
         sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
         <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_855bcd0e3eba8df2733d7205a0bd49106975d35a.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="G:\AndroidStudio\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\support-annotations-24.2.1_02267e1c6641ff1391f7718cf84a40177d8a5205.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\5ed66ac91a91a77ac74b02c6cacff4b1b1cb0834\output\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\internal_impl-24.2.1_b01d8ad035631f8f360029c98f093c13e099efbf.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\e977725f30d29f4e605090dd02b51e14b0c73ca3\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_8518dd7f08fa881e0ff1a511264dab522a136e1e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\caa4e9f10aa5454d34546649c9848c28f6b4bba0\output\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\internal_impl-24.2.1_46b075539b69e0630700f16c343736260b89ac99.jar" />
     </item>
     <item
         is-multidex="false"
@@ -183,21 +111,93 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\mikej\.android\build-cache\5ed66ac91a91a77ac74b02c6cacff4b1b1cb0834\output\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="26.0.2"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_c672796053c9d4e04d9d0b8a40c07597b13032a7.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\mikej\.android\build-cache\8f8e407da479e010e817f1c924502be7785367e3\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="26.0.2"
         sha1="e03f47f3d1017a093bb3239d4ec47c3447f40744">
         <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_9860330d7020f669fd348fcaedff31eaeca9d78c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\499b26e2e47797122729375634eb6ca606befcf2\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_083c8834f2d997b4b47e3a7d6475e5fa0bb67aac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\c195d62927a886227f6066199caea60b3d60a1a9\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_dd545cc994cff8b2b79fc833d80308e2fd87674c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\2f0618e34db5fc1f76f29d6fa5e5d5025960fc70\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_e3cbd1664c1d2e5204d1c949f55c846f3f93bbbd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="G:\AndroidAPP\Workspace\ScanIt\app\src\main\res\android-viewbadger.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="f1303b50d535716ca7601c5014357b8435658313">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\android-viewbadger_9f8fed16caebbd083d41485da618f2d2766ff2bf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="G:\AndroidStudio\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\support-annotations-24.2.1_02267e1c6641ff1391f7718cf84a40177d8a5205.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\5ed66ac91a91a77ac74b02c6cacff4b1b1cb0834\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\internal_impl-24.2.1_b01d8ad035631f8f360029c98f093c13e099efbf.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\e977725f30d29f4e605090dd02b51e14b0c73ca3\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_8518dd7f08fa881e0ff1a511264dab522a136e1e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\caa4e9f10aa5454d34546649c9848c28f6b4bba0\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\internal_impl-24.2.1_46b075539b69e0630700f16c343736260b89ac99.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\mikej\.android\build-cache\5ed66ac91a91a77ac74b02c6cacff4b1b1cb0834\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="G:\AndroidAPP\Workspace\ScanIt\app\build\intermediates\pre-dexed\release\classes_c672796053c9d4e04d9d0b8a40c07597b13032a7.jar" />
     </item>
 
 </items>
